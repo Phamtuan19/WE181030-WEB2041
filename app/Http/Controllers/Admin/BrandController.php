@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\brand;
+use App\Models\Brand;
 use Illuminate\Validation\Rule;
 
 class BrandController extends Controller
@@ -15,7 +15,7 @@ class BrandController extends Controller
 
     public function __construct()
     {
-        $this->table = new brand();
+        $this->table = new Brand();
     }
 
     public function index()

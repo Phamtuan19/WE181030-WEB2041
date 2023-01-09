@@ -22,7 +22,7 @@
             <thead>
                 <tr style="background-color: #C0C0C0; color: #333;">
                     <th class="align-middle text-center" scope="col">STT</th>
-                    <th class="align-middle text-center" scope="col">image</th>
+                    <th class="align-middle text-center" scope="col" width="100px">image</th>
                     <th class="align-middle text-center" scope="col">Tên sản phẩm</th>
                     <th class="align-middle text-center" scope="col">Giá nhập</th>
                     <th class="align-middle text-center" scope="col">Giá bán</th>
@@ -38,17 +38,19 @@
                         <tr>
                             <td class="align-middle text-center" scope="row">{{ $key + 1 }}</td>
 
-                            
+                            <td>
+                                <div class="" style="width: 100%;">
+                                    <img src="{{ asset($product->avatar) }}" alt="" style="width: 100%;">
+                                </div>
+                            </td>
 
                             <td class="align-middle"><span>{{ $product->name }}</span></td>
 
                             <td class="align-middle">{{ $product->price }}đ</td>
                             <td class="align-middle">{!! empty($product->sale) ? $product->price : $product->sale !!}đ</td>
                             <td class="align-middle">{{ $product->category_id }}</td>
-                            <td class="align-middle">{{ $product->brand_id }}</td>
-                            <td class="align-middle">{!! $product->quantity > 0
-                                ? $product->quantity
-                                : '<p class="mb-0" style="background-color: red; text-align: center; border-radius: 5px; color: #333; padding="3px 4px">Hết hàng</p>' !!}</td>
+                            <td class="align-middle">{{ $product->brand->name }}</td>
+                            <td class="align-middle">{!! $product->quantity > 0 ? $product->quantity : '<p class="mb-0" style="background-color: red; text-align: center; border-radius: 5px; color: #333; padding="3px 4px">Hết hàng</p>' !!}</td>
                             <td class="align-middle">
                                 <div class="d-flex justify-content-around">
                                     <div class="">

@@ -13,7 +13,7 @@ class ApiController extends Controller
     //
     public function indexProduct()
     {
-        $data = Product::select('id', 'name', 'price', 'avatar')->search()->paginate(20);
+        $data = Product::select('id', 'name', 'price', 'avatar')->search()->get();
         return $data;
     }
 }

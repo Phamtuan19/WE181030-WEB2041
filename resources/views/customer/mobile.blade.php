@@ -11,27 +11,30 @@
         <!-- Filter products -->
         <div class="col-3 product-show px-4">
 
-            <form action="">
-                <div class="mt-2">
-                    <p class="filter-title mb-2">Hãng sản xuất</p>
+            {{-- <form action=""> --}}
+            <div class="mt-2">
+                <p class="filter-title mb-2">Hãng sản xuất</p>
 
-                    <div class="px-3">
+                <div class="px-3">
+                    <form action="" method="GET">
                         <div class="form-check">
-                            <input class="form-check-input checkBox_all" type="checkbox" name="" value=""
+                            <input class="form-check-input checkBrand" type="checkbox" name="brand[]" value="all"
                                 id="brand" />
                             <label class="form-check-label" for="brand">Tất cả</label>
                         </div>
 
-                        @foreach ($brands as $brand)
+                        @foreach ($brands as $key => $brand)
                             <div class="form-check">
-                                <input class="form-check-input checkBrand" type="checkbox" name="brand"
+                                <input class="form-check-input checkBrand" type="checkbox" name="brand[]"
                                     value="{{ $brand->id }}" id="{{ $brand->name }}" />
                                 <label class="form-check-label" for="{{ $brand->name }}">{{ $brand->name }}</label>
                             </div>
                         @endforeach
-                    </div>
+
+                    </form>
                 </div>
-            </form>
+            </div>
+            {{-- </form> --}}
 
             <form method="GET" action="">
                 <div class="mt-4">
@@ -86,7 +89,7 @@
             </div>
 
             <div class="container mt-4">
-                <div class="row" id="show_product" style="gap: 24px 0" >
+                <div class="row" id="show_product" style="gap: 24px 0">
                     @foreach ($products as $product)
                         <div class=" col-lg-3 col-md-6 col-sm-6">
                             <div class="card">
@@ -146,7 +149,7 @@
         $(document).ready(function() {
 
             function showData(data) {
-                const a = data.data.map(function(value) {
+                const a = data.map(function(value) {
                     return `
                     <div class=" col-lg-3 col-md-6 col-sm-6">
                             <div class="card">
@@ -201,29 +204,27 @@
                 })
             })
 
-            $('#Iphone').click(function() {
-                const __checkBox_all = $(this).val();
-                console.log(__checkBox_all);
-                $.ajax({
-                    url: "{{ route('mobile') }}?brand= " + __checkBox_all,
-                    type: 'GET',
-                    // datatype: 'json',
-                    success: (data) => showData(data),
-                })
-            })
+            const listCheckBrand = []
+            $('.checkBrand').click(function() {
+                if (this.checked) {
+                    const _checkBrand = $(this).val();
+                    // kiểm tra va push vào mảng
+                    if (listCheckBrand.length === 0) {
+                        listCheckBrand.push(_checkBrand)
+                    } else if (!listCheckBrand.includes(_checkBrand)) {
+                        listCheckBrand.push(_checkBrand)
+                    }
+                    $.ajax({
+                        type: "GET",
+                        data: "array",
+                        url: "{{ route('mobile') }}?brand=" + listCheckBrand.join(","),
+                        success: (data) => showData(data),
+                    });
 
-            // $('.checkBrand').each(function(index) {
-            //     $('.checkBrand').click(function() {
-            //         _checkBrand = $(this).val();
-            //         console.log(_checkBrand);
-            //         $.ajax({
-            //             url: "{{ route('mobile') }}?price= " + _checkBrand,
-            //             type: 'GET',
-            //             // datatype: 'json',
-            //             success: (data) => showData(data),
-            //         })
-            //     })
-            // })
+
+                }
+
+            });
 
         })
 

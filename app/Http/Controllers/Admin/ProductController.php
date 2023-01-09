@@ -21,7 +21,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = $this->table->getAll();
+        $products = $this->table->get();
         return view('admin.products.index', compact('products'));
     }
 
@@ -76,8 +76,9 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = $this->table->find($id);
-        // dd($product);
-        return view('admin.products.show', compact('product'));
+        $categories = DB::table('category')->get();
+        $brands = DB::table('brand')->get();
+        return view('admin.products.show', compact('product', 'categories', 'brands'));
     }
 
     public function update(ProductRequest $request, $id)

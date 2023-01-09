@@ -42,10 +42,9 @@
                 <label for="category">Danh mục sản phẩm</label>
                 <select name="category" id="category" class="form-control">
                     <option value="">--- Chọn danh mục ---</option>
-                    <option value="1">Điện thoại</option>
-                    <option value="2">Máy tính bảng</option>
-                    <option value="3">Laptop</option>
-                    <option value="4">PC - Màn hình</option>
+                    @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" {{ $category->id == $product->category_id ? 'selected' : false }}>{{ $category->name }}</option>
+                    @endforeach
                 </select>
 
                 @error('category')
@@ -58,10 +57,9 @@
                 <label for="brand">Thương hiệu sản phẩm</label>
                 <select name="brand" id="brand" class="form-control">
                     <option value="">--- Chọn danh mục ---</option>
-                    <option value="1">Iphone</option>
-                    <option value="2">Samsung</option>
-                    <option value="3">Xiaomi</option>
-                    <option value="4">Oppo</option>
+                    @foreach ($brands as $brand)
+                    <option value="{{ $brand->id }}" {{ $brand->id == $product->brand_id ? 'selected' : false }}>{{ $brand->name }}</option>
+                    @endforeach
                 </select>
 
                 @error('brand')

@@ -38,4 +38,5 @@ Route::prefix('store')->name('store.')->group(function () {
     Route::get('home', [HomeController::class, 'indexHome'])->name('home');
     Route::get('mobile', [HomeController::class, 'indexMobile'])->name('mobile');
     Route::get('mobile/{name}/{id}', [HomeController::class, 'indexProduct'])->name('page_product');
+    Route::get('cart', [HomeController::class, 'indexCart'])->name('cart');
 });

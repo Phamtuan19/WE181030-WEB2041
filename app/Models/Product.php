@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Models\Brand;
+
 use Illuminate\Support\Facades\DB;
 
 class Product extends Model
@@ -47,11 +49,20 @@ class Product extends Model
     public function scopeSearch($query)
     {
         if (!empty(request()->brand)) {
-            $keyBrand = request()->price;
+            $keyBrand = request()->brand;
 
-            $query = $query->where('brand_id', '=', $keyBrand);
+            if ($keyBrand == 'all') {
+                $query = $query;
+            } else {
+                $query = $query->whereIn('brand_id',  explode(",", $keyBrand));
+            }
         }
 
         return $query;
+    }
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
 }

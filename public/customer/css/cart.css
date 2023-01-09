@@ -1,0 +1,43 @@
+
+.carts-detail {
+    padding: 1rem;
+    color: #333;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+tr, th, td {
+    border-style: none ;
+    font-weight: 700 ;
+    font-size: 15px ;
+    color: #1D1D1F !important;
+    min-height: 0px ;
+    vertical-align: middle;
+    text-align: center;
+    padding: 12px !important;
+}
+
+.input-group>.form-control {
+    flex: none !important;
+}
+
+a {
+    font-weight: bold;
+    color: #444 !important;
+    text-decoration: none !important;
+}
+
+.fa-solid {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.detail-image {
+    width: 100%;
+    /* padding: 12px; */
+}
+
+.detail_img {
+    width: 80px;
+    height: 80px;
+}

@@ -46,10 +46,29 @@
                     </div>
 
                     <!-- Search Bar -->
-                    <div class="form-search">
+                    {{-- <div class="form-search">
                         <input type="text" name="keywords-search" class="form-control keywords-search"
                             placeholder="Tìm kiếm sản phẩm ..." />
                         <i class="fa-solid fa-magnifying-glass icon-search"></i>
+                    </div> --}}
+
+
+
+                    <div class="categories">
+                        <ul class="navbar-nav">
+                            <li class="nav-item"><a href="" class="nav-link"
+                                    style="color: #fff !important; font-size: 18px !important">Điện thoại</a></li>
+                            <li class="nav-item"><a href="" class="nav-link"
+                                    style="color: #fff !important; font-size: 18px !important">Máy tính bảng</a></li>
+                            <li class="nav-item"><a href="" class="nav-link"
+                                    style="color: #fff !important; font-size: 18px !important">Laptop</a></li>
+                            <li class="nav-item"><a href="" class="nav-link"
+                                    style="color: #fff !important; font-size: 18px !important">PC - Màn hình</a></li>
+                            <li class="nav-item"><a href="" class="nav-link"
+                                    style="color: #fff !important; font-size: 18px !important">Âm Thanh</a></li>
+                            <li class="nav-item"><a href="" class="nav-link"
+                                    style="color: #fff !important; font-size: 18px !important">Đồng hồ</a></li>
+                        </ul>
                     </div>
 
                     <!--  -->
@@ -83,18 +102,18 @@
             </div>
         </div>
 
-        <div class="nav-c2">
+        {{-- <div class="nav-c2">
             <div class="container nav-c2_box">
                 <div class="nav-item cate-link nav-c2_item">
                     <!-- render js -->
                 </div>
             </div>
-        </div>
+        </div> --}}
     </nav>
     {{-- End NavBar --}}
-    
+
     <!-- Slider Show -->
-    @if (request()->id == false && request()->name == false)
+    @if ((request()->id == false) && (request()->name == false) && ( request()->path() != 'store/cart'))
         <div class="container slidershow_countdown">
             <div class="row" style="padding: 0 12px">
                 <!-- SliderShow -->
@@ -119,7 +138,7 @@
     @endif
 
     <!-- Content -->
-    <div class="container content " >
+    <div class="container content ">
         {{-- Render Product --}}
         @yield('content-product')
 
