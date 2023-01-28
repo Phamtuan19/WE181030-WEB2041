@@ -1,0 +1,45 @@
+
+.title-succsess {
+    text-align: center;
+}
+
+.title-succsess h2 {
+    color: #0000FF;
+}
+
+.title-succsess p {
+    font-size: 18px;
+    color: #828282;
+}
+
+.title-succsess span {
+    font-size: 18px;
+    color: #828282;
+}
+
+.information_order-code {
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.information_user-info i{
+    color: #FF0000;
+}
+
+.information_user-info span {
+    color: #FF0000;
+    text-transform: uppercase;
+}
+
+.total_money {
+    float: right;
+    margin-right: 30px;
+}
+
+.btn-redirect {
+    margin: 0 auto;
+}
+
+.btn-redirect a {
+    color: #fff !important;
+}

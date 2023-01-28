@@ -61,6 +61,17 @@ class Product extends Model
         return $query;
     }
 
+    public function scopeCarts ($query)
+    {
+        if(!empty(request()->product_code)){
+            $product_code = request()->product_code;
+
+            $query = $query->whereIn('code', explode(",", $product_code));
+        }
+
+        return $query;
+    }
+
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Customers;
+
 function uploadFile($upload_path = null, $files = [])
 {
     $image = [];
@@ -36,4 +38,13 @@ if (!function_exists('currency_format')) {
             return number_format($number, 0, ',', '.') . "{$suffix}";
         }
     }
+}
+
+function isActiveCustomer($email){
+    $count = Customers::where('email', $email)->where('is_active', 1)->count();
+
+    if($count > 0) {
+        return true;
+    }
+    return false;
 }

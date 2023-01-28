@@ -24,6 +24,9 @@
     {{-- Fontawesome --}}
     <script src="https://kit.fontawesome.com/03e43a0756.js" crossorigin="anonymous"></script>
 
+    {{-- css custom layout --}}
+    <link rel="stylesheet" href="{{ asset('admin/custom_layout/css/customIndex.css') }}">
+
     @yield('link')
 
 </head>

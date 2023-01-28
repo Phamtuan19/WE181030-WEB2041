@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Customer\ApiController;
 
 /*
@@ -21,3 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('store/mobile', [ApiController::class, 'indexProduct'])->name('mobile');
+Route::get('store/cart', [ApiController::class, 'indexCart'])->name('cart');
+Route::post('store/cart', [ApiController::class, 'create'])->name('create');
+Route::post('store/check-order', [ApiController::class, 'checkOrder'])->name('checkOrder');

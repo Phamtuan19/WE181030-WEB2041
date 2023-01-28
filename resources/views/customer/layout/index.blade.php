@@ -46,29 +46,16 @@
                     </div>
 
                     <!-- Search Bar -->
-                    {{-- <div class="form-search">
+                    <div class="form-search">
                         <input type="text" name="keywords-search" class="form-control keywords-search"
                             placeholder="Tìm kiếm sản phẩm ..." />
                         <i class="fa-solid fa-magnifying-glass icon-search"></i>
-                    </div> --}}
+                    </div>
 
 
 
                     <div class="categories">
-                        <ul class="navbar-nav">
-                            <li class="nav-item"><a href="" class="nav-link"
-                                    style="color: #fff !important; font-size: 18px !important">Điện thoại</a></li>
-                            <li class="nav-item"><a href="" class="nav-link"
-                                    style="color: #fff !important; font-size: 18px !important">Máy tính bảng</a></li>
-                            <li class="nav-item"><a href="" class="nav-link"
-                                    style="color: #fff !important; font-size: 18px !important">Laptop</a></li>
-                            <li class="nav-item"><a href="" class="nav-link"
-                                    style="color: #fff !important; font-size: 18px !important">PC - Màn hình</a></li>
-                            <li class="nav-item"><a href="" class="nav-link"
-                                    style="color: #fff !important; font-size: 18px !important">Âm Thanh</a></li>
-                            <li class="nav-item"><a href="" class="nav-link"
-                                    style="color: #fff !important; font-size: 18px !important">Đồng hồ</a></li>
-                        </ul>
+
                     </div>
 
                     <!--  -->
@@ -86,10 +73,32 @@
                                     <i class="fa-solid fa-receipt"></i>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link cart-title cart-shopping" href="#" title="giỏ hàng">
+                            <li class="nav-item cart">
+                                <a class="nav-link cart-title cart-shopping" href="{{ route('store.cart') }}"
+                                    title="giỏ hàng">
                                     <i class="fa-solid fa-cart-shopping"></i>
                                 </a>
+
+                                <span class="cart_quantity"></span>
+
+                                <!--Start of Dropdown-->
+                                <div class="dropdown-nav">
+                                    <div class="dropdown-count">
+                                        Có <strong class="dropdown-count_strong"></strong> trong giỏ hàng của bạn
+                                    </div>
+                                    <div class="dropdown-items">
+                                        {{-- render Ajax --}}
+                                    </div>
+
+                                    <div class="dropdown-totals">
+                                        Tổng phụ: <strong>0₫</strong>
+                                    </div>
+
+                                    <div class="dropdown-btn">
+                                        <a href="{{ route('store.cart') }}" class="dropdown-btn_buttom">Đi tới giỏ hàng
+                                        </a>
+                                    </div>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link user" href="#" title="Tài khoản">
@@ -113,7 +122,7 @@
     {{-- End NavBar --}}
 
     <!-- Slider Show -->
-    @if ((request()->id == false) && (request()->name == false) && ( request()->path() != 'store/cart'))
+    @if (request()->path() == 'store')
         <div class="container slidershow_countdown">
             <div class="row" style="padding: 0 12px">
                 <!-- SliderShow -->
@@ -188,48 +197,50 @@
     </div>
 
     <!-- footer -->
-    <footer class="mt-4 py-4" style="background-color: #ef0000; color: white">
-        <div class="container">
-            <div class="row">
-                <div class="col-3 footer-colum">
-                    <h6>Về chúng tôi</h6>
+    @if (request()->path() != 'store/payment' && request()->path() != 'store/cart' && request()->path() != 'store/orderSuccess')
+        <footer class="mt-4 py-4" style="background-color: #ef0000; color: white">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3 footer-colum">
+                        <h6>Về chúng tôi</h6>
 
-                    <div class="column-list d-flex gap-3 flex-column">
-                        <a href="" class="nav-link">Tin tức</a>
-                        <a href="" class="nav-link">Giới thiệu</a>
-                        <a href="" class="nav-link">Tuyển dụng</a>
-                        <a href="" class="nav-link">Hệ thống đại lý</a>
-                        <a href="" class="nav-link">Chính sách tích điểm</a>
+                        <div class="column-list d-flex gap-3 flex-column">
+                            <a href="" class="nav-link">Tin tức</a>
+                            <a href="" class="nav-link">Giới thiệu</a>
+                            <a href="" class="nav-link">Tuyển dụng</a>
+                            <a href="" class="nav-link">Hệ thống đại lý</a>
+                            <a href="" class="nav-link">Chính sách tích điểm</a>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Hỗ trợ khách hàng -->
-                <div class="col-3 footer-colum">
-                    <h6>Hỗ trợ khách hàng</h6>
+                    <!-- Hỗ trợ khách hàng -->
+                    <div class="col-3 footer-colum">
+                        <h6>Hỗ trợ khách hàng</h6>
 
-                    <div class="column-list d-flex gap-3 flex-column">
-                        <a href="" class="nav-link">Chính sách, Quy định chung</a>
-                        <a href="" class="nav-link">Chính sách vận chuyển</a>
-                        <a href="" class="nav-link">Chính sách bảo hàng</a>
-                        <a href="" class="nav-link">Chính sách đổi trả</a>
-                        <a href="" class="nav-link">Hướng dãn mua hàng online</a>
+                        <div class="column-list d-flex gap-3 flex-column">
+                            <a href="" class="nav-link">Chính sách, Quy định chung</a>
+                            <a href="" class="nav-link">Chính sách vận chuyển</a>
+                            <a href="" class="nav-link">Chính sách bảo hàng</a>
+                            <a href="" class="nav-link">Chính sách đổi trả</a>
+                            <a href="" class="nav-link">Hướng dãn mua hàng online</a>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Hệ thống cửa hàng -->
-                <div class="col-6 footer-colum">
-                    <h6>Hệ thống cửa hàng</h6>
+                    <!-- Hệ thống cửa hàng -->
+                    <div class="col-6 footer-colum">
+                        <h6>Hệ thống cửa hàng</h6>
 
-                    <div class="column-list d-flex gap-3 flex-column ">
-                        <p>
-                            -
-                            <span>Cơ sở 1: Số 215 Giáp Nhất, Nhân Chính, Thanh Xuân, Hà Nội</span>
-                        </p>
+                        <div class="column-list d-flex gap-3 flex-column ">
+                            <p>
+                                -
+                                <span>Cơ sở 1: Số 215 Giáp Nhất, Nhân Chính, Thanh Xuân, Hà Nội</span>
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </footer>
+        </footer>
+    @endif
 
 
     <!-- {{-- CDN Fontawesome --}} -->
@@ -240,9 +251,66 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
 
-    {{-- <script src="{{ asset('customer/js/index.js') }}"></script> --}}
+    <script src="{{ asset('customer/js/index.js') }}"></script>
 
     @yield('js')
+
+    <script>
+        $(document).ready(function() {
+            function renderDropdown(data, carts) {
+                const dropdown = data.map(function(value, index) {
+                    return `
+                    <div class="dro-item">
+                        <div class="item-picture">
+                            <a href="#">
+                                <img src="http://127.0.0.1:8000/${value.avatar}" alt="" class="dro-item_img">
+                            </a>
+                        </div>
+                        <div class="item-product">
+                            <div class="item-product_name">
+                                <a href="#">${value.name}</a>
+                            </div>
+                            <div class="item-product_price">
+                                Đơn giá: <span>${value.price}đ</span>
+                            </div>
+                            <div class="item-product_quantity">
+                                Số lượng: <span>${carts[index].quantity}</span>
+                            </div>
+                        </div>
+                    </div>
+                    `
+                })
+
+                $('.dropdown-items').html(dropdown)
+
+            }
+
+            // tạo mảng 3 dữ liệu render
+            function renderA() {
+                const cartArr = JSON.parse(localStorage.getItem('cart'));
+                let code = []
+                let quantity = [];
+                if (cartArr) {
+                    cartArr.forEach(e => {
+                        code.push(e.product_code)
+                    });
+                }
+
+                // render quantity product cart
+                $('.dropdown-count_strong').html(code.length + " mục");
+
+                const codeArr = code.slice(0, 3);
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('cart') }}?product_code=" + code.join(','),
+                    // dataType: 'array',
+                    success: (data) => renderDropdown(data, cartArr),
+                })
+            }
+
+            renderA()
+        })
+    </script>
 
 </body>
 

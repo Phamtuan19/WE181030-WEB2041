@@ -90,7 +90,7 @@
 
             <div class="container mt-4">
                 <div class="row" id="show_product" style="gap: 24px 0">
-                    @foreach ($products as $product)
+                    {{-- @foreach ($products as $product)
                         <div class=" col-lg-3 col-md-6 col-sm-6">
                             <div class="card">
                                 <a href="#" class="nav-link">
@@ -130,7 +130,7 @@
                                 </a>
                             </div>
                         </div>
-                    @endforeach
+                    @endforeach --}}
                 </div>
             </div>
 
@@ -159,7 +159,7 @@
                                             alt="...">
                                     </div>
                                     <div class="card-body p-0">
-                                        <h5 class="card-name ">Lenovo Gaming IdeaPad 3 15IAH7 i5 12500H/82S900H2VN</h5>
+                                        <h5 class="card-name ">${value.name}</h5>
 
                                         <div class="card-price ">
                                             <p class="card-price_show">18.890.000&nbsp;đ</p>

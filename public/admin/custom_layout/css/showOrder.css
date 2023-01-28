@@ -1,0 +1,61 @@
+
+body {
+    color: #333;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6, p  {
+    margin: 0 !important;
+}
+
+td, th {
+    vertical-align: middle !important ;
+}
+
+
+.information_order-code {
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.order-status {
+    font-size: 18px;
+    color: #333;
+}
+
+.order-status_name {
+    padding: 4px 12px;
+    font-size: 14px;
+    font-weight: 800;
+    border-radius: 5px;
+    background-color: cornflowerblue;
+    color: #fff;
+}
+
+.order-status_label {
+    min-width: 30%;
+    display: inline-block;
+    margin-right: 12px;
+}
+
+.info-customer .title i, h3 {
+    font-size: 18px;
+    margin-right: 6px;
+}
+
+/* Info customer */
+.customer_info {}
+
+.customer_info-title {
+    text-transform: uppercase;
+    font-weight: 800;
+    font-size: 14px;
+    color: black;
+    margin-bottom: 4px !important;
+}
+
+.info-customer {
+    border: 1px solid #ccc;
+    padding: 12px 24px;
+    border-radius: 5px;
+}
+

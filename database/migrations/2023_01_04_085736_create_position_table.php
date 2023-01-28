@@ -16,7 +16,6 @@ class CreatePositionTable extends Migration
         Schema::create('position', function (Blueprint $table) {
             $table->tinyInteger('id')->autoIncrement();
             $table->string('name');
-            $table->integer('permission_id')->nullable();
             $table->timestamps();
         });
     }

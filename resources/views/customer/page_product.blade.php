@@ -115,7 +115,7 @@
                 </form>
 
                 <div class="products-order">
-                    <button type="button" class="btn btn-primary btn_addToCart" data-code="{{ $product[0]->code }}"
+                    <button type="button" class="btn btn-primary btn_addToCart" data-code="{{ $product[0]->code }}" data-price="{{ $product[0]->price }} "
                         id="liveToastBtn" style="padding: 0; border: none; width: 50%;">
                         <div class="add_to_cart" style="background-color: #795548; width: 100%;pointer-events:none;">
                             <i class="fa-solid fa-cart-shopping add_to_cart_items"></i>
@@ -433,6 +433,7 @@
 
     <!-- Initialize Swiper -->
     <script>
+        /* ================== Slider =================== */
         var swiper = new Swiper(".mySwiper", {
             spaceBetween: 4,
             slidesPerView: 4,
@@ -450,6 +451,7 @@
             },
         });
 
+        /* ================== Chọn màu =================== */
         const color_item = document.querySelectorAll('.color-item');
         color_item.forEach((e, index) => {
             e.onclick = () => {
@@ -462,7 +464,7 @@
             }
         });
 
-        // Bộ nhớ
+        /* ================== Chọn Bộ nhớ =================== */
         const memory_item = document.querySelectorAll('.select-memory-item');
         memory_item.forEach((e, index) => {
             e.onclick = () => {
@@ -475,7 +477,7 @@
             }
         });
 
-        // Notification
+        /* ================== Notification =================== */
         const toastTrigger = document.getElementById('liveToastBtn')
         const toastLiveExample = document.getElementById('liveToast')
         if (toastTrigger) {
@@ -485,18 +487,12 @@
                 toast.show()
             })
         }
-        const addToCart = document.querySelector(".addToCart")
-        const product = {
-                code: '',
-                quantity: 0
-            }
+
         document.querySelector(".btn_addToCart").onclick = (e) => {
-
-            product.code = e.target.dataset.code
-            product.quantity = product.quantity + 1
-            console.log(JSON.stringify(product));
-
-            localStorage.setItem('product_code', JSON.stringify(product));
+            const dataCode = e.target.dataset.code;
+            const price = e.target.dataset.price;
+            addToCart(dataCode, price);
+            renderTotal();
         }
     </script>
 @endsection
