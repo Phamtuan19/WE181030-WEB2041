@@ -37,7 +37,7 @@
                 <tr>
                     <th>STT</th>
                     <th>Tên người dùng</th>
-                    <th>Tài khoản đăng nhập</th>
+                    {{-- <th>Tài khoản đăng nhập</th> --}}
                     <th>Số điện thoại</th>
                     <th>Email</th>
                     <th>Vị trí làm việc</th>
@@ -46,29 +46,29 @@
                 </tr>
             </thead>
             <tbody>
-                @if ($users->count() > 0)
-                    @foreach ($users as $key => $user)
+                @if ($customers->count() > 0)
+                    @foreach ($customers as $key => $customer)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->username }}</td>
-                            <td>{{ $user->phone }}</td>
-                            <td>{{ $user->email }}</td>
-                            <td>{!! $user->position_id == 1 ? '<p class="text-danger">Administrator</p>' : '<p class="text-primary">Member</p>' !!}</td>
-                            <td>{!! $user->is_active == 1
+                            <td>{{ $customer->full_name }}</td>
+                            {{-- <td>{{ $customer->username }}</td> --}}
+                            <td>{{ $customer->phone }}</td>
+                            <td>{{ $customer->email }}</td>
+                            <td>{!! $customer->position_id == 1 ? '<p class="text-danger">Administrator</p>' : '<p class="text-primary">Member</p>' !!}</td>
+                            <td>{!! $customer->is_active == 1
                                 ? '<div class="btn btn-success">Kích hoạt</div>'
                                 : '<div class="btn btn-danger">Vô hiệu hóa</div>' !!}</td>
                             <td class="" >
                                 <div class="d-flex justify-content-around">
                                     <div class="">
-                                        <a href="{{ route('admin.users.show', $user->id) }}" class="btn"
+                                        <a href="{{ route('admin.users.show', $customer->id) }}" class="btn"
                                             style="color: black;">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                     </div>
-                                    @if ($user->position_id != 1)
+                                    @if ($customer->position_id != 1)
                                         <div class="">
-                                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
+                                            <form action="{{ route('admin.users.destroy', $customer->id) }}" method="POST">
                                                 @method('DELETE')
                                                 @csrf
 
@@ -95,7 +95,7 @@
             </tbody>
         </table>
 
-        {{ $users->links() }}
+        {{-- {{ $users->links() }} --}}
 
     </div>
 @endsection

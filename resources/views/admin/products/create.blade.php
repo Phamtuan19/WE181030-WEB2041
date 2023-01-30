@@ -29,128 +29,126 @@
         </div>
     @endif
 
-    <div class="p-4" style="background-color: #fff; border-radius: 5px">
-        <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+    <form action="{{ route('admin.product.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
 
-            <div class="form-group">
-                <label for="category">Danh mục sản phẩm</label>
-                <select name="category" id="category" class="form-control">
-                    <option value="">--- Chọn danh mục ---</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-                </select>
+        <div class="form-group">
+            <label for="category">Danh mục sản phẩm</label>
+            <select name="category" id="category" class="form-control">
+                <option value="">--- Chọn danh mục ---</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
 
-                @error('category')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('category')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="brand">Thương hiệu sản phẩm</label>
-                <select name="brand" id="brand" class="form-control">
-                    <option value="">--- Chọn danh mục ---</option>
-                    @foreach ($brands as $brand)
-                        <option value="{{ $brand->id }}">{{ $brand->name }}</option>
-                    @endforeach
-                </select>
+        <div class="form-group">
+            <label for="brand">Thương hiệu sản phẩm</label>
+            <select name="brand" id="brand" class="form-control">
+                <option value="">--- Chọn danh mục ---</option>
+                @foreach ($brands as $brand)
+                    <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                @endforeach
+            </select>
 
-                @error('brand')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
-            </div>
+            @error('brand')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
+        </div>
 
 
-            <div class="form-group">
-                <label for="name">Tên sản phẩm</label>
-                <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}">
+        <div class="form-group">
+            <label for="name">Tên sản phẩm</label>
+            <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}">
 
-                @error('name')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('name')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="quantity">Số lượng</label>
-                <input type="text" name="quantity" class="form-control" id="quantity" value="{{ old('quantity') }}">
+        <div class="form-group">
+            <label for="quantity">Số lượng</label>
+            <input type="text" name="quantity" class="form-control" id="quantity" value="{{ old('quantity') }}">
 
-                @error('quantity')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('quantity')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="price">Giá sản phẩm</label>
-                <input type="text" name="price" class="form-control" id="price" value="{{ old('price') }}">
+        <div class="form-group">
+            <label for="price">Giá sản phẩm</label>
+            <input type="text" name="price" class="form-control" id="price" value="{{ old('price') }}">
 
-                @error('price')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('price')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="sale">Giá khuyến mãi</label>
-                <input type="text" name="sale" class="form-control" id="sale" value="{{ old('sale') }}">
+        <div class="form-group">
+            <label for="sale">Giá khuyến mãi</label>
+            <input type="text" name="sale" class="form-control" id="sale" value="{{ old('sale') }}">
 
-                @error('sale')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('sale')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="title">Tiêu đề sản phẩm</label>
-                <input type="text" name="title" class="form-control" id="title" value="{{ old('title') }}">
+        <div class="form-group">
+            <label for="title">Tiêu đề sản phẩm</label>
+            <input type="text" name="title" class="form-control" id="title" value="{{ old('title') }}">
 
-                @error('title')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('title')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="avatar">Ảnh đại diện sản phẩm</label>
-                <input type="file" name="avatar[]" class="form-control" id="avatar" style="padding: 3px 12px">
+        <div class="form-group">
+            <label for="avatar">Ảnh đại diện sản phẩm</label>
+            <input type="file" name="avatar[]" class="form-control" id="avatar" style="padding: 3px 12px">
 
-                @error('avatar')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('avatar')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="product_image">Ảnh sản phẩm</label>
-                <input type="file" name="product_image[]" multiple class="form-control" id="product_image"
-                    style="padding: 3px 12px">
+        <div class="form-group">
+            <label for="product_image">Ảnh sản phẩm</label>
+            <input type="file" name="product_image[]" multiple class="form-control" id="product_image"
+                style="padding: 3px 12px">
 
-                @error('product_image')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('product_image')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="detail">Thông số kỹ thuật</label>
-                <textarea name="detail" id="detail">
+        <div class="form-group">
+            <label for="detail">Thông số kỹ thuật</label>
+            <textarea name="detail" id="detail">
                     {{ old('detail') }}
                 </textarea>
 
-                @error('detail')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('detail')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Thêm mới">
-            </div>
-        </form>
-    </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Thêm mới">
+        </div>
+    </form>
 @endsection
 
 @section('js')

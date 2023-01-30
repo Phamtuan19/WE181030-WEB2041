@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 
-@section('page_heading', 'Chỉnh sửa danh mục')
+@section('page_heading', 'Chỉnh sửa Thương hiệu')
 
 @section('link')
     <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
@@ -30,7 +30,7 @@
     @endif
 
     @if (!empty($brand))
-        <div class="p-4" style="background-color: #fff; border-radius: 5px">
+        <div class="">
             <form action="{{ route('admin.brand.update', $brand->id) }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf

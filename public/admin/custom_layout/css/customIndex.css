@@ -1,4 +1,56 @@
 
-.page-content {
+
+
+
+/* =============================================  Content =============================================*/
+
+.background-white {
     background-color: #fff !important;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px;
+    min-height: 500px;
+}
+
+.title-page {
+
+    margin: 0 -12px;
+    /* background-color: bisque !important; */
+    padding: 12px 12px;
+    border-radius: 5px 5px 0 0;
+}
+
+/* =============================================  End content =============================================*/
+
+
+.admin_name {
+    color: #333;
+    font-weight: 600;
+    position: relative;
+    cursor: pointer;
+}
+
+/* .admin_name:focus .admin_name-dropdown {
+    display: block;
+} */
+
+.admin_name-dropdown {
+    /* display: none; */
+    position: absolute;
+    padding: 12px;
+    top: 30px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+    z-index: 9999;
+}
+
+.admin_name-dropdown a {
+    width: 100px;
+    color: #333 !important;
+}
+
+.admin_name-dropdown a:hover {
+    text-decoration: none !important;
+    color: #4e73df !important;
 }

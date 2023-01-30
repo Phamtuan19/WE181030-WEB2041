@@ -49,11 +49,39 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        return Validator::make(
+            $data,
+            [
+                'username' => ['required', 'string', 'max:255', 'unique:users'],
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'phone' => [
+                    'required',
+                    'integer',
+                    'regex:/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/'
+                ],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+
+            ],
+            [
+                'required' => ':attribute không được để trống',
+                'string' => ':attribute không đúng định dạng',
+                'min' => ':attribute phải lớn hơn :min ký tự',
+                'max' => ':attribute phải nhỏ howng :max ký tự',
+                'unique' => ':attribute đã tồn tại',
+                'email' => ':attribute không đúng định dạng email',
+                'regex' => ':attribute không đúng định dạng',
+                'integer' => ':attribute không phải là số',
+                'confirmed' => ':attribute nhập lại không chính sác',
+            ],
+            [
+                'name' => 'Tên tài khoản',
+                'username' => 'Tài khoản đăng nhập',
+                'email' => 'Email',
+                'phone' => 'Số điện thoại',
+                'password' => 'Mật khẩu',
+            ]
+        );
     }
 
     /**
@@ -65,8 +93,12 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'username' => $data['username'],
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
+            'position_id' => 1,
+            'is_active' => 1,
             'password' => Hash::make($data['password']),
         ]);
     }

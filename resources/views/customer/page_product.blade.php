@@ -12,18 +12,18 @@
     {{-- <div class="row flex-row justify-content-between product_content">
 
     </div> --}}
-    <div class="container  product_content">
+    <div class="container-fluid  product_content">
         <div class="row">
             {{-- Slider Image --}}
-            <div class="col-4">
+            <div class="col-lg-6">
                 <div class="box-image_product">
 
                     {{-- Slider cha --}}
-                    <div class="" style="width: 100%; height: 400px;">
-                        <div class="swiper mySwiper2">
+                    <div class="product-slider">
+                        <div class="swiper mySwiper">
                             <div class="swiper-wrapper">
-                                @foreach (json_decode($product[0]->image, true) as $image)
-                                    <div class="item-border swiper-slide">
+                                @foreach (json_decode($product->image, true) as $image)
+                                    <div class="d-flex justify-content-center swiper-slide">
                                         <img src="{{ asset($image) }}" class="product_img" alt="">
                                     </div>
                                 @endforeach
@@ -32,10 +32,10 @@
                     </div>
 
                     {{-- Slider con --}}
-                    <div thumbsSlider="" class="swiper mySwiper">
+                    <div class="swiper mySwiper2">
                         <div class="swiper-wrapper">
-                            @foreach (json_decode($product[0]->image, true) as $image)
-                                <div class="product_image swiper-slide"
+                            @foreach (json_decode($product->image, true) as $image)
+                                <div class=" d-flex justify-content-center swiper-slide"
                                     style="border: 1px solid #ededed; padding: 2px; overflow: hidden;">
                                     <img src="{{ asset($image) }}" class="product_img_mini" alt="">
                                 </div>
@@ -48,115 +48,124 @@
             {{-- End Slider --}}
 
             {{--  --}}
-            <div class="col-5">
+            <div class="col-lg-6">
+                {{-- Product name --}}
+                <div class="info-name">
+                    <h3>{{ $product->name }}</h3>
+                    <span class="mt-4">Tình trạng: <b>Còn hàng</b></span>
+                </div>
+
                 {{-- Giá sản phảm --}}
-                @if (!empty($product[0]->sale))
-                    <div class="price-region">
+                @if (!empty($product->sale))
+                    <div class="price-region my-3">
                         <div class="price-current">
-                            <span class="price_sale">{{ currency_format($product[0]->sale) }}</span>
-                            <span class="price_old">{{ currency_format($product[0]->price) }}</span>
+                            <span class="price_sale">{{ currency_format($product->sale) }}</span>
+                            <span class="price_old">{{ currency_format($product->price) }}</span>
                         </div>
                     </div>
                 @else
-                    <div class="price-region">
+                    <div class="price-region my-3">
                         <div class="price-current">
-                            <span class="price_sale">{{ currency_format($product[0]->price) }}</span>
+                            <span class="price_sale">{{ currency_format($product->price) }}</span>
                         </div>
                     </div>
                 @endif
                 {{-- End --}}
 
-                {{-- detail selection --}}
-                {{-- memory --}}
-                <div class="select-memory">
-                    <div class="title">
-                        <strong>Bộ nhớ :</strong>
+                <div class="attribute">
+                    <div class="my-3">
+                        <span class="attribute-title">Dung lượng <small>64GB</small></span>
+                        <div class="option-list mt-2">
+                            <div class="form-group">
+                                <input type="radio" id="attribute-memory_64" class="form-control" name="attribute-memory"
+                                    hidden>
+                                <label for="attribute-memory_64" class="attribute-memory_label">64GB</label>
+                            </div>
+                            <div class="form-group">
+                                <input type="radio" id="attribute-memory_128" class="form-control" name="attribute"
+                                    hidden>
+                                <label for="attribute-memory_128" class="attribute-memory_label">128GB</label>
+                            </div>
+                        </div>
                     </div>
-                    <p class="btn btn-light btn-outline-secondary select-memory-item memory">
-                        <span>3/64GB</span>
-                    </p>
 
-                    <p class="btn btn-light btn-outline-secondary select-memory-item">
-                        <span>4/328GB</span>
-                    </p>
-
-                    <p class="btn btn-light btn-outline-secondary select-memory-item">
-                        <span>8/128GB</span>
-                    </p>
-
-                    <p class="btn btn-light btn-outline-secondary select-memory-item">
-                        <span>16/256GB</span>
-                    </p>
+                    <div class="my-3">
+                        <span class="attribute-title">Màu sắc <small>Black</small></span>
+                        <div class="option-list mt-2">
+                            <div class="form-group ">
+                                <input type="radio" id="attribute-color_white" class="form-control" name="attribute"
+                                    hidden>
+                                <label for="attribute-color_white" class="attribute-color_label selected-value"
+                                    style="background-color: #fff"></label>
+                            </div>
+                            <div class="form-group ">
+                                <input type="radio" id="attribute-color_black" class="form-control" name="attribute"
+                                    hidden>
+                                <label for="attribute-color_black" class="attribute-color_label selected-value"
+                                    style="background-color: #333"></label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <form action="">
-                    {{-- color --}}
-                    <div class="select-color">
-                        <div class="title">
-                            <strong>Chọn màu :</strong>
-                        </div>
-                        <p class="btn btn-success color-item " data-original-title="+0₫">
-                            <input type="hidden" name="clor" value="vàng">
+                <div class="short-des">
+                    <div class="short-des_title">
+                        <i class="fa-solid fa-gift me-2"></i>
+                        Ưu đãi thêm
+                    </div>
+                    <div class="short-description">
+                        <p class="mb-2">
+                            <span>
+                                <strong style="color: #e03e2d">Tết mới - Trúng trọn bộ Apple 99 triệu đồng -
+                                    <a href="#">Chi tiết</a>
+                                </strong>
+                            </span>
                         </p>
-                        <p class="btn btn-success color-item "></p>
-                        <p class="btn btn-success color-item "></p>
-                        <p class="btn btn-success color-item "></p>
+                        <p class="mb-2">
+                            <span>
+                                <strong style="color: #e03e2d">Ưu đãi cổng thanh toán:</strong>
+                            </span>
+                        </p>
+                        <p class="mb-2">● Giảm 5% tối đa 300.000đ qua Moca (code: SDMOCA1 - SL có hạn)</p>
+                        <p class="mb-2">
+                            <span>
+                                <strong style="color: #e03e2d">Ưu đãi mua kèm:</strong>
+                            </span>
+                        </p>
+                        <p class="mb-2">● Giảm tới 500.000đ khi mua Marshall Stanmore II</p>
+                        <p class="mb-2">● Mua nhiều giảm sâu:</p>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>Mua combo 3 phụ kiện</td>
+                                    <td>Mua combo 4 phụ kiện</td>
+                                    <td>Mua combo 5 phụ kiện</td>
+                                </tr>
+                                <tr>
+                                    <td>Giảm 200.000đ</td>
+                                    <td>Giảm 300.000đ</td>
+                                    <td>Giảm 400.000đ</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="mb-2">● Giảm 200.000đ khi mua Apple Care</p>
+                        <p class="mb-2">● Giảm tới 200.000đ khi mua kèm AirPods </p>
+                        <p class="mb-2">
+                            <span>
+                                <strong style="color: #e03e2d">Ưu đãi đặc quyền:</strong>
+                            </span>
+                        </p>
+                        <p class="mb-2">● Tặng đến 4 triệu khi thu cũ đổi mới lên đời iPhone</p>
                     </div>
-
-                    {{-- status --}}
-                    <div class="select-status">
-                        <div class="title">
-                            <strong>Tình trạng :</strong>
-                        </div>
-                        <span class="">Còn hàng</span>
-                    </div>
-                    {{-- End detail selection --}}
-
-                </form>
+                </div>
 
                 <div class="products-order">
-                    <button type="button" class="btn btn-primary btn_addToCart" data-code="{{ $product[0]->code }}" data-price="{{ $product[0]->price }} "
-                        id="liveToastBtn" style="padding: 0; border: none; width: 50%;">
-                        <div class="add_to_cart" style="background-color: #795548; width: 100%;pointer-events:none;">
-                            <i class="fa-solid fa-cart-shopping add_to_cart_items"></i>
 
-                            <div class="">
-                                <span class="addToCart">Thêm Giỏ Hàng</span>
-                                <br>
-                                <span>Cho vào giỏ hàng</span>
-                            </div>
-                        </div>
-                    </button>
-                    {{-- <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button> --}}
+                    <button class="order-add" style="">Thêm vào giỏ hàng</button>
 
-                    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-                        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
-                            style="background-color: #fff">
-                            <div class="toast-header">
-                                <img src="" class="rounded me-2" alt="">
-                                <strong class="me-auto">Notification</strong>
-                                <small>11 mins ago</small>
-                                <button type="button" class="btn-close" data-bs-dismiss="toast"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="toast-body">
-                                Thêm sản phẩm thành công
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="add_to_cart" style="background-color: green;">
-                        <i class="fa-solid fa-cart-shopping add_to_cart_items"></i>
-
-                        <div class="">
-                            <span>Mua ngay</span>
-                            <br>
-                            <span>Giao hàng toàn quốc</span>
-                        </div>
-                    </div>
                 </div>
 
-                <div class="place-order" style="margin-top: 24px">
+                {{-- <div class="place-order" style="margin-top: 24px">
                     <form action="" method="">
                         <div class="form-group">
                             <input type="text" class="form-control" name="phone" placeholder="Nhập số điện thoại">
@@ -166,129 +175,25 @@
                             <input type="submit" class="form-control bg-danger" value="Đặt ngay" style="color: #fff">
                         </div>
                     </form>
-                </div>
-
-                {{-- promotion --}}
-                <div class="promotion" style="margin-top: 36px">
-                    <label class="promotion-title">Khuyến mãi</label>
-                    <p class="promotion-detail">
-                        Trợ giá mua củ sạc nhanh 20W PD chính hãng chỉ 250k
-                    </p>
-                    <p class="promotion-detail">
-                        Trợ giá mua củ sạc nhanh 20W PD chính hãng chỉ 250k
-                    </p>
-                    <p class="promotion-detail">
-                        Trợ giá mua củ sạc nhanh 20W PD chính hãng chỉ 250k
-                    </p>
-                </div>
+                </div> --}}
 
             </div>
 
-            <div class="col-3">
-                <div class="extra-products" style="margin: 4px 0 0 0">
-                    <div class="extra-products-title">
-                        <h5>Có thể bạn quan tâm</h5>
-                    </div>
 
-                    <div class="products-item">
-
-                        <div class="products-item_image">
-                            <a href="#" class="nav-link">
-                                <img class="products-item_img"
-                                    src="https://dienthoaihay.vn/images/products/2022/06/17/resized/neo-2-mint_1634346131jpg_1655432653.jpg"
-                                    alt="">
-                            </a>
-                        </div>
-
-                        <div class="products-item_info">
-                            <a href="" class="nav-link">
-                                <h3 class="products-item_name">
-                                    Xiaomi Redmi K50
-                                </h3>
-                            </a>
-                            <span class="products-item_price">7.350.000₫</span>
-                        </div>
-
-                    </div>
-
-                    <div class="products-item">
-
-                        <div class="products-item_image">
-                            <a href="#" class="nav-link">
-                                <img class="products-item_img"
-                                    src="https://dienthoaihay.vn/images/products/2022/06/17/resized/neo-2-mint_1634346131jpg_1655432653.jpg"
-                                    alt="">
-                            </a>
-                        </div>
-
-                        <div class="products-item_info">
-                            <a href="" class="nav-link">
-                                <h3 class="products-item_name">
-                                    Xiaomi Redmi K50
-                                </h3>
-                            </a>
-                            <span class="products-item_price">7.350.000₫</span>
-                        </div>
-
-                    </div>
-
-                    <div class="products-item">
-
-                        <div class="products-item_image">
-                            <a href="#" class="nav-link">
-                                <img class="products-item_img"
-                                    src="https://dienthoaihay.vn/images/products/2022/06/17/resized/neo-2-mint_1634346131jpg_1655432653.jpg"
-                                    alt="">
-                            </a>
-                        </div>
-
-                        <div class="products-item_info">
-                            <a href="" class="nav-link">
-                                <h3 class="products-item_name">
-                                    Xiaomi Redmi K50
-                                </h3>
-                            </a>
-                            <span class="products-item_price">7.350.000₫</span>
-                        </div>
-
-                    </div>
-
-                    <div class="products-item">
-
-                        <div class="products-item_image">
-                            <a href="#" class="nav-link">
-                                <img class="products-item_img"
-                                    src="https://dienthoaihay.vn/images/products/2022/06/17/resized/neo-2-mint_1634346131jpg_1655432653.jpg"
-                                    alt="">
-                            </a>
-                        </div>
-
-                        <div class="products-item_info">
-                            <a href="" class="nav-link">
-                                <h3 class="products-item_name">
-                                    Xiaomi Redmi K50
-                                </h3>
-                            </a>
-                            <span class="products-item_price">7.350.000₫</span>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
 
             <div class="col-12 mt-4">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-8">
+                        <div class="col-lg-6">
                             <h5 class="table-title">Thông số kỹ thuật</h5>
                             <div class="table-box">
 
-                                {!! $product[0]->detail !!}
+                                {!! $product->detail !!}
 
                             </div>
                             <div class="d-flex justify-content-center ">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary my-3" data-bs-toggle="modal"
+                                <button type="button" class="btn btn-primary my-3 mx-auto" data-bs-toggle="modal"
                                     data-bs-target="#exampleModal">
                                     Xem thông tin chi tiết
                                 </button>
@@ -304,7 +209,7 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body compare_table" style="height: 550px !important">
-                                                {!! $product[0]->detail !!}
+                                                {!! $product->detail !!}
                                             </div>
                                         </div>
                                     </div>
@@ -312,112 +217,34 @@
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
+                        <div class="col-lg-6" style="overflow: hidden">
+                            <h5 class="table-title">Bài viết</h5>
 
-                            <div class="products-item">
-                                <div class="products-item_image">
-                                    <a href="#" class="nav-link">
-                                        <img class="products-item_img"
-                                            src="https://dienthoaihay.vn/images/products/2022/06/17/resized/neo-2-mint_1634346131jpg_1655432653.jpg"
-                                            alt="">
-                                    </a>
-                                </div>
+                            <h2>iPhone 14 Pro Max 128GB - chiếc iPhone g&acirc;y bất ngờ với nhiều t&iacute;nh năng mới lạ
+                            </h2>
 
-                                <div class="products-item_info">
-                                    <a href="" class="nav-link">
-                                        <h3 class="products-item_name">
-                                            Xiaomi Redmi K50
-                                        </h3>
-                                    </a>
-                                    <span class="products-item_price">7.350.000₫</span>
-                                    <br>
-                                    <a href="#" class="btn btn-outline-danger btn-compare">So sánh chi tiết</a>
-                                </div>
-                            </div>
+                            <p><em><strong><a href="https://didongviet.vn/iphone-14.html">iPhone 14 Pro
+                                            Max</a>&nbsp;</strong></em>được xem l&agrave; chiếc iPhone đ&aacute;ng mua nhất
+                                trong năm trong năm 2022 v&igrave; c&oacute; thể đ&aacute;p ứng tốt hầu hết mọi nhu cầu của
+                                người d&ugrave;ng từ cơ bản đến n&acirc;ng cao. Với sự n&acirc;ng cấp mạnh mẽ về mặt phần
+                                cứng với camera l&ecirc;n đến 48MP, bộ nhớ trong 1TB, m&agrave;n h&igrave;nh thiết kế mới
+                                hứa hẹn sẽ mang lại trải nghiệm v&ocirc; c&ugrave;ng tuyệt vời đến người d&ugrave;ng.</p>
 
-                            <div class="products-item">
-                                <div class="products-item_image">
-                                    <a href="#" class="nav-link">
-                                        <img class="products-item_img"
-                                            src="https://dienthoaihay.vn/images/products/2022/06/17/resized/neo-2-mint_1634346131jpg_1655432653.jpg"
-                                            alt="">
-                                    </a>
-                                </div>
+                            <p><img alt="iPhone 14 Pro Max 128GB - chiếc iPhone gây bất ngờ với nhiều tính năng mới lạ"
+                                    src="https://cdn.didongviet.vn/pub/media/wysiwyg/2022/san-pham/apple-product/iphone-14-pro-max-128gb-didongviet.jpg" />
+                            </p>
 
-                                <div class="products-item_info">
-                                    <a href="" class="nav-link">
-                                        <h3 class="products-item_name">
-                                            Xiaomi Redmi K50
-                                        </h3>
-                                    </a>
-                                    <span class="products-item_price">7.350.000₫</span>
-                                    <br>
-                                    <a href="#" class="btn btn-outline-danger btn-compare">So sánh chi tiết</a>
-                                </div>
-                            </div>
+                            <h3>H&igrave;nh ảnh sắc n&eacute;t - trải nghiệm mượt m&agrave; với tần số qu&eacute;t 120Hz
+                            </h3>
 
-                            <div class="products-item">
-                                <div class="products-item_image">
-                                    <a href="#" class="nav-link">
-                                        <img class="products-item_img"
-                                            src="https://dienthoaihay.vn/images/products/2022/06/17/resized/neo-2-mint_1634346131jpg_1655432653.jpg"
-                                            alt="">
-                                    </a>
-                                </div>
-
-                                <div class="products-item_info">
-                                    <a href="" class="nav-link">
-                                        <h3 class="products-item_name">
-                                            Xiaomi Redmi K50
-                                        </h3>
-                                    </a>
-                                    <span class="products-item_price">7.350.000₫</span>
-                                    <br>
-                                    <a href="#" class="btn btn-outline-danger btn-compare">So sánh chi tiết</a>
-                                </div>
-                            </div>
-
-                            <div class="products-item">
-                                <div class="products-item_image">
-                                    <a href="#" class="nav-link">
-                                        <img class="products-item_img"
-                                            src="https://dienthoaihay.vn/images/products/2022/06/17/resized/neo-2-mint_1634346131jpg_1655432653.jpg"
-                                            alt="">
-                                    </a>
-                                </div>
-
-                                <div class="products-item_info">
-                                    <a href="" class="nav-link">
-                                        <h3 class="products-item_name">
-                                            Xiaomi Redmi K50
-                                        </h3>
-                                    </a>
-                                    <span class="products-item_price">7.350.000₫</span>
-                                    <br>
-                                    <a href="#" class="btn btn-outline-danger btn-compare">So sánh chi tiết</a>
-                                </div>
-                            </div>
-
-                            <div class="products-item">
-                                <div class="products-item_image">
-                                    <a href="#" class="nav-link">
-                                        <img class="products-item_img"
-                                            src="https://dienthoaihay.vn/images/products/2022/06/17/resized/neo-2-mint_1634346131jpg_1655432653.jpg"
-                                            alt="">
-                                    </a>
-                                </div>
-
-                                <div class="products-item_info">
-                                    <a href="" class="nav-link">
-                                        <h3 class="products-item_name">
-                                            Xiaomi Redmi K50
-                                        </h3>
-                                    </a>
-                                    <span class="products-item_price">7.350.000₫</span>
-                                    <br>
-                                    <a href="#" class="btn btn-outline-danger btn-compare">So sánh chi tiết</a>
-                                </div>
-                            </div>
+                            <p>M&agrave;n h&igrave;nh iPhone&nbsp;<em><strong><a
+                                            href="https://didongviet.vn/iphone-14-pro-max-128gb.html">14 Pro Max
+                                            128GB</a></strong></em>&nbsp;được Apple thay đổi ho&agrave;n to&agrave;n với
+                                phần viền m&agrave;n h&igrave;nh được l&agrave;m mỏng đều ở 4 cạnh, đi k&egrave;m với phần
+                                notch được thiết kế h&igrave;nh giọt nước thay v&igrave; tai thỏ như tr&ecirc;n c&aacute;c
+                                phi&ecirc;n bản tiền nhiệm. Sự thay đổi n&agrave;y mang lại cho người d&ugrave;ng trải
+                                nghiệm h&igrave;nh ảnh tốt hơn, kh&ocirc;ng gian rộng r&atilde;i hơn cũng như
+                                &ldquo;sexy&rdquo; hơn khi so với c&aacute;c d&ograve;ng flagship kh&aacute;c.</p>
 
                         </div>
                     </div>
@@ -434,13 +261,13 @@
     <!-- Initialize Swiper -->
     <script>
         /* ================== Slider =================== */
-        var swiper = new Swiper(".mySwiper", {
-            spaceBetween: 4,
-            slidesPerView: 4,
+        var swiper = new Swiper(".mySwiper2", {
+            spaceBetween: 5,
+            slidesPerView: 5,
             freeMode: true,
             watchSlidesProgress: true,
         });
-        var swiper2 = new Swiper(".mySwiper2", {
+        var swiper2 = new Swiper(".mySwiper", {
             spaceBetween: 1,
             navigation: {
                 nextEl: ".swiper-button-next",
@@ -450,49 +277,5 @@
                 swiper: swiper,
             },
         });
-
-        /* ================== Chọn màu =================== */
-        const color_item = document.querySelectorAll('.color-item');
-        color_item.forEach((e, index) => {
-            e.onclick = () => {
-                const color = document.querySelectorAll('.color-item');
-                color.forEach(item => {
-                    item.classList.remove("after")
-                })
-                e.classList.add('after');
-
-            }
-        });
-
-        /* ================== Chọn Bộ nhớ =================== */
-        const memory_item = document.querySelectorAll('.select-memory-item');
-        memory_item.forEach((e, index) => {
-            e.onclick = () => {
-                const memory = document.querySelectorAll('.select-memory-item');
-                memory.forEach(item => {
-                    item.classList.remove("memory")
-                })
-                e.classList.add('memory');
-
-            }
-        });
-
-        /* ================== Notification =================== */
-        const toastTrigger = document.getElementById('liveToastBtn')
-        const toastLiveExample = document.getElementById('liveToast')
-        if (toastTrigger) {
-            toastTrigger.addEventListener('click', () => {
-                const toast = new bootstrap.Toast(toastLiveExample)
-
-                toast.show()
-            })
-        }
-
-        document.querySelector(".btn_addToCart").onclick = (e) => {
-            const dataCode = e.target.dataset.code;
-            const price = e.target.dataset.price;
-            addToCart(dataCode, price);
-            renderTotal();
-        }
     </script>
 @endsection

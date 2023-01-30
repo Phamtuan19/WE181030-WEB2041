@@ -32,6 +32,7 @@ function deleteFilePublic($files = [])
     return $files;
 }
 
+// fomat money
 if (!function_exists('currency_format')) {
     function currency_format($number, $suffix = 'đ') {
         if (!empty($number)) {

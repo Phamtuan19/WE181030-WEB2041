@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 
-@section('page_heading', 'Thêm danh mục sản phẩm')
+@section('page_heading', 'Thêm danh Thương hiệu')
 
 @section('link')
     <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
@@ -29,35 +29,31 @@
         </div>
     @endif
 
-    <div class="p-4" style="background-color: #fff; border-radius: 5px">
-        <form action="{{ route('admin.brand.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+    <form action="{{ route('admin.brand.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
 
-            <div class="form-group">
-                <label for="name">Tên thương hiệu</label>
-                <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}">
+        <div class="form-group">
+            <label for="name">Tên thương hiệu</label>
+            <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}">
 
-                @error('name')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('name')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <label for="avatar">Ảnh đại Thương hiệu</label>
-                <input type="file" name="avatar[]" class="form-control" id="avatar" style="padding: 3px 12px">
+        <div class="form-group mb-4">
+            <label for="avatar">Ảnh đại Thương hiệu</label>
+            <input type="file" name="avatar[]" class="form-control" id="avatar" style="padding: 3px 12px">
 
-                @error('avatar')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+            @error('avatar')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
 
-            </div>
+        </div>
 
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Thêm mới">
-            </div>
-        </form>
-    </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Thêm mới">
+        </div>
+    </form>
 @endsection
-
-

@@ -1,45 +1,40 @@
 .product_content {
-    margin: 90px 0px !important;
+    margin: 10px 0px !important;
     padding: 12px;
     background-color: #fff;
     border-radius: 5px;
     color: #333;
 }
 
-.product_image {
-    width: 100%;
+.product-slider {
+    background-color: #F5F5F7;
 }
 
 .product_img {
-    width: 400px;
-    height: 400px;
-    transform: scale(0.9);
+    width: 100%;
+    height: 600px;
+    /* transform: scale(0.9); */
 }
 
 .product_img_mini {
     width: 100px;
 }
 
-.item-border {
-    width: 100px;
-    height: 100px;
-}
+/* =============================================  End =============================================*/
 
-/* price-region */
+/* =============================================  Product info =============================================*/
 
-.price-region {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 4px;
-    border-bottom: 1px solid #ededed;
+.info-name h3 {
+    font-weight: 600;
 }
 
 .price-current .price_sale {
+    color: #0066CC;
     font-size: 24px;
+    font-weight: bold;
+    line-height: 27px;
+    margin-top: 0;
     font-weight: 600;
-    color: red;
-    letter-spacing: 2px;
 }
 
 .price-old {
@@ -52,220 +47,101 @@
     letter-spacing: 1px;
     font-weight: 400;
     color: #888888;
-    margin: 7px 0 0 10px;
+    margin: 7px 0 0 12px;
 }
 
-.select-memory,
-.select-color,
-.select-status {
+.attribute-title {
+    font-weight: 400;
+    font-size: 16px;
+    color: #515154;
+    line-height: 20px;
+    margin-bottom: 11px;
+}
+
+.option-list {
     display: flex;
-    align-items: center;
-    gap: 0 12px;
-    margin-top: 24px;
 }
 
-/* momory */
-
-.select-memory-item:hover {
-    background-color: transparent !important;
-    color: #333 !important;
-}
-
-.memory {
-    border: 1px solid red !important;
-    color: red !important;
-    background-color: #fff;
-}
-
-/* color */
-
-.color-item {
-    width: 25px;
-    height: 25px;
-    border-radius: 50% !important;
-    position: relative;
-}
-
-.after::after {
-    transform: translate(-50%, -50%) rotate(45deg);
-    content: "";
-    width: 6px;
-    height: 10px;
-    display: block;
-    border: solid #eee;
-    border-width: 0 2px 2px 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin: -2px -2px 0 0;
-}
-
-/* .color-item:after {
-    content: attr(data-content) ' any other text you may want';
-} */
-
-/* .color-item .active:before {
-    display: block;
-} */
-
-/* status */
-.status-icon {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: red;
-    color: #fff;
+.attribute-memory_label {
     text-align: center;
-    font-size: 12px;
-}
-
-.select-status::after {
-    content: "";
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    box-sizing: border-box;
-    background-image: url('data:image/svg+xml;charset=utf-8,<svg fill="rgb(76 175 80)" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 408.576 408.576" style="enable-background:new 0 0 408.576 408.576;" xml:space="preserve"><g><g><path d="M204.288,0C91.648,0,0,91.648,0,204.288s91.648,204.288,204.288,204.288s204.288-91.648,204.288-204.288    S316.928,0,204.288,0z M318.464,150.528l-130.56,129.536c-7.68,7.68-19.968,8.192-28.16,0.512L90.624,217.6    c-8.192-7.68-8.704-20.48-1.536-28.672c7.68-8.192,20.48-8.704,28.672-1.024l54.784,50.176L289.28,121.344    c8.192-8.192,20.992-8.192,29.184,0C326.656,129.536,326.656,142.336,318.464,150.528z"></path></g></g></svg>');
-}
-
-.status-icon i {
-    line-height: 22px;
-}
-
-/* promotion */
-.promotion {
-    border: #ddd 1px solid;
-    padding: 24px 12px;
-    position: relative;
-    border-radius: 3px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.promotion-title {
-    padding: 2px 8px;
-    font-size: 13px;
-    color: #fff;
-    font-weight: 600;
-    background-color: red;
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
     border-radius: 5px;
-    position: absolute;
-    top: -12px;
+    padding: 8px 15.668px;
+    cursor: pointer;
+    min-width: 90px;
+    min-height: 38px;
+    margin: 0 6px;
 }
 
-.promotion-detail {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 15px;
-    font-weight: 500;
+.attribute-color_label {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 100%;
+    box-shadow: inset 1px 1px 2px rgb(0 0 0 / 10%);
+    border: unset !important;
+    margin: 0 6px;
 }
 
-.promotion-detail::before {
-    content: "";
-    width: 12px;
-    height: 12px;
+.selected-value {
+    /* background-color: #fff; */
     border-radius: 50%;
-    box-sizing: border-box;
-    background-image: url('data:image/svg+xml;charset=utf-8,<svg fill="rgb(76 175 80)" width="12px" height="12px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 408.576 408.576" style="enable-background:new 0 0 408.576 408.576;" xml:space="preserve"><g><g><path d="M204.288,0C91.648,0,0,91.648,0,204.288s91.648,204.288,204.288,204.288s204.288-91.648,204.288-204.288    S316.928,0,204.288,0z M318.464,150.528l-130.56,129.536c-7.68,7.68-19.968,8.192-28.16,0.512L90.624,217.6    c-8.192-7.68-8.704-20.48-1.536-28.672c7.68-8.192,20.48-8.704,28.672-1.024l54.784,50.176L289.28,121.344    c8.192-8.192,20.992-8.192,29.184,0C326.656,129.536,326.656,142.336,318.464,150.528z"></path></g></g></svg>');
+    border: 1px solid #0066cc !important;
+    padding: 3px;
 }
 
-.promotion-detail .status-icon {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background-color: red;
-    color: #fff;
-    text-align: center;
-    font-size: 12px;
+/* ============================================= End Product info =============================================*/
+
+.short-des {
+    margin: 0;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #EBEBEB;
+    margin-bottom: 15px;
 }
 
-.icon-check_promotion {
-    line-height: 0 !important;
-    text-align: center;
-}
-
-/* product buttom order */
-.products-order {
-    margin-top: 24px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.add_to_cart {
-    padding: 6px 12px;
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    border-radius: 5px;
-    width: calc(50% - 10px);
-}
-
-.add_to_cart_items {
-    font-size: 24px;
-}
-
-.add_to_cart span:nth-child(1) {
-    text-transform: uppercase;
-    font-size: 15px;
-    color: #fff;
+.short-des_title {
+    padding: 12px 16px 12px 15px;
+    color: #1D1D1F;
     font-weight: bold;
+    font-size: 16px;
+    line-height: 24px;
+    /* border-bottom: 1px solid #EFEFEF; */
+    text-align: left;
 }
 
-.add_to_cart span:nth-child(2) {
-    font-size: 13px;
-    color: #fff;
-    font-weight: bold;
+.short-description {
+    overflow: hidden;
+    background: #fff;
+    border-radius: 8px;
+    padding: 0 20px 35px 33px;
+    color: #515154;
+    font-size: 15px;
 }
 
-/*  */
-.extra-products-title {
-    padding: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: red;
-    border-radius: 5px;
+.short-description p span strong a {
+    color: #0066CC !important;
 }
 
-.extra-products-title h5 {
-    margin-bottom: 0;
-    color: #fff;
-    font-size: 18px;
-}
+/* =============================================  Btn add to cart =============================================*/
 
-.products-item {
-    margin-top: 6px;
-    padding: 12px;
-    display: flex;
-    justify-content: space-around;
-    border: 1px solid #ededed;
-    border-radius: 5px;
-}
-
-.products-item_image {
-    width: 90px;
-    min-height: 80px;
-    margin-bottom: 0px;
-}
-
-.products-item_image .products-item_img {
+.order-add {
     width: 100%;
+    font-weight: bold !important;
+    font-size: 17px !important;
+    line-height: 25px !important;
+    background: #0066CC;
+    color: #fff;
+    border: none !important;
+    border-radius: 8px;
+    width: 100%;
+    height: 56px;
 }
 
-.products-item_name {
-    font-size: 17px;
-}
+/* ============================================= End Btn add to cart =============================================*/
 
-.products-item_price {
-    font-weight: 600;
-    color: #dc0000;
-    margin-top: 5px;
-}
 
-/* Table detail */
+/* ============================================= Table detail product =============================================*/
 
 .table-title {
     padding: 12px 0;
@@ -339,10 +215,10 @@ table th {
     width: 100%;
 }
 
-
 .btn-compare {
     padding: 2px 6px !important;
     font-size: 12px !important;
     margin-top: 12px !important;
     border-radius: 0 !important;
 }
+/* ============================================= End Table detail product =============================================*/

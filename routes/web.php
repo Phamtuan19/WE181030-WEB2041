@@ -18,6 +18,8 @@ use App\Http\Controllers\Customer\PaymentController;
 
 use App\Http\Controllers\admin\OrderController;
 
+use App\Http\Controllers\admin\CutomerController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,7 +34,7 @@ use App\Http\Controllers\admin\OrderController;
 Auth::routes();
 
 
-// Route::middleware('auth')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource("users", UserController::class)->except(['edit']);
         Route::resource('product', ProductController::class)->except(['edit']);
@@ -40,17 +42,23 @@ Auth::routes();
         Route::resource('brand', BrandController::class)->except(['edit']);
 
         Route::resource('orders', OrderController::class)->except('edit', 'store');
+
+        Route::get('customers', [CutomerController::class, 'index'])->name('customers');
     });
-// });
+});
 
 Route::get('/', function () {
     return redirect(route('admin.users'));
 });
 
 Route::prefix('store')->name('store.')->group(function () {
+
     Route::get('/', [HomeController::class, 'indexHome'])->name('home');
-    Route::get('mobile', [HomeController::class, 'indexMobile'])->name('mobile');
-    Route::get('mobile/{name}/{id}', [HomeController::class, 'indexProduct'])->name('page_product');
+
+    Route::get('products', [HomeController::class, 'indexMobile'])->name('mobile');
+
+    Route::get('detail-product/{id}', [HomeController::class, 'indexProduct'])->name('product');
+    
     Route::get('cart', [HomeController::class, 'indexCart'])->name('cart');
 
     Route::get('payment', [PaymentController::class, 'payment'])->name('payment');

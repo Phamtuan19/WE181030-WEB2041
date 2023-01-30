@@ -30,111 +30,150 @@
 
 <body>
     <!-- NavBar -->
-    <nav class="navbar navbar-expand-lg bg-body-tertiary nav-header p-0 flex-column">
-        <div class="navbar nav-c1">
-            <div class="container">
-                <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
-                    <!-- logo -->
-                    <div class="d-flex gap-3 align-items-center">
-                        <div class="">
-                            <a class="navbar-brand" href="#">
-                                <img src="https://dienthoaihay.vn/images/config/logo-dth_1630379348.png" alt=""
-                                    class="navbar_image" />
-                                <!-- <img src="https://dienthoaihay.vn/images/config/logo-dth_1592615391.png" alt=""> -->
-                            </a>
+
+    <div class="navbar-custom sticky-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-2">
+                    <a href="" class="d-flex align-items-center">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfJ28zNBVMe0zS7qTP82M2WvNp_LUMM_6fNA&usqp=CAU"
+                            alt="" class="nav-logo">
+                        <div class="nav-name_shop ms-2">
+                            <span class="name_shop">X - Shop</span>
                         </div>
+                    </a>
+                </div>
+
+                <div class="col-lg-4">
+                    <ul class="navbar-nav nav-bar">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-item_a" href="#">
+                                Điện Thoại
+                            </a>
+                        </li>
+
+                        <li class="nav-item cart-item">
+                            <a class="nav-link nav-item_a" aria-current="page" href="#">
+                                Laptop
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-item_a" href="#">
+                                Máy tính bảng
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-item_a" href="#">
+                                Phụ kiện
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nhập vào sản phẩm bạn muốn tìm kiếm...">
                     </div>
+                </div>
 
-                    <!-- Search Bar -->
-                    <div class="form-search">
-                        <input type="text" name="keywords-search" class="form-control keywords-search"
-                            placeholder="Tìm kiếm sản phẩm ..." />
-                        <i class="fa-solid fa-magnifying-glass icon-search"></i>
-                    </div>
+                {{-- <div class="col-lg-2"></div> --}}
 
+                <div class="col-lg-2">
+                    <ul class="navbar-nav nav-bar">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link nav-link_custom dropdown-toggle" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-regular fa-file-lines"></i>
+                            </a>
 
+                            <ul class="dropdown-menu nav-item_menu">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>
 
-                    <div class="categories">
+                        <li class="nav-item cart-item">
+                            <a class="nav-link nav-link_custom" aria-current="page" href="#">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                            </a>
 
-                    </div>
-
-                    <!--  -->
-                    <div class="">
-                        <ul class="navbar-nav" style="gap: 0 12px">
-                            <li class="nav-item nav-post">
-                                <a class="nav-link payment" aria-current="" href="#" title="Thanh toán">
-                                    <i class="fa-solid fa-file-invoice-dollar"></i>
-                                </a>
-                            </li>
-
-                            <!-- Danh mục bài viết -->
-                            <li class="nav-item">
-                                <a class="nav-link posts" href="#" title="Bài viết">
-                                    <i class="fa-solid fa-receipt"></i>
-                                </a>
-                            </li>
-                            <li class="nav-item cart">
-                                <a class="nav-link cart-title cart-shopping" href="{{ route('store.cart') }}"
-                                    title="giỏ hàng">
-                                    <i class="fa-solid fa-cart-shopping"></i>
-                                </a>
-
-                                <span class="cart_quantity"></span>
-
-                                <!--Start of Dropdown-->
-                                <div class="dropdown-nav">
-                                    <div class="dropdown-count">
-                                        Có <strong class="dropdown-count_strong"></strong> trong giỏ hàng của bạn
-                                    </div>
-                                    <div class="dropdown-items">
-                                        {{-- render Ajax --}}
-                                    </div>
-
-                                    <div class="dropdown-totals">
-                                        Tổng phụ: <strong>0₫</strong>
-                                    </div>
-
-                                    <div class="dropdown-btn">
-                                        <a href="{{ route('store.cart') }}" class="dropdown-btn_buttom">Đi tới giỏ hàng
-                                        </a>
-                                    </div>
+                            <div class="dropdown-nav">
+                                <div class="dropdown-count">
+                                    Có <strong class="dropdown-count_strong"></strong> trong giỏ hàng của bạn
                                 </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link user" href="#" title="Tài khoản">
-                                    <i class="fa-solid fa-user"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                                <div class="dropdown-items">
+                                </div>
+
+                                <div class="dropdown-totals">
+                                    Tổng phụ: <strong>0₫</strong>
+                                </div>
+
+                                <div class="dropdown-btn">
+                                    <a href="{{ route('store.cart') }}" class="dropdown-btn_buttom">Đi tới giỏ hàng
+                                    </a>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link nav-link_custom" href="#">
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
+    </div>
 
-        {{-- <div class="nav-c2">
-            <div class="container nav-c2_box">
-                <div class="nav-item cate-link nav-c2_item">
-                    <!-- render js -->
-                </div>
-            </div>
-        </div> --}}
-    </nav>
     {{-- End NavBar --}}
+
+    <!--Start of Dropdown-->
+
 
     <!-- Slider Show -->
     @if (request()->path() == 'store')
         <div class="container slidershow_countdown">
-            <div class="row" style="padding: 0 12px">
+            <div class="row" style="padding: 6px 12px">
                 <!-- SliderShow -->
-                <div class="col-12 p-0">
-                    <div class="navbar flex-column owl-carousel-slider owl-carousel owl-theme">
-                        <div class="sliderShow" style="display: inline-block; width: 100%">
-                            <a href="#" class="sliderShow-link">
-                                <img class="sliderShow_img"
-                                    src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2022/12/15/638066662143788648_F-C1_1200x300.png"
-                                    alt="" />
-                            </a>
+                <div class="col-lg-12 p-0">
+                    <div class="swiper mySwiper-slider">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
+                                    alt="" style="width: 100%; height: 327px;">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
+                                    alt="" style="width: 100%; height: 327px;">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
+                                    alt="" style="width: 100%; height: 327px;">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
+                                    alt="" style="width: 100%; height: 327px;">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
+                                    alt="" style="width: 100%; height: 327px;">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
+                                    alt="" style="width: 100%; height: 327px;">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
+                                    alt="" style="width: 100%; height: 327px;">
+                            </div>
                         </div>
+                        <div class="swiper-pagination"></div>
                     </div>
                 </div>
 
@@ -148,56 +187,99 @@
 
     <!-- Content -->
     <div class="container content ">
-        {{-- Render Product --}}
-        @yield('content-product')
+        {{-- <form action=""> --}}
+        <div class="row">
+            @if (request()->path() == 'store/products')
+                <div class="col-lg-2">
+                    <div class="mt-2">
+                        <p class="filter-title mb-2">Hãng sản xuất</p>
 
-        <!-- Ưu đã thanh toán -->
-        {{-- <div class="incentives">
-            <div class="product-title px-2 d-flex justify-content-between">
-                <h2>Ưu đãi khi thanh toán</h2>
-            </div>
+                        <div class="px-3">
+                            <form action="" method="GET">
+                                <div class="form-check">
+                                    <input class="form-check-input checkBrand" type="checkbox" name="brand[]"
+                                        value="all" id="brand" />
+                                    <label class="form-check-label" for="brand">Tất cả</label>
+                                </div>
 
-            <div class="incentives-banner_content px-2">
-                <div class="row">
-                    <div class="col-3">
-                        <a href="#" class="nav-link incentives_image">
-                            <img class="incentives_img"
-                                src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/evo-banner-hp.png"
-                                alt="" />
-                        </a>
+                                @foreach ($brands as $key => $brand)
+                                    <div class="form-check">
+                                        <input class="form-check-input checkBrand" type="checkbox" name="brand[]"
+                                            value="{{ $brand->id }}" id="{{ $brand->name }}" />
+                                        <label class="form-check-label"
+                                            for="{{ $brand->name }}">{{ $brand->name }}</label>
+                                    </div>
+                                @endforeach
+
+                            </form>
+                        </div>
                     </div>
+                    {{-- </form> --}}
 
-                    <div class="col-3">
-                        <a href="#" class="nav-link incentives_image">
-                            <img class="incentives_img"
-                                src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/800-400-max.png"
-                                alt="" />
-                        </a>
-                    </div>
+                    <form method="GET" action="">
+                        <div class="mt-4">
+                            <p class="filter-title mb-2">Mức Giá</p>
 
-                    <div class="col-3">
-                        <a href="#" class="nav-link incentives_image">
-                            <img class="incentives_img"
-                                src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/uu-dai-thanh-toan-homecredit-normal-new.jpg"
-                                alt="" />
-                        </a>
-                    </div>
+                            <div class="px-3">
+                                <div class="form-check">
+                                    <input class="form-check-input checkAll" checked type="checkbox" name="price[]"
+                                        value="all" id="check-price-all" />
+                                    <label class="form-check-label" for="check-price-all">Tất cả</label>
+                                </div>
 
-                    <div class="col-3">
-                        <a href="#" class="nav-link incentives_image">
-                            <img class="incentives_img"
-                                src="https://cdn2.cellphones.com.vn/690x300,webp,q100/https://dashboard.cellphones.com.vn/storage/uu-dai-thanh-toan-jcb-normal-new.jpg"
-                                alt="" />
-                        </a>
-                    </div>
+                                <div class="form-check">
+                                    <input class="form-check-input selectedId" type="checkbox" name="price[]"
+                                        value="2" id="price_2" />
+                                    <label class="form-check-label" for="price_2">Dưới 2 triệu</label>
+                                </div>
 
+                                <div class="form-check">
+                                    <input class="form-check-input selectedId" type="checkbox" name="price[]"
+                                        value="3" id="price_2-4" />
+                                    <label class="form-check-label" for="price_2-4">Từ 2 - 4 triệu</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input selectedId" type="checkbox" name="price[]"
+                                        value="4" id="price_4-7" />
+                                    <label class="form-check-label" for="price_4-7">Từ 4 - 7 triệu</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input selectedId" type="checkbox" name="price[]"
+                                        value="5" id="price_7-13" />
+                                    <label class="form-check-label" for="price_7-13">Từ 7 - 13 triệu</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input selectedId" type="checkbox" name="price[]"
+                                        value="6" id="price_13" />
+                                    <label class="form-check-label" for="price_13">Trên 13 triệu</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </div>
-        </div> --}}
+            @endif
+
+            {{-- Render Product --}}
+            @if (request()->path() == 'store/products')
+                <div class="col-lg-10">
+                    @yield('content-product')
+                </div>
+            @else
+                <div class="col-lg-12">
+                    @yield('content-product')
+                </div>
+            @endif
+        </div>
+
     </div>
 
     <!-- footer -->
-    @if (request()->path() != 'store/payment' && request()->path() != 'store/cart' && request()->path() != 'store/orderSuccess')
+    @if (request()->path() != 'store/payment' &&
+            request()->path() != 'store/cart' &&
+            request()->path() != 'store/orderSuccess')
         <footer class="mt-4 py-4" style="background-color: #ef0000; color: white">
             <div class="container">
                 <div class="row">
@@ -252,33 +334,45 @@
     </script>
 
     <script src="{{ asset('customer/js/index.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
     @yield('js')
 
+
     <script>
+        var swiper = new Swiper(".mySwiper-slider", {
+            pagination: {
+                el: ".swiper-pagination",
+            },
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+        });
+
         $(document).ready(function() {
             function renderDropdown(data, carts) {
                 const dropdown = data.map(function(value, index) {
                     return `
-                    <div class="dro-item">
-                        <div class="item-picture">
-                            <a href="#">
-                                <img src="http://127.0.0.1:8000/${value.avatar}" alt="" class="dro-item_img">
-                            </a>
+                        <div class="dro-item">
+                            <div class="item-picture">
+                                <a href="#">
+                                    <img src="http://127.0.0.1:8000/${value.avatar}" alt="" class="dro-item_img">
+                                </a>
+                            </div>
+                            <div class="item-product">
+                                <div class="item-product_name">
+                                    <a href="#">${value.name}</a>
+                                </div>
+                                <div class="item-product_price">
+                                    Đơn giá: <span>${value.price}đ</span>
+                                </div>
+                                <div class="item-product_quantity">
+                                    Số lượng: <span>${carts[index].quantity}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="item-product">
-                            <div class="item-product_name">
-                                <a href="#">${value.name}</a>
-                            </div>
-                            <div class="item-product_price">
-                                Đơn giá: <span>${value.price}đ</span>
-                            </div>
-                            <div class="item-product_quantity">
-                                Số lượng: <span>${carts[index].quantity}</span>
-                            </div>
-                        </div>
-                    </div>
-                    `
+                        `
                 })
 
                 $('.dropdown-items').html(dropdown)

@@ -29,7 +29,7 @@
         </div>
     @endif
 
-    <div class="table-responsive p-4" style="background-color: #fff; border-radius: 5px">
+    <div class="table-responsive">
         <table class="table table-bordered" id="" width="100%" style="font-size: 14px;">
             <thead>
                 <tr style="background-color: #C0C0C0; color: #333;">

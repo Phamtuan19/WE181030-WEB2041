@@ -10,98 +10,99 @@ body {
     /* background-image: url('https://img3.thuthuatphanmem.vn/uploads/2019/09/17/background-tet-nguyen-dan_105957525.jpg'); */
 }
 
+a {
+    color: #333 !important;
+    text-decoration: none !important;
+}
+
 p {
     margin-bottom: 0;
 }
 
-/*
-    Navbar
-*/
-.nav-header {
-    position: fixed;
-    z-index: 99999;
-    top: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15) !important;
+/* =============================================  Navbar Custom =============================================*/
+
+.navbar-custom {
+    background-color: #d70018;
+    padding: 6px 0;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
-/*
-    NavBar C1
-*/
-.nav-c1 {
-    background-color: red !important;
-    width: 100%;
-}
-
-.nav-logo,
-.image {
-    max-width: 200px;
-    max-height: 46px;
-}
-
-.staggered-menu {
-    background: hsla(0, 0%, 100%, 0.3);
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    padding: 8px;
-    color: #fff;
-}
-
-.dropdown-menu_items {
-    width: 205px;
-    transform: translateX(-50%) translateY(5%);
-}
-
-.form-search {
-    position: relative;
-}
-
-.icon-search {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.keywords-search {
-    width: 350px;
-}
-
-.form-control:focus {
-    /* border-color: #333 !important; */
-    box-shadow: none !important;
-}
-
-.nav-post {
-    position: relative;
-}
-
-.nav-link {
-    color: #333 !important;
-}
-
-.nav-link:hover {
-    color: #0168fa !important;
-}
-
-.cart-shopping,
-.posts,
-.payment,
-.user {
-    width: 38px;
-    height: 38px;
+.nav-logo {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background-color: white;
-    text-align: center;
+}
+
+.name_shop {
+    color:  #fff;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.nav-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.nav-bar .nav-item .nav-link_custom {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #1D1D1F;
+    color: #fff !important;
+    font-size: 16px;
+    font-weight: 500;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center
 }
 
-/* cart */
+.nav-bar .nav-item .nav-link_custom i {
+    font-size: 16px;
+    text-align: center;
+}
+
+.nav-item_menu {
+    transform: translate3d(-100px, 38.4px, 0px) !important;
+}
+
+.dropdown-toggle::after {
+    display: none;
+}
+
+/* ========= Category ========== */
+.nav-item_a {
+    color: #fff !important;
+    /* text-transform: uppercase; */
+}
+
+.nav-item_a:hover {
+    color: #aaa !important;
+}
+
+/* ========= order cart ========== */
+.cart-item_menu {
+    padding: 0 !important;
+    width: 200px !important;;
+}
+
+.cart-item {
+    position: relative;
+}
+
+.cart-item_menu .cart-item_li {
+    list-style-type: none;
+}
+
+.cart-item_menu {
+    position: absolute;
+    right: 0;
+    transform: translateX(50%);
+}
+
+
+/* =============================================  Cart menu =============================================*/
 .cart {
     position: relative;
 }
@@ -119,6 +120,7 @@ p {
 
 .dropdown-nav {
     display: none;
+    top: 100%;
     transition: transform 0.3s cubic-bezier(0.88, -0.72, 0, 1),
         opacity 0.3s ease-in-out;
     margin: 0;
@@ -226,42 +228,18 @@ p {
     font-size: 1.2rem;
 }
 
-.cart:hover > .dropdown-nav {
+.cart-item:hover > .dropdown-nav {
     display: block;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
         0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/*
-    Navbar c2
-*/
+/* ============================================= End Navbar Custom =============================================*/
 
-.nav-c2 {
-    background-color: #333;
-    padding: 4px;
-    width: 100%;
-}
+/* ============================================= Slider Show =============================================*/
 
-.nav-c2_box {
-    width: 1320px;
-    display: flex;
-    justify-content: space-around;
-}
-
-.nav-c2_link {
-    color: #fff !important;
-}
-
-.nav-c2_item:hover > .nav-c2_link {
-    color: #aaa !important;
-    cursor: pointer;
-}
-
-/*
-
-*/
 .slidershow_countdown {
-    margin-top: 100px;
+    margin-top: 12px;
     padding: 0 6px !important;
     background-color: #fff;
     border-radius: 5px;
@@ -275,29 +253,117 @@ p {
 }
 
 .cate-title {
-    padding: 12px 0;
+    padding: 12px 0 !important;
     background: rgb(255, 0, 0, 0.8);
     color: #fff;
     text-align: center;
     margin-bottom: 1.5px;
 }
 
-/* .cate-content {
-	margin-bottom: 1.5px;
+/* =============================================  END slider show =============================================*/
+
+.filter-title {
+    font-size: 18px;
+    font-weight: 600;
+    padding-top: 12px;
+    padding-left: 12px;
 }
 
-.text-uppercase {
-	text-transform: uppercase;
+
+/* =============================================  Product =============================================*/
+.product {
+    min-height: 450px;
+    padding: 12px 20px 24px 20px;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+    border: 1px solid #ccc;
+    overflow: hidden;
 }
 
-.cate-link {
-	font-size: 15px;
-	font-weight: 500;
+.flag-installment {
+    background: #fff;
+    color: #be1e2d;
+    border: 1px solid #feb913;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    font-size: 11px;
+    display: inline-block;
+    margin-right: 4px;
+    padding: 3px 6px;
+    cursor: pointer;
 }
 
-.cate-link .fa-chevron-right {
-	font-size: 12px;
-} */
+.percent-deal {
+    background: #be1e2d;
+    color: #fff;
+    border: 1px solid #feb913;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    font-size: 13px;
+    display: inline-block;
+    margin-right: 4px;
+    padding: 3px 6px;
+    cursor: pointer;
+}
+
+.product-img {
+    width: 100%;
+}
+
+.product-image {
+    width: 100%;
+    height: auto;
+}
+
+.product-name {
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 27px;
+    color: #1D1D1F;
+    min-height: 54px;
+    margin-top: 12px;
+}
+
+.product-name span {
+    color: #1D1D1F;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-price {
+    /* margin-top: 6px; */
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.old-price {
+    color: #86868B;
+    margin: 0 5px 0 5px;
+    font-size: 15px;
+    line-height: 24px;
+    text-decoration: line-through;
+}
+
+.actual-price {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: #0066CC;
+}
+
+.product:hover .product-image {
+    transform: scale(1.1);
+    transition: all 0.5s;
+}
+
+/* =============================================  End Product =============================================*/
 
 .support {
     padding: 0;
@@ -319,16 +385,6 @@ p {
     transform: scale(1.1);
     transition: all 0.5s;
 }
-
-/* .content {
-	margin-top: 12px;
-	border-radius: 5px;
-	padding: 0 6px !important;
-	background-color: #fff;
-    display: flex;
-    gap: 12px 0 !important;
-    flex-direction: column;
-} */
 
 /* Ưu đãi thanh toán */
 .incentives {
@@ -357,7 +413,7 @@ p {
     color: white !important;
 }
 
-/* =============================================  END =============================================*/
+/* =============================================  END slider show =============================================*/
 
 /* =============================================  Card product =============================================*/
 .card {

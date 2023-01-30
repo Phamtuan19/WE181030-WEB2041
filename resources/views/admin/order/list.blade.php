@@ -1,13 +1,13 @@
 @extends('admin.layout.index')
 
-@section('page_heading', 'Doasboard')
+@section('page_heading', 'Danh sách đơn hàng')
 
-@section('redirect')
+{{-- @section('redirect')
     <a href="{{ route('admin.users.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
         <i class="fa-solid fa-left-long text-white-50 pr-3"></i>
         Danh sách đơn hàng
     </a>
-@endsection
+@endsection --}}
 
 @section('content')
 
