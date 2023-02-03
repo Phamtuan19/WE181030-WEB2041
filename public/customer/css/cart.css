@@ -151,3 +151,12 @@ a {
     text-align: left;
     line-height: 45px;
 }
+
+
+
+.container-cart_h1 {
+    text-align: center;
+    margin-bottom: 24px;
+    color: red;
+    font-weight: 600;
+}

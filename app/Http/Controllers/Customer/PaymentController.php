@@ -28,6 +28,8 @@ class PaymentController extends Controller
 
         $customer = $customers->find(Auth::guard('customers')->id());
 
+        // dd(Auth::name());
+
         // $purchase_forms = DB::table('purchase_form')->get();
 
         // dd(Auth::guard('customers')->user());
@@ -37,9 +39,6 @@ class PaymentController extends Controller
 
     public function checkPayment(PaymentRequest $request)
     {
-
-        // dd($request->all());
-
         $orders = new Order();
 
         $order_details = new OrderDetail();
@@ -58,7 +57,6 @@ class PaymentController extends Controller
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:'),
         ];
-        // dd($dataOrder);
 
         $order = $orders->create($dataOrder);
 
@@ -96,6 +94,6 @@ class PaymentController extends Controller
             $order_details->insert($dataOrderDetail);
         }
 
-        return redirect(route('store.orderSuccess'))->with('order_code', $order->code_orders);
+        return back()->with('msg', 'ok');
     }
 }

@@ -66,4 +66,9 @@ class OrderController extends Controller
             return back()->with('msg', 'Thêm ghi chú thành công');
         }
     }
+
+    public function destroy (Order $order) {
+
+        return back()->with('msg', 'Xóa thành công');
+    }
 }

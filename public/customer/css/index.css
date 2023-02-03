@@ -238,6 +238,41 @@ p {
         0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
+
+/* =========== */
+
+.customer_name {
+    position: relative;
+}
+
+.admin_name {
+    color: #333;
+    font-weight: 600;
+    position: relative;
+    cursor: pointer;
+}
+
+.admin_name-dropdown {
+    /* display: none; */
+    position: absolute;
+    padding: 12px;
+    top: 30px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+    cursor: pointer;
+    z-index: 9999;
+    width: 100px;
+    top: 45px;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+.admin_name-dropdown a {
+    width: 100px;
+    color: #333 !important;
+}
+
 /* ============================================= End Navbar Custom =============================================*/
 
 /* ============================================= Slider Show =============================================*/
@@ -327,7 +362,7 @@ p {
     line-height: 27px;
     color: #1D1D1F;
     min-height: 54px;
-    margin-top: 12px;
+    margin-top: 24px;
 }
 
 .product-name span {

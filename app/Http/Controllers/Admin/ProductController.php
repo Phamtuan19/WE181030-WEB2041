@@ -29,23 +29,62 @@ class ProductController extends Controller
         $this->table = new Product();
     }
 
-    public function index()
+    public function index(Request $request)
     {
         $products = new Product();
-
-        // dd($products->SearchAdmin());
 
         $categories = new Categories();
 
         $brands = new Brand();
 
-        $products = $products->searchAdmin();
-
         $categories = $categories->where('category_id', '8')->get();
 
         $brands = $brands->get();
 
-        return view('admin.products.index', compact('products', 'categories', 'brands'));
+        // sử lý tìm kiếm
+
+        $categoryKey = null;
+
+        $brnadKey = null;
+
+        $keyword = null;
+
+        if (!empty($request->category)) {
+            $categoryKey = $request->category;
+        }
+
+        if (!empty($request->brand)) {
+            $brnadKey = $request->brand;
+        }
+
+        if (!empty($request->keyword)) {
+            $keyword = $request->keyword;
+        }
+
+        // sử lý xắp xếp
+        $sortBy = $request->input('sort-by');
+        $sortType = $request->input('sort-type');
+
+        $allowSort = ['asc', 'desc'];
+
+        if (!empty($sortType) && in_array($sortType, $allowSort)) {
+            if ($sortType == 'desc') {
+                $sortType = 'asc';
+            } else {
+                $sortType = 'desc';
+            }
+        } else {
+            $sortType = 'asc';
+        }
+
+        $sortArr = [
+            'sortBy' => $sortBy,
+            'sortType' => $sortType,
+        ];
+
+        $products = $products->searchAdmin($categoryKey, $brnadKey, $keyword, $sortArr);
+
+        return view('admin.products.index', compact('products', 'categories', 'brands', 'sortType'));
     }
 
     public function create()
@@ -203,7 +242,7 @@ class ProductController extends Controller
             $files = $request->file('images');
             $imagesJson = uploadFile($public_path, $files);
 
-            foreach ($imagesJson as $iamge){
+            foreach ($imagesJson as $iamge) {
                 $dataImage = [
                     'product_id' => $id,
                     'image' => $iamge,
@@ -216,25 +255,19 @@ class ProductController extends Controller
         return back()->with('msg', 'Thay đổi thành công');
     }
 
-    // public function destroy($id)
-    // {
-    //     $products = new Product();
+    public function destroy(Product $product)
+    {
 
-    //     $images = new Image();
+        if (is_array($product->image)) {
+            $imageArr = [];
+            foreach ($product->image as $index => $image) {
+                $imageArr[$index] = $image->image;
+            }
+            deleteFilePublic($imageArr);
+        }
+        
+        $product->delete();
 
-    //     $product = $products->find($id);
-
-    //     $images = $images->where('product_id', $id)->get();
-
-    //     dd($images);
-
-    //     // deleteFilePublic($product_avatar);
-    //     // deleteFilePublic($imagesJson);
-
-    //     // if($a && $b){
-    //     $this->table->destroy($id);
-    //     // }
-
-    //     return back()->with('msg', 'Xóa thành công');
-    // }
+        return back()->with('msg', 'Xóa thành công');
+    }
 }

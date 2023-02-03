@@ -1,3 +1,5 @@
+`
+
 @extends('customer.layout.index')
 
 @section('css')
@@ -9,7 +11,7 @@
 @section('content-product')
     <div class="div-fake" style="height: 62px"></div>
 
-    <div class="container mt-4">
+    <div class="container mt-4" id="container-cart">
         <form action="" method="">
             @csrf
             <div class="row">
@@ -103,9 +105,10 @@
 
             const cartArr = JSON.parse(localStorage.getItem('cart'));
 
-            function renderTable() {
-                const data = cartArr.map(function(e) {
-                    return `
+            if (cartArr != null) {
+                function renderTable() {
+                    const data = cartArr.map(function(e) {
+                        return `
                     <tr style="vertical-align: middle;">
                         <td>
                             <img src="http://127.0.0.1:8000/${e.image}" alt="" style="width: 100%;">
@@ -134,15 +137,20 @@
                         </td>
                     </tr>
                     `
-                });
+                    });
 
-                $('.cart-table_body').html(data);
+                    $('.cart-table_body').html(data);
+                }
+
+                renderTable()
+            }else {
+                $("#container-cart").html(" <h1 class=\"container-cart_h1\">Không có sản phẩm nào trong giỏ hàng</h1> ");
             }
 
             // Hiển thị tổng số tiền
             $("input[name='total_payment']").val(renderTotalMoney());
 
-            renderTable()
+
 
             window.onload = function() {
 

@@ -2,6 +2,7 @@
 
 use App\Models\Customers;
 
+// upload image
 function uploadFile($upload_path = null, $files = [])
 {
     $image = [];
@@ -21,6 +22,7 @@ function uploadFile($upload_path = null, $files = [])
     }
 }
 
+// Delete image
 function deleteFilePublic($files = [])
 {
     foreach ($files as $key => $file) {

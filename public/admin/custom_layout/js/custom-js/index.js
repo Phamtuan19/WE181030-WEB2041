@@ -34,7 +34,9 @@ function renSlug(title) {
 }
 
 $(document).ready(function () {
-    $(".right-left").click(function () {
-        $(this).toggleClass("active");
+
+    $(".right-left_a").click(function () {
+        $(".right-left_a").removeClass("active");
+        $(this).addClass("active");
     });
 });

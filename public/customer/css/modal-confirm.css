@@ -1,0 +1,16 @@
+
+.content-modal i {
+    font-size: 50px !important;
+    display: block !important;
+    text-align: center !important;
+    color: red !important;
+}
+
+.content-modal_title {
+    text-align: center !important;
+    text-align: center !important;
+    margin-top: 18px;
+    margin-bottom: 0;
+    color: #007bff;
+    font-size: 18px;
+}

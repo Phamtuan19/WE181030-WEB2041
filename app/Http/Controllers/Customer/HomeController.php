@@ -64,21 +64,8 @@ class HomeController extends Controller
 
     public function indexCart(Request $request)
     {
-
-        return view('customer.cart');
+        return view('customer.pages.cart');
     }
-
-    // public function indexPay(Request $request)
-    // {
-    //     // dd(Auth::guard('customers')->id());
-
-    //     $customers = new Customers();
-    //     $customer = $customers->find(Auth::guard('customers')->id());
-    //     $purchase_forms = DB::table('purchase_form')->get();
-    //     // dd($purchase_forms);
-
-    //     return view('customer.pages.pay', compact('customer', 'purchase_forms'));
-    // }
 
     public function orderSuccess()
     {

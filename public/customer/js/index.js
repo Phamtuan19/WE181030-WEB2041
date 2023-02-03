@@ -14,7 +14,8 @@ function addToCart(dataCode, image, price, name, color, memory) {
     const item = cart.find(item => item.code === dataCode)
     // console.log(item);
     if (item) {
-        item.quantity += 1;
+        item.color = color;
+        item.memory = memory;
     } else {
 
         cart.push({
@@ -85,9 +86,12 @@ function render_Cart_product(cartArr) {
 function renderTotalMoney () {
     const cartArr = JSON.parse(localStorage.getItem('cart'));
     let total = 0;
-    cartArr.forEach((e) => {
-        total += e.quantity * e.price
-    })
+
+    if(cartArr != null) {
+        cartArr.forEach((e) => {
+            total += e.quantity * e.price
+        })
+    }
 
     return total
 }
@@ -144,3 +148,9 @@ function renderTotals() {
     $(".total-money").val(formatNumber(amount, ',', '.'))
     console.log(amount);
 }
+
+
+/* ================== Customer =================== */
+$(".customer_name").click(function () {
+    $(".admin_name-dropdown").toggleClass('d-none');
+})

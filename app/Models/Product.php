@@ -37,23 +37,14 @@ class Product extends Model
         'detail',
     ];
 
-    public function getAll($keywords = null)
+    public function getAll($query)
     {
-        $products = DB::table($this->table)->orderBy('created_at', 'desc');
+        $query = $query->paginate(5);
 
-        if (!empty($keywords)) {
-            $products = $products->where(function ($query) use ($keywords) {
-                $query->where('name', 'like', '%' . $keywords . '%');
-                // ->orWhere('username', 'like', '%'. $keywords. '%');
-            });
-        }
-
-        $products = $products->get();
-
-        return $products;
+        return $query;
     }
 
-    public function scopeSearch ($query)
+    public function scopeSearch($query)
     {
         if (!empty(request()->brand)) {
             $keyBrand = request()->brand;
@@ -68,9 +59,9 @@ class Product extends Model
         return $query;
     }
 
-    public function scopeCarts ($query)
+    public function scopeCarts($query)
     {
-        if(!empty(request()->product_code)){
+        if (!empty(request()->product_code)) {
             $product_code = request()->product_code;
 
             $query = $query->whereIn('code', explode(",", $product_code));
@@ -79,23 +70,35 @@ class Product extends Model
         return $query;
     }
 
-    public function scopeSearchAdmin ($query) {
-        if(!empty(request()->category)){
-            $category = Categories::where('slug', request()->category)->get();
-
+    public function scopeSearchAdmin($query, $categoryKey = null, $brnadKey = null, $keyword = null, $sortArr = null)
+    {
+        // logic tìm kiếm
+        if (!empty($categoryKey)) {
+            $category = Categories::where('slug', $categoryKey)->get();
             $query = $query->where('category_id', $category[0]->id);
         }
-        if(!empty(request()->brand)){
-            $brand = Brand::where('slug', request()->brand)->get();
+        if (!empty($brnadKey)) {
+            $brand = Brand::where('slug', $brnadKey)->get();
 
             $query = $query->where('brand_id', $brand[0]->id);
         }
 
-        if(!empty(request()->keyword)){
-            $query = $query->where('name', 'like', '%'.request()->keyword.'%');
+        if (!empty($keyword)) {
+            $query = $query->where('name', 'like', '%' . $keyword . '%');
         }
 
-        $query = $query->get();
+        // logic xắp xếp
+        $orderBy = 'created_at';
+        $orderType = 'desc';
+
+        if (!empty($sortArr) && is_array($sortArr)) {
+            if (!empty($sortArr['sortBy']) && !empty($sortArr['sortType'])) {
+                $orderBy = trim($sortArr['sortBy']);
+                $orderType = trim($sortArr['sortType']);
+            }
+        }
+
+        $query = $query->orderBy($orderBy, $orderType)->get();
 
         return $query;
     }
@@ -105,17 +108,17 @@ class Product extends Model
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
 
-    public function cartegory ()
+    public function cartegory()
     {
         return $this->belongsTo(Categories::class, 'category_id', 'id');
     }
 
-    public function attribute ()
+    public function attribute()
     {
         return $this->hasOne(Attribute::class);
     }
 
-    public function image ()
+    public function image()
     {
         return $this->hasMany(Image::class, 'product_id', 'id');
     }

@@ -25,6 +25,15 @@ class PaymentRequest extends FormRequest
     {
         return [
             'name' => 'required | max: 255',
+            'email' => [
+                function ($attribute, $value, $fail) {
+                    if (!empty($value)) {
+                        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                            $fail('không đúng định dạng');
+                        }
+                    }
+                }
+            ],
             'phone' => [
                 'required',
                 'regex:/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/',
@@ -37,7 +46,8 @@ class PaymentRequest extends FormRequest
         ];
     }
 
-    public function messages () {
+    public function messages()
+    {
         return [
             'required' => ':attribute không được để trống',
             'regex' => ':attribute không đúng định dạng',

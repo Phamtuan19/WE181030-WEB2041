@@ -7,6 +7,23 @@
 @section('title', 'Trang sản phẩm')
 
 @section('content-product')
+
+    @if (session('msg'))
+        <div class="modal fade show modal-show" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            style="display: block; top: -25px" aria-modal="true" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content" style="box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;">
+                    <div class="modal-body mt-4" style="text-align: center">
+                        <i class="fa-solid fa-circle-check" style="font-size: 50px; color: #1cc88a"></i>
+                        <p class="mt-3" style="font-size: 18px; font-weight: 600">Đặt hàng thành công</p>
+                    </div>
+                    <button type="button" class="btn btn-primary mx-auto my-3 sucess-btn" data-bs-dismiss="modal">Về trang
+                        chủ</button>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="div-fake" style="height: 70px"></div>
 
     <div class="row " style="background-color: #fff">
@@ -31,7 +48,7 @@
                                         <label for="" class="form-label"
                                             style="font-weight: 600; color: font-size: 16px">Tên khách hàng</label>
                                         <input type="text" class="form-control" name="name"
-                                            value="{{ old('name') ? old('name') : $customer->full_name }}"
+                                            value="{{ old('name') ? old('name') : $customer->name }}"
                                             style="height: 46px; color: #86868B; font-size: 14px">
                                         @error('name')
                                             <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
@@ -79,7 +96,8 @@
                                             style="font-weight: 600; color: font-size: 16px">Quận / huyện</label>
                                         <select class="form-select" aria-label="Default select example" name="district"
                                             style="height: 46px; color: #86868B; font-size: 14px">
-                                            <option selected value="{{ $customer->district }}">{{ $customer->district }}
+                                            <option selected value="{{ $customer->district }}">
+                                                {{ $customer->district }}
                                             </option>
                                         </select>
                                         @error('district')
@@ -92,7 +110,8 @@
                                             style="font-weight: 600; color: font-size: 16px">Xã / phường</label>
                                         <select class="form-select" aria-label="Default select example" name="ward"
                                             style="height: 46px; color: #86868B; font-size: 14px">
-                                            <option selected value="{{ $customer->ward }}">{{ $customer->ward }}</option>
+                                            <option selected value="{{ $customer->ward }}">{{ $customer->ward }}
+                                            </option>
                                         </select>
                                         @error('ward')
                                             <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
@@ -162,7 +181,8 @@
                                         readonly style=" flex: 3; border: none; text-align: end; padding: 3px 0;">
                                 </div>
 
-                                <p class="mt-3" style="font-weight: 600; color: font-size: 16px">Hình thức giao hàng</p>
+                                <p class="mt-3" style="font-weight: 600; color: font-size: 16px">Hình thức giao hàng
+                                </p>
                                 <div class="form-check mt-1" style="vertical-align: inherit">
                                     <input class="form-check-input" type="radio" value="1" checked
                                         name="delivery_form" id="delivery_form">
@@ -179,7 +199,6 @@
                         </div>
                     </div>
                 </div>
-
 
             </form>
         </div>
@@ -207,8 +226,8 @@
                             <input type="text" class="form-control" name="memory[]" value="${e.memory}" readonly style="flex: 3; border: none; padding: 3px 0; background-color: #fff; color: #86868B; font-size: 14px">
                         </div>
                         <div class="form-group d-flex align-items-center">
-                            <lable for="" style="flex: 1; color: #86868B; font-size: 14px">Màu sắc: </lable>
-                            <input type="text" class="form-control" name="color[]" value="${e.color}" readonly style="flex: 3; border: none; padding: 3px 0; background-color: #fff;  color: #86868B;font-size: 14px">
+                            <lable for="" style="flex: 1; color: #86868B; font-size: 14px;">Màu sắc: </lable>
+                            <input type="text" class="form-control" name="color[]" value="${e.color}" readonly style="flex: 2.5; border: none; padding: 3px 0; background-color: #fff;  color: #86868B;font-size: 14px; text-transform: capitalize;">
                         </div>
                         <a href="http://127.0.0.1:8000/store/detail-product/${e.code}" style="color: #0066cc !important">Sửa</a>
                     </td>
@@ -231,18 +250,24 @@
                 </tr>
                 `
             }))
+
+            let count = cartArr.length;
+            $('quantity_product').val(count)
         }
 
         console.log(formatNumber(renderTotalMoney(), ',', '.'));
-        // $('.total-payment').val(formatNumber(renderTotalMoney(), ',', '.'));
         $('.total-payment').val(renderTotalMoney());
 
-        let count = cartArr.length;
-        $('quantity_product').val(count)
+        $('.sucess-btn').click(function() {
+            window.location.href = "http://127.0.0.1:8000/store";
 
-        $("#order").click(function() {
-            localStorage.clear();
+
+
+            localStorage.removeItem('cart');
         })
 
+        if(cartArr == null){
+            window.history.back()
+        }
     </script>
 @endsection

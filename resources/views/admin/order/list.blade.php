@@ -1,13 +1,19 @@
 @extends('admin.layout.index')
 
+@extends('admin.layout.model-confirm')
+
 @section('page_heading', 'Danh sách đơn hàng')
 
-{{-- @section('redirect')
-    <a href="{{ route('admin.users.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+@section('link')
+    <link rel="stylesheet" href="{{ asset('customer/css/modal-confirm.css') }}">
+@endsection
+
+@section('redirect')
+    <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
         <i class="fa-solid fa-left-long text-white-50 pr-3"></i>
-        Danh sách đơn hàng
+        Tạo đơn hàng
     </a>
-@endsection --}}
+@endsection
 
 @section('content')
 
@@ -65,9 +71,11 @@
                                         </a>
                                     </div>
                                     <div class="">
-                                        <a href="" class="btn" style="color: red">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
+                                        <button class="btn btn-delete" id="btn" style="border: none; " data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" data-id="{{ $order->code_order }}">
+                                            <i class="fa-solid fa-trash" style="color: red"></i>
+                                            <input type="submit" value="Xóa" class="d-none">
+                                        </button>
                                     </div>
                                 </div>
                             </td>
@@ -78,7 +86,16 @@
             </table>
         </div>
     </div>
+@endsection
 
-
-
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $(".btn-delete").click(function() {
+                console.log($(this).data("id"));
+                $("#form-modal").attr('action', "http://127.0.0.1:8000/admin/orders/" + $(this).data("id"));
+                console.log($("#form-modal").attr('action'));
+            })
+        })
+    </script>
 @endsection

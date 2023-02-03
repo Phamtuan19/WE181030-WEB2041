@@ -35,7 +35,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-2">
-                    <a href="" class="d-flex align-items-center">
+                    <a href="{{ route('store.home') }}" class="d-flex align-items-center">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfJ28zNBVMe0zS7qTP82M2WvNp_LUMM_6fNA&usqp=CAU"
                             alt="" class="nav-logo">
                         <div class="nav-name_shop ms-2">
@@ -121,10 +121,23 @@
                             </div>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link nav-link_custom" href="#">
+                        <li class="nav-item customer_name">
+                            <a class="nav-link nav-link_custom admin_name" href="#">
                                 <i class="fa-solid fa-user"></i>
+
                             </a>
+                            <div class="admin_name-dropdown d-none">
+                                <a href="{{ route('customers.logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    đăng xuất
+                                </a>
+                                <form id="logout-form" action="{{ route('customers.logout') }}" method="POST"
+                                    class="d-none">
+                                    @csrf
+                                    {{-- <input type="hidden" name="_token"
+                                        value="0gHkalwIcbQsMg9fQWmF3TczWs7mkDXVeEbJx4A4"> --}}
+                                </form>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -326,7 +339,7 @@
     @endif
 
 
-    <!-- {{-- CDN Fontawesome --}} -->
+    <!-- CDN Fontawesome -->
     <script src="https://kit.fontawesome.com/03e43a0756.js" crossorigin="anonymous"></script>
 
     <!-- Bootstrap Javascript -->

@@ -20,6 +20,8 @@ use App\Http\Controllers\admin\OrderController;
 
 use App\Http\Controllers\admin\CutomerController;
 
+use Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,7 +37,9 @@ Auth::routes();
 
 
 Route::middleware('auth')->group(function () {
+
     Route::prefix('admin')->name('admin.')->group(function () {
+
         Route::resource("users", UserController::class)->except(['edit']);
 
         Route::resource('products', ProductController::class);
@@ -60,17 +64,14 @@ Route::prefix('store')->name('store.')->group(function () {
 
     Route::get('cart', [HomeController::class, 'indexCart'])->name('cart');
 
-    Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
+    // Route::middleware('guest:customers')->group(function () {
+        Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
 
-    Route::post('check-order', [PaymentController::class, 'checkPayment'])->name('checkOrder');
+        Route::post('check-order', [PaymentController::class, 'checkPayment'])->name('checkOrder');
 
-    Route::get('orderSuccess', [HomeController::class, 'orderSuccess'])->name('orderSuccess');
+        Route::get('order-success', [HomeController::class, 'orderSuccess'])->name('orderSuccess');
+    // });
 });
-
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
 
 Route::prefix('customers')->name('customers.')->group(function () {
     Route::get('/login', [LoginController::class, 'login'])->middleware('guest:customers')->name('login');
@@ -79,7 +80,6 @@ Route::prefix('customers')->name('customers.')->group(function () {
 
     Route::post('/logout', function () {
         Auth::guard('customers')->logout();
-
-        return redirect()->route('customers.login');
+        return redirect()->route('store.home');
     })->middleware('auth:customers')->name('logout');
 });

@@ -9,11 +9,9 @@
 @section('content-product')
     <div class="row my-4">
 
-        @if (session('order_code'))
-            <div class="alert alert-success text-center">
-                {{ session('order_code') }}
-            </div>
-        @endif
+        {{-- @if (empty(session('order_code')))
+            <script>window.history.back()</script>
+        @endif --}}
 
         <div class="title-succsess mb-3">
             <h2 class="">

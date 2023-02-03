@@ -4,6 +4,8 @@ namespace App\Http\Requests\Admin\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use Illuminate\Validation\Rule;
+
 class EditRequest extends FormRequest
 {
     /**
@@ -30,20 +32,20 @@ class EditRequest extends FormRequest
                 'string',
                 'min:6',
                 'max:255',
-                // Rule::unique('users')->ignore($this->id, 'id'),
+                Rule::unique('users')->ignore($this->id, 'id'),
             ],
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:255',
-                // Rule::unique('users')->ignore($this->id, 'id'),
+                Rule::unique('users')->ignore($this->id, 'id'),
             ],
             'phone' => [
                 'required',
                 'regex:/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/',
                 // 'unique:users',
-                // Rule::unique('users')->ignore($this->id, 'id'),
+                Rule::unique('users')->ignore($this->id, 'id'),
             ],
             'position' => 'required',
             'is_active' => 'required',
