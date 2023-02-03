@@ -7,8 +7,12 @@ use App\Http\Requests\Admin\User\CreateRequest;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\Admin\User\EditRequest;
+
 use App\Models\User;
+
 use Illuminate\Support\Facades\Hash;
+
+use App\Models\Position;
 
 class UserController extends Controller
 {
@@ -23,34 +27,42 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+        $users = new User();
+
         $keywords = null;
         if(!empty($request->keywords)){
             $keywords = $request->keywords;
         }
 
-        $users = $this->users->getAll($keywords);
+        $users = $users->getAll($keywords);
         return view('admin.users.list', compact('users'));
     }
 
     public function create()
     {
-        return view('admin.users.create');
+        $positions = new Position();
+
+        $positions = $positions->get();
+
+        return view('admin.users.create', compact('positions'));
     }
 
     public function store(CreateRequest $request)
     {
+        $users = new User();
+
         $data = [
-            'username' => $request->input('username'),
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'address' => $request->input('address'),
-            'phone' => $request->input('phone'),
-            'position_id' => $request->input('position'),
+            'username' => $request->username,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'position_id' => $request->position,
             'is_active' => 1,
-            'password' => Hash::make($request->input('password')),
+            'password' => Hash::make($request->password),
         ];
 
-        $create_user = $this->users->create($data);
+        // dd($data);
+
+        $create_user = $users->insert($data);
 
         if ($create_user) {
             return back()->with('msg', 'Thêm người dùng thành công');

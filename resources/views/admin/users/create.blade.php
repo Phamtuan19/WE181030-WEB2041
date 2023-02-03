@@ -18,13 +18,7 @@
     @endif
     <form action="{{ route('admin.users.store') }}" method="POST">
 
-        <div class="form-group">
-            <label for="name">Tên người dùng</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Nhập tên tài khoản">
-            @error('name')
-                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-            @enderror
-        </div>
+        @csrf
 
         <div class="form-group">
             <label for="username">Tài khoản đăng nhập</label>
@@ -44,14 +38,6 @@
         </div>
 
         <div class="form-group">
-            <label for="address">Địa chỉ nhà</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ nhà ...">
-            @error('address')
-                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-            @enderror
-        </div>
-
-        <div class="form-group">
             <label for="phone">Số điện thoại</label>
             <input type="text" class="form-control" id="phone" name="phone" placeholder="Nhập số điện thoại ...">
             @error('phone')
@@ -63,8 +49,9 @@
             <label for="position">Quyền</label>
             <select class="form-control" id="position" name="position">
                 <option value="">--- chọn ---</option>
-                <option value="1">Quản trị viên</option>
-                <option value="2" selected>người dùng</option>
+                @foreach ($positions as $position)
+                    <option value="{{ $position->id }}">{{ $position->name }}</option>
+                @endforeach
             </select>
             @error('position')
                 <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
@@ -87,8 +74,6 @@
                 <span class="text-danger" style="font-size: 16px">{{ $message }}</>
                 @enderror
         </div>
-
-        @csrf
 
         <div class="form-group">
             <input type="submit" class="btn btn-success" name="submit" value="Đăng ký mới">

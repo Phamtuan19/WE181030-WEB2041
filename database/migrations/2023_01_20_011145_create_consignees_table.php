@@ -19,16 +19,11 @@ class CreateConsigneesTable extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('email')->nullable();
-            $table->string('province');
-            $table->string('district');
-            $table->string('ward');
-            $table->string('house_number')->nullable();
-            $table->string('specific_address')->nullable();
+            $table->string('province'); // tỉnh / thành phố
+            $table->string('district'); // quận / huyện
+            $table->string('ward'); // xã / phường
+            $table->string('specific_address')->nullable(); // địa chỉ cụ thể
             $table->timestamps();
-
-            $table->foreign('order_id')
-                ->references('id')
-                ->on('id');
         });
     }
 

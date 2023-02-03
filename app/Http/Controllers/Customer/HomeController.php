@@ -33,10 +33,6 @@ class HomeController extends Controller
 
         $brands = $brands->get();
 
-        // dd($brands);
-
-        // $productsMobi = $products->where('category_id', )
-
         return view('customer.pages.home', compact('products', 'brands'));
     }
 
@@ -50,9 +46,7 @@ class HomeController extends Controller
 
         $products = $products->get();
 
-        // dd($request->brand);
-
-        return view('customer.mobile', compact('products', 'brands'));
+        return view('customer.pages.products', compact('products', 'brands'));
     }
 
     public function indexProduct($id)
@@ -65,16 +59,12 @@ class HomeController extends Controller
 
         $brands = $brands->get();
 
-        // dd($product);
-
-        return view('customer.page_product', compact('product', 'brands'));
+        return view('customer.pages.page_product', compact('product', 'brands'));
     }
 
     public function indexCart(Request $request)
     {
-        // $product = DB::table('products')->where('code',)->get();
-        // dd($request->code);
-        // dd($request->path());
+
         return view('customer.cart');
     }
 
@@ -90,15 +80,13 @@ class HomeController extends Controller
     //     return view('customer.pages.pay', compact('customer', 'purchase_forms'));
     // }
 
-    // public function orderSuccess()
-    // {
+    public function orderSuccess()
+    {
 
-    //     $orders = new Order();
+        $orders = new Order();
 
-    //     $orders = $orders->get();
+        $orders = $orders->get();
 
-    //     // dd($orders);
-
-    //     return view('customer.pages.orderSuccess', compact('orders'));
-    // }
+        return view('customer.pages.orderSuccess', compact('orders'));
+    }
 }

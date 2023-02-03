@@ -22,17 +22,15 @@
                 <div class="swiper mySwiper-product my-2">
                     <div class="swiper-wrapper">
                         @foreach ($products as $product)
-            {{-- @dd($product) --}}
-
                             <div class="product swiper-slide">
-                                <div class="product-label">
+                                <div class="product-label mb-3">
                                     <div class="flag-installment">Trả góp 0%</div>
-                                    <div class="percent-deal">Giảm {!! currency_format($product->price - $product->sale) !!}</div>
+                                    <div class="percent-deal">Giảm {!! currency_format($product->import_price - $product->price) !!}</div>
                                 </div>
                                 <div class="product-img">
                                     <a href="{{ route('store.product', $product->id) }}">
-                                        <img src="http://127.0.0.1:8000/{{ $product->avatar }}" class="product-image"
-                                            alt="">
+                                        <img src="http://127.0.0.1:8000/{{ $product->image[0]->image }}"
+                                            class="product-image" alt="">
                                     </a>
                                 </div>
                                 <div class="product-name">
@@ -41,8 +39,8 @@
                                     </a>
                                 </div>
                                 <div class="product-price">
-                                    <span class="old-price">{{ currency_format($product->price) }}</span>
-                                    <span class="actual-price">{{ currency_format($product->sale) }}</span>
+                                    <span class="old-price">{{ currency_format($product->import_price) }}</span>
+                                    <span class="actual-price">{{ currency_format($product->price) }}</span>
                                 </div>
                             </div>
                         @endforeach
@@ -67,13 +65,13 @@
                     <div class="swiper-wrapper">
                         @foreach ($products as $product)
                             <div class="product swiper-slide">
-                                <div class="product-label">
+                                <div class="product-label mb-3">
                                     <div class="flag-installment">Trả góp 0%</div>
-                                    <div class="percent-deal">Giảm {!! currency_format($product->price - $product->sale) !!}</div>
+                                    <div class="percent-deal">Giảm {!! currency_format($product->import_price - $product->price) !!}</div>
                                 </div>
                                 <div class="product-img">
                                     <a href="{{ route('store.product', $product->id) }}">
-                                        <img src="http://127.0.0.1:8000/{{ $product->avatar }}" class="product-image"
+                                        <img src="http://127.0.0.1:8000/{{ $product->image[0]->image }}" class="product-image"
                                             alt="">
                                     </a>
                                 </div>
@@ -83,8 +81,8 @@
                                     </a>
                                 </div>
                                 <div class="product-price">
-                                    <span class="old-price">{{ currency_format($product->price) }}</span>
-                                    <span class="actual-price">{{ currency_format($product->sale) }}</span>
+                                    <span class="old-price">{{ currency_format($product->import_price) }}</span>
+                                    <span class="actual-price">{{ currency_format($product->price) }}</span>
                                 </div>
                             </div>
                         @endforeach

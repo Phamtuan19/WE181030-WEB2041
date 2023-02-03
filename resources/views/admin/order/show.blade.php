@@ -5,7 +5,7 @@
 @endsection
 
 @section('page_heading')
-    Chi tiết đơn hàng: # {{ $order->code_orders }}
+    Chi tiết đơn hàng: # {{ $order->code_order }}
 @endsection
 
 @section('redirect')
@@ -16,6 +16,12 @@
 @endsection
 
 @section('content')
+    @if (session('msg'))
+        <div class="alert alert-success text-center">
+            {{ session('msg') }}
+        </div>
+    @endif
+
     {{-- info-customer --}}
     <div class="container-fluid">
         <div class="row">
@@ -23,36 +29,76 @@
 
                 <div class="order-status mb-3">
                     <b>Trạng thái đơn hàng: </b>
-                    <span class="order-status_name">{{ $order->orderStatus->name }}</span>
+                    @if ($order->orderStatus->id == 1)
+                        <div class="btn btn-secondary">{{ $order->orderStatus->name }}</div>
+                    @elseif ($order->orderStatus->id == 2)
+                        <div class="btn btn-primary">{{ $order->orderStatus->name }}</div>
+                    @elseif ($order->orderStatus->id == 3)
+                        <div class="btn btn-warning">{{ $order->orderStatus->name }}</div>
+                    @elseif ($order->orderStatus->id == 4)
+                        <div class="btn btn-success">{{ $order->orderStatus->name }}</div>
+                    @else
+                        <div class="btn btn-danger">{{ $order->orderStatus->name }}</div>
+                    @endif
+
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-bs-whatever="@getbootstrap">
+                        <i class="fa-solid fa-pen mr-2"></i>
+                        Trạng thái & Ghi chú
+                    </button>
+
                 </div>
 
-                <form action="{{ route('admin.orders.update', $order->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                                    style="border: none; background-color: #fff;">
+                                    <i class="fa-regular fa-circle-xmark"></i>
+                                </button>
+                            </div>
+                            <form action="{{ route('admin.orders.update', $order->id) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
 
-                    <div class="order-status_label form-group mb-4">
-                        {{-- <label for="order_status" class="label-order_status">Trạng thái đơn hàng</label> --}}
-                        <select name="order_status" id="order_status" class="form-control">
-                            @foreach ($order_status as $status)
-                                <option value="{{ $status->id }}" {!! $status->id == $order->order_statusID ? 'selected' : false !!}>
-                                    {{ $status->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('order_status')
-                            <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                        @enderror
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label for="recipient-name" class="col-form-label">
+                                            Trạng thái đơn hàng:
+                                        </label>
+                                        <select name="order_status" id="order_status" class="form-control">
+                                            @foreach ($order_status as $status)
+                                                <option value="{{ $status->id }}" {!! $status->id == $order->order_statusID ? 'selected' : false !!}>
+                                                    {{ $status->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message-text" class="col-form-label">Notes:</label>
+                                        <textarea class="form-control" id="message-text" name="shop_notes"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-
-                    <input type="submit" class="btn btn-primary" value="Cập nhật">
-                </form>
+                </div>
 
                 <div class="title mb-3">
                     <i class="fa-solid fa-circle-info"></i>
                     <span>Thông tin đơn hàng</span>
                 </div>
 
-                <table class="table table-striped " style="text-align: center">
+                <table id="dataTable" class="table table-striped " style="text-align: center">
                     <thead>
                         <tr style="border-top: 1px solid #ccc">
                             <th scope="col">STT</th>
@@ -67,7 +113,7 @@
                             <tr>
                                 <th>1</th>
                                 <td>
-                                    <img src="http://127.0.0.1:8000/{{ $detail->product->avatar }}" alt=""
+                                    <img src="http://127.0.0.1:8000/{{ $detail->product->image[0]->image }}" alt=""
                                         style="width: 80px; height: 60px;">
                                 </td>
                                 <th>{{ $detail->product->name }}</th>
@@ -78,7 +124,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-3">
+            <div class="col-3 mb-3">
 
                 <div class="title mb-3">
                     <i class="fa-solid fa-circle-question"></i>
@@ -88,28 +134,29 @@
                 <div class="info-customer">
                     @foreach ($order->consignees as $value)
                         <div class="customer_info mb-2">
-                            <p class="customer_info-title">Họ & Tên đặt hàng</p>
-                            <span>{{ $order->customer->full_name }}</span>
+                            <p class="customer_info-title">Họ & Tên người đặt hàng</p>
+                            <span>{{ $order->customer->name }}</span>
                         </div>
 
                         <div class="customer_info mb-2">
                             <p class="customer_info-title">Họ & Tên người nhận</p>
-                            <span>{{ $value->name }}</span>
+                            <span>{{ $order->consignees[0]->name }}</span>
                         </div>
 
                         <div class="customer_info mb-2">
                             <p class="customer_info-title">Số điện thoại</p>
-                            <span>{{ $value->phone }}</span>
+                            <span>{{ $order->consignees[0]->phone }}</span>
                         </div>
 
                         <div class="customer_info mb-2">
                             <p class="customer_info-title">Email</p>
-                            <span>{{ $value->email }}</span>
+                            <span>{{ $order->consignees[0]->email }}</span>
                         </div>
 
                         <div class="customer_info mb-2">
                             <p class="customer_info-title">Địa chỉ</p>
-                            <span> {{ $value->ward }} - {{ $value->district }} - {{ $value->province }}</span>
+                            <span> {{ $order->consignees[0]->ward }} - {{ $order->consignees[0]->district }} -
+                                {{ $order->consignees[0]->province }}</span>
                         </div>
 
                         <div class="customer_info mb-2">
@@ -118,12 +165,23 @@
                         </div>
 
                         <div class="customer_info mb-2">
-                            <p class="customer_info-title">Ghi chú</p>
-                            <span>{{ $order->note }}</span>
+                            <p class="customer_info-title">Ghi chú của người mua</p>
+                            <span>{{ $order->user_notes }}</span>
                         </div>
+
+                        @if (!empty($order->shop_notes))
+                            <div class="customer_info mb-2">
+                                <p class="customer_info-title">Ghi chú của shop</p>
+                                <span>{{ $order->shop_notes }}</span>
+                            </div>
+                        @endif
                     @endforeach
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script></script>
 @endsection

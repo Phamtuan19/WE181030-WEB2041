@@ -31,40 +31,64 @@
 
     @if (!empty($category))
         <form action="{{ route('admin.category.update', $category->id) }}" method="POST">
-            @method('PUT')
             @csrf
+            @method('PATCH');
 
-            <div class="form-group">
-                <label for="name">Tên danh mục</label>
-                <input type="text" name="name" class="form-control" id="name"
-                    value="{{ empty(old('name')) ? $category->name : old('name') }}">
+            <div class="container-fluid">
+                <div class="row">
 
-                @error('name')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+                    <div class="form-group col-lg-6">
+                        <label for="name">Tên danh mục</label>
+                        <input type="text" name="name" class="form-control" id="title"
+                            value="{{ empty(old('name')) ? $category->name : old('name')  }}">
+                        @error('name')
+                            <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-            </div>
+                    <div class="form-group col-lg-6">
+                        <label for="name">Slug</label>
+                        <input type="text" name="slug" class="form-control" id="slug"
+                            value="{{ !empty(old('slug')) ? $category->slug : old('slug') }}">
+                        @error('slug')
+                            <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                        @enderror
+                    </div>
 
-            <div class="form-group">
-                <label for="type">Loại danh mục</label>
-                <select name="type" id="type" class="form-control">
-                    <option value="">--- Chọn danh mục ---</option>
-                    <option value="1" {{ $category->type == 1 ? 'selected' : false }}>Sản phẩm</option>
-                    <option value="2" {{ $category->type == 2 ? 'selected' : false }}>Bài viết</option>
-                </select>
+                    <div class="form-group col-lg-6">
+                        <label for="category_id">Danh mục cha</label>
+                        <select name="category_id" id="category_id" class="form-control">
+                            <option value="">--- Không ---</option>
+                            @foreach ($categories as $categories)
+                                <option value="{{ $categories->id }}" {!! $categories->id == $category->category_id ? 'selected' : false !!}>{{ $categories->name }}</option>
+                            @endforeach
+                        </select>
 
-                @error('type')
-                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                @enderror
+                        @error('type')
+                            <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                        @enderror
 
-            </div>
+                    </div>
 
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Thêm mới">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Thêm mới">
+                        </div>
+                    </div>
+                </div>
             </div>
         </form>
-    @else
-        Danh mục không tồn tại
     @endif
+@endsection
 
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $("#title").keyup(function() {
+                $("#slug").val(renSlug($(this).val()))
+            });
+
+            $("#slug").val(renSlug($("#title").val()))
+        });
+    </script>
 @endsection

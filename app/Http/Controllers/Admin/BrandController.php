@@ -66,20 +66,20 @@ class BrandController extends Controller
         return view('admin.brand.show', compact('brand'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Brand $brand)
     {
-        $brand = $this->table->find($id);
+        // dd($brand);
 
         $rules = [
             'name' => [
                 'required',
-                Rule::unique('users')->ignore($id, 'id'),
+                // Rule::unique('users')->ignore($brand->id, 'id'),
             ],
         ];
 
         $message = [
             'name.required' => 'Tên thương hiệu không được để trống',
-            'name.unique' => 'Tên thương hiệu đã tồn tại',
+            // 'name.unique' => 'Tên thương hiệu đã tồn tại',
         ];
 
         $request->validate($rules, $message);
@@ -90,23 +90,24 @@ class BrandController extends Controller
 
         $brand_image = [];
 
-        // dd($request->file('avatar'));
-
-        if($request->avatar){
+        if ($request->avatar) {
             $avatar = $request->file('avatar');
             deleteFilePublic($brand_img);
 
             $brand_image = uploadFile($public_path, $avatar);
         }
 
-        $data = [
-            'name' => $request->name,
-            'brand_image' => $brand_image[0],
-        ];
+        if (!empty($request->avatar)) {
+            
+            $brand->name = $request->name;
+            $brand->brand_image = $brand_image[0];
 
-        // dd($data)
+            $brand->save();
+        } else {
+            $brand->name = $request->name;
 
-        $brand->update($data);
+            $brand->save();
+        }
 
         return back()->with('msg', 'Sửa danh mục thành công');
     }

@@ -15,14 +15,6 @@
 
 @section('content')
 
-    {{-- @if ($errors->any())
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif --}}
-
     @if (session('msg'))
         <div class="alert alert-success text-center">
             {{ session('msg') }}
@@ -32,8 +24,8 @@
     @if (!empty($brand))
         <div class="">
             <form action="{{ route('admin.brand.update', $brand->id) }}" method="POST" enctype="multipart/form-data">
-                @method('PUT')
                 @csrf
+                @method('PATCH')
 
                 <div class="form-group">
                     <label for="name">Tên danh mục</label>
@@ -56,7 +48,8 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" class="btn btn-primary" value="Thêm mới">
+                    <input type="submit" class="btn btn-primary" value="Áp dụng">
+                    <a href="{{ route('admin.brand.index') }}" class="btn btn-danger">Hủy</a>
                 </div>
             </form>
         </div>

@@ -5,3 +5,17 @@
     background-color: #fff;
     color: #333;
 }
+
+.total-payment:focus{
+    outline: none;
+}
+
+.product_price {
+    border: none;
+    background-color: #fff !important;
+    max-width: 130px;
+}
+
+.product_price:focus {
+    outline: none;
+}

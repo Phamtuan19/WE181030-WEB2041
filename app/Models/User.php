@@ -10,6 +10,8 @@ use Laravel\Sanctum\HasApiTokens;
 
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Position;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -24,10 +26,8 @@ class User extends Authenticatable
 
     protected $fillable = [
         'username',
-        'name',
         'email',
         'phone',
-        'address',
         'position_id',
         'is_active',
         'password',
@@ -67,5 +67,10 @@ class User extends Authenticatable
         $users = $users->paginate(3)->withQueryString();
         // $users->get();
         return $users;
+    }
+
+    public function position ()
+    {
+        return $this->belongsTo(Position::class);
     }
 }

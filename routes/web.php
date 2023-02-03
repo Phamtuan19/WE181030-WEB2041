@@ -37,18 +37,17 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource("users", UserController::class)->except(['edit']);
-        Route::resource('product', ProductController::class)->except(['edit']);
+
+        Route::resource('products', ProductController::class);
+
         Route::resource('category', CategoryController::class)->except(['edit']);
+
         Route::resource('brand', BrandController::class)->except(['edit']);
 
         Route::resource('orders', OrderController::class)->except('edit', 'store');
 
         Route::get('customers', [CutomerController::class, 'index'])->name('customers');
     });
-});
-
-Route::get('/', function () {
-    return redirect(route('admin.users'));
 });
 
 Route::prefix('store')->name('store.')->group(function () {
@@ -58,7 +57,7 @@ Route::prefix('store')->name('store.')->group(function () {
     Route::get('products', [HomeController::class, 'indexMobile'])->name('mobile');
 
     Route::get('detail-product/{id}', [HomeController::class, 'indexProduct'])->name('product');
-    
+
     Route::get('cart', [HomeController::class, 'indexCart'])->name('cart');
 
     Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
@@ -77,8 +76,6 @@ Route::prefix('customers')->name('customers.')->group(function () {
     Route::get('/login', [LoginController::class, 'login'])->middleware('guest:customers')->name('login');
 
     Route::post('/login', [LoginController::class, 'postLogin'])->middleware('guest:customers');
-
-    Route::get('/', [LoginController::class, 'index']);
 
     Route::post('/logout', function () {
         Auth::guard('customers')->logout();

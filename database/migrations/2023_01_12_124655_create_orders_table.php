@@ -20,12 +20,14 @@ class CreateOrdersTable extends Migration
             $table->dateTime('date_order')->nullable(); // ngày yêu cầu tạo đơn hàng
             $table->dateTime('date_confirmation')->nullable(); // ngày xác nhận
             $table->dateTime('date_delivered')->nullable(); // ngày giao hàng
-            $table->string('notes')->nullable(); // ghi chú
+            $table->string('user_notes')->nullable(); // ghi chú của người dùng
+            $table->string('shop_notes')->nullable(); // ghi chú của cửa hàng
             $table->tinyInteger('order_statusID'); // trạng thái đơn hàng
-            $table->boolean('payment_form'); // hình thức thanh toán
-            $table->tinyInteger('quantity'); //
-            $table->integer('total_money'); 
+            $table->boolean('delivery_form'); // hình thức giao hàng
+            $table->tinyInteger('quantity'); // số lượng sản phẩm của đơn hàng
+            $table->integer('total_money'); // tổng số tiền của đơn hàng
             $table->timestamps();
+
         });
     }
 

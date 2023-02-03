@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AdđForeignUsersTable extends Migration
+class CreateImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class AdđForeignUsersTable extends Migration
      */
     public function up()
     {
-        //
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreign('position_id')
-                ->references('id')
-                ->on('position');
+        Schema::create('images', function (Blueprint $table) {
+            $table->integerIncrements('id');
+            $table->integer('product_id');
+            $table->text('image');
+            $table->boolean('is_avatar')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -28,6 +29,6 @@ class AdđForeignUsersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('images');
     }
 }

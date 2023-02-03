@@ -17,18 +17,19 @@ class OrderController extends Controller
 {
     //
 
-    public function index () {
+    public function index()
+    {
 
         $orders = new Order();
         $products = new Product();
 
-        $orders = $orders->get();
+        $orders = Order::select('*')->orderBy('id', 'DESC')->get();
         $products = $products->get();
 
         return view('admin.order.list', compact('orders', 'products'));
     }
 
-    public function show (Order $order)
+    public function show(Order $order)
     {
         $order_status = new OrderStatus();
 
@@ -43,26 +44,26 @@ class OrderController extends Controller
         return view('admin.order.show', compact('order', 'order_status', 'order_details'));
     }
 
-    public function update (Request $request ,Order $order) {
+    public function update(Request $request, Order $order)
+    {
 
         $order->order_statusID = $request->order_status;
 
-        if($request->order_status == 2){
-            $order->date_confirmation = date('Y-m-d H:i:');
+        if ($request->method() === 'PATCH') {
+            if ($request->order_status == 2) {
+                $order->date_confirmation = date('Y-m-d H:i:');
+            }
 
-            $order->update();
+            if ($request->order_status == 4) {
+                $order->date_delivered = date('Y-m-d H:i:');
+            }
+
+            if (!empty($request->shop_notes)) {
+                $order->shop_notes = $request->shop_notes;
+            }
+            $order->save();
+
+            return back()->with('msg', 'Thêm ghi chú thành công');
         }
-
-        if($request->order_status == 4){
-            $order->date_delivered = date('Y-m-d H:i:');
-
-            $order->update();
-        }
-
-        $order->update();
-
-        return back();
-
-
     }
 }

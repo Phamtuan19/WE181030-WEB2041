@@ -1,4 +1,8 @@
 
+td{
+    color: #888888 !important;
+}
+
 .title-succsess {
     text-align: center;
 }
@@ -20,14 +24,15 @@
 .information_order-code {
     font-size: 16px;
     text-transform: uppercase;
+    color: #888888;
 }
 
 .information_user-info i{
-    color: #FF0000;
+    color: #2b77e5;
 }
 
 .information_user-info span {
-    color: #FF0000;
+    color: #2b77e5;
     text-transform: uppercase;
 }
 

@@ -1,60 +1,105 @@
 
 
-//
-let local_Cart = JSON.parse(localStorage.getItem('cart'));
-
 
 /* ================== Add to carts =================== */
-function addToCart(dataCode, price) {
-    // const addToCart = document.querySelector(".addToCart")
-    let cart = [];
+function addToCart(dataCode, image, price, name, color, memory) {
 
-    // const dataCode = e.target.dataset.code;
+    let cart = [];
 
     const localCart = localStorage.getItem('cart');
     if (localCart) {
         cart = JSON.parse(localCart);
     }
 
-    const item = cart.find(item => item.product_code === dataCode)
+    const item = cart.find(item => item.code === dataCode)
     // console.log(item);
     if (item) {
         item.quantity += 1;
     } else {
 
-        cart.push({ product_code: dataCode, price: price, quantity: 1 })
+        cart.push({
+            code: dataCode,
+            name: name,
+            price: price,
+            image: image,
+            color: color,
+            memory: memory,
+            quantity: 1
+        })
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
 
-    renderTotal();
-    renderTotals()
-}
+    renderCart_(cart);
+};
 
 
 /* ================== Update the number of products in the cart =================== */
+function renderCart_(cartArr) {
+    if (Array.isArray(cartArr)) {
+        const amount = cartArr.length;
 
-function renderTotal() {
-    const cartArr = JSON.parse(localStorage.getItem('cart'));
-    let amount = 0;
-    if (cartArr) {
-        amount = cartArr.length;
+        $('.quantity-cart').html(amount);
+        $('.dropdown-count_strong').html(amount);
+
+        let totalMoney = 0;
+        cartArr.forEach(function (item, index) {
+            totalMoney += item.quantity * item.price
+        });
+
+        $(".total_money").html(totalMoney)
+
+        render_Cart_product(cartArr);
+
     }
-    document.querySelector('.cart_quantity').innerHTML = amount;
-    $('.dropdown-count_strong').html(amount + " mục")
-};
+}
 
-renderTotal();
+function render_Cart_product(cartArr) {
+    const renderCart = cartArr.map(function (value) {
+        return `
+        <div class="dro-item">
+            <div class="item-picture">
+
+                    <img src="http://127.0.0.1:8000/${value.image}" alt="" class="dro-item_img" style="width: 100%">
+
+            </div>
+            <div class="item-product">
+                <div class="item-product_name">
+                    <a href="#"></a>
+                </div>
+                <div class="item-product_price">
+                    Đơn giá: <span>${value.price}đ</span>
+                </div>
+                <div class="item-product_quantity">
+                    Số lượng: <span>${value.quantity}</span>
+                </div>
+            </div>
+        </div>
+    `
+    });
+
+    $('.dropdown-items').html(renderCart)
+}
+
+/* ================== Total Money =================== */
+function renderTotalMoney () {
+    const cartArr = JSON.parse(localStorage.getItem('cart'));
+    let total = 0;
+    cartArr.forEach((e) => {
+        total += e.quantity * e.price
+    })
+
+    return total
+}
+/* ================== Total Money =================== */
 
 /* ================== Update the number of products in the cart =================== */
 function updateItemCart(productCode, quantity, cartName = '') {
     local_Cart.forEach((e) => {
-        if (e.product_code === productCode) {
+        if (e.code === productCode) {
             e.quantity = quantity
         }
     })
-
-    localStorage.setItem(cartName, JSON.stringify(local_Cart));
 }
 
 /* ================== Remove product item in cart =================== */
@@ -62,7 +107,7 @@ function removeItemCart(product_code, cartname = '') {
     let carts = [];
     if (local_Cart.length > 1) {
         local_Cart.forEach((e) => {
-            if (e.product_code != product_code) {
+            if (e.code != product_code) {
                 carts.push(e);
             }
         })
@@ -82,7 +127,7 @@ function formatNumber(nStr, decSeperate, groupSeperate) {
     x2 = x.length > 1 ? '.' + x[1] : '';
     var rgx = /(\d+)(\d{3})/;
     while (rgx.test(x1)) {
-        x1 = x1.replace(rgx, '$1' + groupSeperate + '$2') ;
+        x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
     }
     return x1 + x2 + ' VND';
 }
@@ -92,7 +137,7 @@ function formatNumber(nStr, decSeperate, groupSeperate) {
 function renderTotals() {
     let localCart = JSON.parse(localStorage.getItem('cart'))
     let amount = 0;
-    localCart.forEach(function(e) {
+    localCart.forEach(function (e) {
         amount += e.price * e.quantity;
     })
     $(".total-payment").val(formatNumber(amount, ',', '.'));

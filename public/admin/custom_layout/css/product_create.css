@@ -1,0 +1,39 @@
+
+#cke_2_contents {
+    min-height: 840px !important;
+}
+
+.cke_editable > a > img {
+    width: 100% !important;
+}
+
+.form-control {
+    height: 46px !important;
+}
+
+input[type="file"] {
+    display: block;
+}
+.imageThumb {
+    max-height: 75px;
+    /* border: 2px solid; */
+    padding: 1px;
+    cursor: pointer;
+}
+.pip {
+    display: inline-block;
+    margin: 10px 10px 0 0;
+    position: relative;
+}
+.remove {
+    color: #333;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.remove:hover {
+    background: white;
+    color: black;
+}

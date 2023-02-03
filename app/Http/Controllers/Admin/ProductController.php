@@ -6,8 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
+
 use App\Http\Requests\Admin\Product\ProductRequest;
+
 use Illuminate\Support\Facades\DB;
+
+use App\Models\Attribute;
+
+use App\Models\Categories;
+
+use App\Models\Image;
+
+use App\Models\Brand;
 
 class ProductController extends Controller
 {
@@ -21,8 +31,21 @@ class ProductController extends Controller
 
     public function index()
     {
-        $products = $this->table->get();
-        return view('admin.products.index', compact('products'));
+        $products = new Product();
+
+        // dd($products->SearchAdmin());
+
+        $categories = new Categories();
+
+        $brands = new Brand();
+
+        $products = $products->searchAdmin();
+
+        $categories = $categories->where('category_id', '8')->get();
+
+        $brands = $brands->get();
+
+        return view('admin.products.index', compact('products', 'categories', 'brands'));
     }
 
     public function create()
@@ -30,117 +53,188 @@ class ProductController extends Controller
         $categories = DB::table('category')->get();
         $brands = DB::table('brand')->get();
 
-        return view('admin.products.create', compact('categories', 'brands'));
+        $colors = [
+            'Yellow' => '#FFFF00',
+            'red' => '#FF0000',
+            'black' => '#000000',
+            'white' => '#FFFFFF',
+        ];
+
+        $memory = [
+            '32GB',
+            '64GB',
+            '128GB',
+            '256GB',
+            '512GB',
+            '1T'
+        ];
+
+        // dd($colors);
+
+        return view('admin.products.create', compact('categories', 'brands', 'colors', 'memory'));
     }
 
     public function store(ProductRequest $request)
     {
+        // dd($request->all());
+        $attributes = new Attribute();
+
+        $images = new Image();
+
         $public_path = 'uploads/products/';
 
-        if ($request->file('avatar')) {
-            $file = $request->file('avatar');
-            $avatar = uploadFile($public_path, $file);
-        }
-
-        if ($request->file('product_image')) {
-            $files = $request->file('product_image');
-            $imagesJson = uploadFile($public_path, $files);
-        }
-
-        $data = [
+        $dataProduct = [
+            'code' => rand(100000, 9000000),
             'name' => $request->name,
             'category_id' => $request->category,
             'brand_id' => $request->brand,
-            'quantity' => $request->quantity,
+            'import_price' => $request->import_price,
             'price' => $request->price,
-            'sale' => $request->sale,
-            // 'color' => $request->color,
-            'avatar' => $avatar[0],
-            'image' => json_encode($imagesJson),
-            'title' => $request->title,
+            'input_quantity' => $request->input_quantity,
+            'quantity_stock' => $request->input_quantity,
+            'information' => $request->information,
             'detail' => $request->detail,
         ];
 
-        $createProduct = $this->table->create($data);
-        dd('a');
+        $createProduct = $this->table->create($dataProduct);
 
         if ($createProduct) {
+            // dd($request->file('images'));
+            if ($request->file('images')) {
+                $files = $request->file('images');
+                $imagesJson = uploadFile($public_path, $files);
+            }
+
+            foreach ($imagesJson as $image) {
+                $dataImage = [
+                    'product_id' => $createProduct->id,
+                    'image' => $image,
+                    'is_avatar' => 0,
+                ];
+
+                $images->insert($dataImage);
+            }
+
+            $dataAttribute = [
+                'product_id' => $createProduct->id,
+                'color' => json_encode($request->color),
+                'memory' => json_encode($request->memory),
+            ];
+
+            $attributes->insert($dataAttribute);
+
             return back()->with('msg', 'Thêm sản phẩm thành công');
-        } else {
-            deleteFilePublic($avatar);
-            deleteFilePublic($imagesJson);
-            return back()->with('msg', 'Thêm sản phẩm thất bại');
         }
+
+        return back()->with('msg', 'Thêm sản phẩm thất bại');
     }
 
     public function show($id)
     {
         $product = $this->table->find($id);
+
         $categories = DB::table('category')->get();
+
         $brands = DB::table('brand')->get();
-        return view('admin.products.show', compact('product', 'categories', 'brands'));
+
+        $colors = [
+            'Yellow',
+            'red',
+            'black',
+            'white',
+        ];
+
+        $memory = [
+            '32GB',
+            '64GB',
+            '128GB',
+            '256GB',
+            '512GB',
+            '1T'
+        ];
+
+        // dd($product->image);
+
+        return view('admin.products.show', compact('product', 'categories', 'brands', 'colors', 'memory'));
     }
 
-    public function update(ProductRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $product = $this->table->find($id);
+        // dd($request->method());
+
+        $products = new Product();
+
+        $product = $products->find($id);
+
+        $attributes = new Attribute();
+
+        $attribute = $attributes->where('product_id', $id)->get()[0];
+
+        $images = new Image();
 
         $public_path = 'uploads/products/';
 
-        $product_avatar[] = $product->avatar;
-        $imagesJson = json_decode($product->image, true);
 
-        if($request->file('product_image')){
-            $images = $request->file('product_image');
+        // Save Table Product
+        $product->name = $request->name;
+        $product->category_id = $request->category;
+        $product->brand_id = $request->brand;
+        $product->import_price = $request->import_price;
+        $product->price = $request->price;
+        $product->input_quantity = $request->input_quantity;
+        $product->information = $request->information;
+        $product->detail = $request->detail;
 
-            deleteFilePublic($imagesJson);
+        $product->save();
 
-            $imagesJson = uploadFile($public_path, $images);
+        // Save Table Attribute
+        if ($request->color) {
+            $attribute->color = json_encode($request->color);
+        }
+        if ($request->memory) {
+            $attribute->memory = json_encode($request->memory);
         }
 
-        if($request->file('avatar')){
-            $avatar = $request->file('avatar');
+        $attribute->update();
 
-            deleteFilePublic($product_avatar);
+        // Save Table Image
+        if (!empty($request->images)) {
 
-            $product_avatar = uploadFile($public_path, $avatar);
+            $files = $request->file('images');
+            $imagesJson = uploadFile($public_path, $files);
+
+            foreach ($imagesJson as $iamge){
+                $dataImage = [
+                    'product_id' => $id,
+                    'image' => $iamge,
+                    'is_avatar' => 0,
+                ];
+                $images->insert($dataImage);
+            }
         }
-
-        $data = [
-            'name' => $request->name,
-            'category_id' => $request->category,
-            'brand_id' => $request->brand,
-            'quantity' => $request->quantity,
-            'price' => $request->price,
-            'sale' => $request->sale,
-            // 'color' => $request->color,
-            'avatar' => $product_avatar[0],
-            'image' => json_encode($imagesJson),
-            'title' => $request->title,
-            'detail' => $request->detail,
-        ];
-
-        $product->update($data);
 
         return back()->with('msg', 'Thay đổi thành công');
     }
 
-    public function destroy($id)
-    {
-        $product = DB::table('products')->where('id', $id)->get();
+    // public function destroy($id)
+    // {
+    //     $products = new Product();
 
-        $product_avatar[] = $product[0]->avatar;
-        $imagesJson = json_decode($product[0]->image, true);
+    //     $images = new Image();
 
-        // dd($product);
+    //     $product = $products->find($id);
 
-        deleteFilePublic($product_avatar);
-        deleteFilePublic($imagesJson);
+    //     $images = $images->where('product_id', $id)->get();
 
-        // if($a && $b){
-            $this->table->destroy($id);
-        // }
+    //     dd($images);
 
-        return back()->with('msg', 'Xóa thành công');
-    }
+    //     // deleteFilePublic($product_avatar);
+    //     // deleteFilePublic($imagesJson);
+
+    //     // if($a && $b){
+    //     $this->table->destroy($id);
+    //     // }
+
+    //     return back()->with('msg', 'Xóa thành công');
+    // }
 }

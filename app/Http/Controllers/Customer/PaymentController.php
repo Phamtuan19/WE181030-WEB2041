@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
 
+use App\Http\Requests\Customer\PaymentRequest;
+
 class PaymentController extends Controller
 {
     public function payment(Request $request)
@@ -26,15 +28,17 @@ class PaymentController extends Controller
 
         $customer = $customers->find(Auth::guard('customers')->id());
 
-        $purchase_forms = DB::table('purchase_form')->get();
+        // $purchase_forms = DB::table('purchase_form')->get();
 
         // dd(Auth::guard('customers')->user());
 
-        return view('customer.pages.pay', compact('customer', 'purchase_forms'));
+        return view('customer.pages.pay', compact('customer'));
     }
 
-    public function checkPayment(Request $request)
+    public function checkPayment(PaymentRequest $request)
     {
+
+        // dd($request->all());
 
         $orders = new Order();
 
@@ -43,13 +47,13 @@ class PaymentController extends Controller
         $consignees = new Consignees();
 
         $dataOrder = [
-            'code_orders' => rand(10000, 100000000),
+            'code_order' => rand(100000, 1000000),
             'customer_id' => Auth::guard('customers')->id(),
             'date_order' => date('Y-m-d H:i:s'),
-            'note' => $request->note,
+            'user_notes' => $request->note,
             'order_statusID' => 1,
-            'payment_form' => $request->payment_form,
-            'quantity' => $request->quantity_product,
+            'delivery_form' => $request->delivery_form,
+            'quantity' => count($request->product_code),
             'total_money' => $request->total_money,
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:'),
@@ -74,12 +78,16 @@ class PaymentController extends Controller
         $consignees->insert($dataConsignees);
 
         $products_code = $request->product_code;
+
         $quantity = $request->quantity;
+
+        $price = $request->price;
 
         foreach ($products_code as $index => $code) {
             $dataOrderDetail = [
                 'order_id' => $order_id,
                 'product_code' => $code,
+                'price' => $price[$index],
                 'quantity' => $quantity[$index],
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:'),

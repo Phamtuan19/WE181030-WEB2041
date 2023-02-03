@@ -9,14 +9,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>Admin . X-shop</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('admin/custom_layout/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet"
         type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('admin/custom_layout/css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -68,7 +65,7 @@
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('admin.orders.index') }}">
-                    <i class="fa-solid fa-pen"></i>
+                    <i class="fa-solid fa-cart-shopping"></i>
                     <span>Đơn hàng</span>
                 </a>
             </li>
@@ -82,7 +79,6 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
                         <a class="collapse-item" href="buttons.html">Buttons</a>
                         <a class="collapse-item" href="cards.html">Cards</a>
                     </div>
@@ -93,31 +89,42 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
                     aria-expanded="true" aria-controls="collapseProduct">
-                    <i class="fa-solid fa-bars"></i>
+                    <i class="fa-brands fa-product-hunt"></i>
                     <span>Quản lý sản phẩm</span>
                 </a>
                 <div id="collapseProduct" class="collapse" aria-labelledby="headingProduct"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
-                        {{-- <a class="collapse-item" href="buttons.html">Danh mục sản phẩm</a> --}}
-                        <a class="collapse-item" href="{{ route('admin.product.create') }}">Thêm sản phẩm</a>
-                        <a class="collapse-item" href="{{ route('admin.product.index') }}">Danh sách sản phẩm</a>
+                        <a class="collapse-item" href="{{ route('admin.products.create') }}">Thêm sản phẩm</a>
+                        <a class="collapse-item" href="{{ route('admin.products.index') }}">Danh sách sản phẩm</a>
                     </div>
                 </div>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCB"
-                    aria-expanded="true" aria-controls="collapseCB">
-                    <i class="fa-solid fa-bars"></i>
-                    <span>Category & Brand</span>
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories"
+                    aria-expanded="true" aria-controls="collapseCategories">
+                    <i class="fa-solid fa-list"></i>
+                    <span>Danh mục</span>
                 </a>
-                <div id="collapseCB" class="collapse" aria-labelledby="headingCB" data-parent="#accordionSidebar">
+                <div id="collapseCategories" class="collapse" aria-labelledby="headingCB"
+                    data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        {{-- <h6 class="collapse-header">Custom Components:</h6> --}}
                         <a class="collapse-item" href="{{ route('admin.category.create') }}">Thêm danh mục </a>
                         <a class="collapse-item" href="{{ route('admin.category.index') }}">Danh sách danh mục</a>
+                    </div>
+                </div>
+            </li>
+
+            {{-- Thương hiệu sản phảm --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBrand"
+                    aria-expanded="true" aria-controls="collapseBrand">
+                    <i class="fa-solid fa-bars-staggered"></i>
+                    <span>Thương hiệu</span>
+                </a>
+                <div id="collapseBrand" class="collapse" aria-labelledby="headingCB" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('admin.brand.create') }}">Thêm thương hiệu </a>
                         <a class="collapse-item" href="{{ route('admin.brand.index') }}">Danh sách thương hiệu</a>
                     </div>
@@ -134,18 +141,16 @@
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        {{-- <h6 class="collapse-header">Custom Utilities:</h6> --}}
-                        <a class="collapse-item" href="{{ route('admin.users.create') }}">Thêm người quản trị viên</a>
+                        <a class="collapse-item" href="{{ route('admin.users.create') }}">Thêm người quản trị
+                            viên</a>
                         <a class="collapse-item" href="{{ route('admin.users.index') }}">Danh sách quản trị viên</a>
-                        {{-- <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                        <a class="collapse-item" href="utilities-other.html">Other</a> --}}
                     </div>
                 </div>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('admin.customers') }}">
-                    <i class="fa-solid fa-pen"></i>
+                    <i class="fa-solid fa-users"></i>
                     <span>Người dùng</span>
                 </a>
             </li>
@@ -263,7 +268,7 @@
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <div class="admin_name">
-                                <span>{{ Auth::user()->name }}</span>
+                                <span style="text-transform: capitalize">{{ Auth::user()->username }}</span>
                                 <i class="fa-solid fa-caret-down"></i>
                             </div>
 
@@ -360,20 +365,14 @@
     <!-- Custom scripts for all pages-->
     <script src="{{ asset('admin/custom_layout/js/sb-admin-2.min.js') }}"></script>
 
-    <!-- Page level plugins -->
-    {{-- <script src="{{ asset('admin/custom_layout/vendor/chart.js/Chart.min.js') }}"></script> --}}
+    {{-- Custom JS --}}
+    <script src="{{ asset('admin/custom_layout/js/custom-js/index.js') }}"></script>
 
-    <!-- Page level custom scripts -->
-    {{-- <script src="{{ asset('admin/custom_layout/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('admin/custom_layout/js/demo/chart-pie-demo.js') }}"></script> --}}
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
+    </script>
     @yield('js')
 
-    <script>
-        $('.admin_name').click(function() {
-            $('.admin_name-dropdown').toggleClass("d-none")
-        });
-    </script>
 
 </body>
 

@@ -21,7 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('store/customers', [ApiController::class, 'indexCustomer'])->name('createCustomer');
+
 Route::get('store/mobile', [ApiController::class, 'indexProduct'])->name('mobile');
-Route::get('store/cart', [ApiController::class, 'indexCart'])->name('cart');
-Route::post('store/cart', [ApiController::class, 'create'])->name('create');
-Route::post('store/check-order', [ApiController::class, 'checkOrder'])->name('checkOrder');

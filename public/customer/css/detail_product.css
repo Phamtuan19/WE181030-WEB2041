@@ -83,7 +83,11 @@
     margin: 0 6px;
 }
 
-.selected-value {
+.op_list_1 .form-group .active {
+    border: 1px solid #0066cc !important;
+}
+
+.op_list_2 .form-group .active {
     /* background-color: #fff; */
     border-radius: 50%;
     border: 1px solid #0066cc !important;
@@ -222,3 +226,7 @@ table th {
     border-radius: 0 !important;
 }
 /* ============================================= End Table detail product =============================================*/
+
+.product-post img {
+    width: 100%;
+}

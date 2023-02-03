@@ -8,8 +8,8 @@
 
 @section('redirect')
     <a href="{{ route('admin.brand.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fa-solid fa-left-long text-white-50 pr-2"></i>
         Thêm thương hiệu
+        <i class="fa-solid fa-right-long mx-2"></i>
     </a>
 @endsection
 
@@ -36,16 +36,17 @@
                     <th class="align-middle text-center" scope="col" width="100px">STT</th>
                     <th class="align-middle text-center" scope="col" width="150px">Ảnh đại diện</th>
                     <th class="align-middle text-center" scope="col" >Tên danh mục</th>
-                    <th class="align-middle text-center" scope="col" width="100px">Edit</th>
+                    <th class="align-middle text-center" scope="col" width="200px">Edit</th>
+                    <th class="align-middle text-center" scope="col" width="200px">Remove</th>
                 </tr>
             </thead>
             <tbody>
                 @if ($brands->count() > 0)
                     @foreach ($brands as $key => $brand)
-                        <tr>
-                            <td class="align-middle text-center" scope="row">{{ $key + 1 }}</td>
+                        <tr style="text-align: center; vertical-align: middle;">
+                            <td scope="row">{{ $key + 1 }}</td>
 
-                            <td class="align-middle">
+                            <td>
                                 <div class="d-flex justify-content-center">
                                     @if (!empty($brand->brand_image))
                                         {{-- @dd(json_decode($product->images, true)) --}}
@@ -55,28 +56,29 @@
                                 </div>
                             </td>
 
-                            <td class="align-middle"><span>{{ $brand->name }}</span></td>
+                            <td><span>{{ $brand->name }}</span></td>
 
                             <td>
                                 <div class="d-flex justify-content-around">
-                                    <div class="">
+                                    <div>
                                         <a href="{{ route('admin.brand.show', $brand->id) }}" class="btn" style="color: black;">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                     </div>
-                                    <div class="">
-                                        <form action="{{ route('admin.brand.destroy', $brand->id) }}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <form action="{{ route('admin.brand.destroy', $brand->id) }}" method="POST">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button class="btn" style="border: none; ">
+                                            <i class="fa-solid fa-trash" style="color: red"></i>
+                                            <input type="submit" value="Xóa" class="d-none">
+                                        </button>
 
-                                            <button class="btn" style="border: none; ">
-                                                <i class="fa-solid fa-trash" style="color: red"></i>
-                                                <input type="submit" value="Xóa" class="d-none">
-                                            </button>
+                                    </form>
 
-                                        </form>
-
-                                    </div>
                                 </div>
                             </td>
                         </tr>

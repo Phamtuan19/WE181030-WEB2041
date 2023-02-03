@@ -21,14 +21,15 @@ class Order extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'code_orders',
+        'code_order',
         'customer_id',
         'date_order',
         'date_confirmation',
         'date_delivered',
-        'notes',
+        'user_notes',
+        'shop_notes',
         'order_statusID',
-        'payment_form',
+        'delivery_form',
         'quantity',
         'total_money',
     ];

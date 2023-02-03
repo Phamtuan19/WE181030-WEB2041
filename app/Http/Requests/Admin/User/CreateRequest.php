@@ -26,13 +26,12 @@ class CreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
             'username' => [
                 'required',
                 'string',
                 'min:6',
                 'max:255',
-                // Rule::unique('users')->ignore($this->id, 'id'),
+                Rule::unique('users')->ignore($this->id, 'id'),
             ],
 
             'email' => [
@@ -40,14 +39,14 @@ class CreateRequest extends FormRequest
                 'string',
                 'email',
                 'max:255',
-                // Rule::unique('users')->ignore($this->id, 'id'),
+                Rule::unique('users')->ignore($this->id, 'id'),
             ],
 
             'phone' => [
                 'required',
                 'regex:/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/',
                 // 'unique:users',
-                // Rule::unique('users')->ignore($this->id, 'id'),
+                Rule::unique('users')->ignore($this->id, 'id'),
             ],
 
             'position' => 'required',
@@ -74,11 +73,9 @@ class CreateRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'Tên tài khoản',
             'username' => 'Tài khoản đăng nhập',
             'email' => 'Email',
             'phone' => 'Số điện thoại',
-            'address' => 'Địa chỉ',
             'position_id' => 'Chức danh',
             'password' => 'Mật khẩu',
             'password_confirmation' => 'Mật khẩu nhập lại',

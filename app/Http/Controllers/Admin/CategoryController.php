@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use App\Models\Category;
+use App\Models\Categories;
+
+use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
@@ -13,39 +15,48 @@ class CategoryController extends Controller
 
     public function __construct()
     {
-        $this->table = new Category();
+        $this->table = new Categories();
     }
 
     public function index()
     {
-        $categories = $this->table->get();
+        $categories = new Categories();
+
+        $categories = $categories->get();
 
         return view('admin.category.index', compact('categories'));
     }
 
     public function create()
     {
-        return view('admin.category.create');
+        $categories = new Categories();
+
+        $categories = $categories->where('category_id', null)->get();
+
+        return view('admin.category.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|unique:category',
-            'type' => 'required',
+            'name' => 'required|unique:category|max:255',
+            'slug' => 'required|unique:category|max:255',
         ];
 
         $message = [
             'name.required' => 'Tên danh mục không được để trống',
             'name.unique' => 'Tên danh mục đã tồn tại',
-            'type.required' => 'Loại danh mục không được để trống',
+            'name.max' => 'Tên danh mục quá dài',
+            'slug.required' => 'Loại danh mục không được để trống',
+            'slug.unique' => 'Slug đã tồn tại',
         ];
 
         $request->validate($rules, $message);
 
         $data = [
             'name' => $request->name,
-            'type' => $request->type,
+            'slug' => $request->slug,
+            'category_id' => $request->category_id,
         ];
 
         $this->table->create($data);
@@ -55,34 +66,48 @@ class CategoryController extends Controller
 
     public function show($id)
     {
-        $category = $this->table->find($id);
+        $categories = new Categories();
 
-        return view('admin.category.show', compact('category'));
+        $category = $categories->find($id);
+
+        $categories = $categories->where('category_id', null)->get();
+
+        return view('admin.category.show', compact('categories', 'category'));
     }
 
     public function update(Request $request, $id)
     {
-        $category = $this->table->find($id);
+        $categories = new Categories();
+
+        $category = $categories->find($id);
+
+        // dd($category);
 
         $rules = [
-            'name' => 'required|unique:category',
-            'type' => 'required',
+            'name' => 'required|max:255',
+            'slug' => 'required|max:255',
         ];
 
         $message = [
             'name.required' => 'Tên danh mục không được để trống',
-            'name.unique' => 'Tên danh mục đã tồn tại',
-            'type.required' => 'Loại danh mục không được để trống',
+            'name.max' => 'Tên danh mục quá dài',
+            'slug.required' => 'Loại danh mục không được để trống',
         ];
 
         $request->validate($rules, $message);
 
-        $data = [
-            'name' => $request->name,
-            'type' => $request->type,
-        ];
+        if (!empty($request->category_id)) {
+            $category->name = $request->name;
+            $category->slug = $request->slug;
+            $category->category_id = $request->category_id;
 
-        $category->update($data);
+            $category->save();
+        } else {
+            $category->name = $request->name;
+            $category->slug = $request->slug;
+
+            $category->save();
+        }
 
         return back()->with('msg', 'Sửa danh mục thành công');
     }

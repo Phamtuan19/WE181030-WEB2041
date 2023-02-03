@@ -13,26 +13,24 @@
         <form action="" method="">
             @csrf
             <div class="row">
-                <div class="col-lg-9">
+                <div class="col-lg-9 pb-4">
                     {{-- danh sách giỏ hàng --}}
-                    <div class="carts-detail">
-                        <div class="table-wrapper">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">STT</th>
-                                        <th scope="col" width="150px">Hình ảnh</th>
-                                        <th scope="col">Tên sản phẩm</th>
-                                        <th scope="col">Giá Tiền</th>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col" width="70px"></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="cart-table_body">
-                                    {{-- render Ajax --}}
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="cart-detail" style="background-color: #fff; border-radius: 5px; padding: 0 6px 12px 6px;">
+                        <h4 style="padding: 24px 0; text-align: center;">Thông tin sản phẩm</h4>
+                        <table class="table">
+                            <thead>
+                                <tr style="font-size: 14px;">
+                                    <th scope="col" width="100px">Hình ảnh</th>
+                                    <th scope="col">Tên sản phẩm</th>
+                                    <th scope="col">Giá sản phẩm</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col" width="50px"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="cart-table_body">
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -70,14 +68,6 @@
                                                     style="border: none; text-align: end; padding: 3px 0;">
                                             </td>
                                         </tr>
-                                        {{-- <tr class="tax-value">
-                                            <td class="cart-total-left">
-                                                <label>Thuế:</label>
-                                            </td>
-                                            <td class="cart-total-right">
-                                                <span class="value-summary">0₫</span>
-                                            </td>
-                                        </tr> --}}
                                         <tr class="order-total">
                                             <td class="cart-total-left">
                                                 <label>Tổng cộng:</label>
@@ -111,83 +101,71 @@
     <script>
         $(document).ready(function() {
 
-            function renderTable(data, carts) {
-                const tbale_body = data.map(function(item, index) {
+            const cartArr = JSON.parse(localStorage.getItem('cart'));
+
+            function renderTable() {
+                const data = cartArr.map(function(e) {
                     return `
-                    <tr>
-                        <th scope="row">${index + 1}</th>
+                    <tr style="vertical-align: middle;">
                         <td>
-                            <div class="detail-image">
-                                <a href="#" class="detail-image_link">
-                                    <img src="	http://127.0.0.1:8000/${item.avatar}"
-                                        alt="" class="detail_img">
-                                </a>
+                            <img src="http://127.0.0.1:8000/${e.image}" alt="" style="width: 100%;">
+                        </td>
+                        <td>
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="${e.name}" disabled style="border: none; padding: 3px 0; background-color: #fff; font-size: 14px">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="Dung lượng: 128GB" disabled style="border: none; padding: 3px 0; background-color: #fff; color: #86868B; font-size: 14px">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" value="Màu sắc: RED" disabled style="border: none; padding: 3px 0; background-color: #fff;  color: #86868B;font-size: 14px">
+                            </div>
+                            <a href="" style="color: #0066cc !important">Sửa</a>
+                        </td>
+
+                        <th style="font-size: 14px">${formatNumber(e.price, ',', '.')}</th>
+                        <td>
+                            <div class="form-group">
+                                <input type="number" class="form-control" value="${e.quantity}" disabled style="width: 60px; padding: 6px 10px; background-color: #f5f5f7; font-size: 14px">
                             </div>
                         </td>
                         <td>
-                            <a href="#">${item.name}</a>
-                        </td>
-                        <td>${formatNumber(item.price, '.', '.')}</td>
-                        <td>
-                            <div class="input-group justify-content-center ">
-                                <input type="number" id="abc" class="form-control quantity" value="${carts[index].quantity}" min="1" max="99" data-code="${item.code}"
-                                    aria-describedby="basic-addon1" style="width: 60px">
-                            </div>
-                        </td>
-                        <td>
-                            <p class="remove_product" data-code="${item.code}"><i class="fa-solid fa-trash"></i></p>
+                            <i class="fa-solid fa-trash" style="color: #86868B"></i>
                         </td>
                     </tr>
                     `
-                })
+                });
 
-                $('.cart-table_body').html(tbale_body);
+                $('.cart-table_body').html(data);
             }
 
-            /* ================== Render products in the cart =================== */
-            function renderTableCart() {
-                const localCart = JSON.parse(localStorage.getItem('cart'))
-                if (localCart) {
-                    codeArr = []
-                    localCart.forEach(function(e) {
-                        codeArr.push(e.product_code)
-                    })
-                    renderTotals(localCart)
+            // Hiển thị tổng số tiền
+            $("input[name='total_payment']").val(renderTotalMoney());
 
-                    $.ajax({
-                        url: "{{ route('cart') }}?product_code=" + codeArr.join(','),
-                        type: 'GET',
-                        // success: (data) => renderTable(data, localCart)
-                    }).done(function(data) {
-                        renderTable(data, localCart);
-                        console.log(data);
-                    })
+            renderTable()
 
-                } else {
-                    console.log('faild');
-                }
+            window.onload = function() {
+
+                $('.edit_quantity').click(function() {
+
+                    let code = $(this).data('code')
+                    console.log(code);
+                    addToCart(code);
+                    renderTotalMoney(cartArr)
+                });
+
+                $('.remove_product').click(function() {
+                    let code = $(this).data('code');
+
+                    let cartArrr = JSON.parse(localStorage.getItem('cartArrr'));
+
+                    const newCartArr = cartArr.filter(item => item.product_code != code)
+
+                    localStorage.setItem('cart', JSON.stringify(newCartArr));
+
+                    location.reload();
+                });
             }
-
-            renderTableCart()
-
-            window.onload = () => {
-
-                /* ================== Update the number of products in the cart =================== */
-                $(".quantity").change(function() {
-                    const productCode = $(this).data('code');
-                    const productQuantity = $(this).val();
-                    updateItemCart(productCode, productQuantity, 'cart')
-                    renderTotals()
-                })
-
-                /* ================== Delete the number of products in the cart =================== */
-                $(".remove_product").click(function() {
-                    removeItemCart($(this).data('code'), 'cart');
-                    renderTotal()
-                    renderTotals()
-                })
-            }
-
         })
     </script>
 @endsection

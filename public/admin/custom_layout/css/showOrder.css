@@ -22,15 +22,6 @@ td, th {
     color: #333;
 }
 
-.order-status_name {
-    padding: 4px 12px;
-    font-size: 14px;
-    font-weight: 800;
-    border-radius: 5px;
-    background-color: cornflowerblue;
-    color: #fff;
-}
-
 .order-status_label {
     min-width: 30%;
     display: inline-block;

@@ -54,3 +54,29 @@
     text-decoration: none !important;
     color: #4e73df !important;
 }
+
+
+/* ================================================================================= */
+
+th {
+    position: relative;
+    vertical-align: middle!important;
+    text-align: center!important;
+}
+
+.right-left {
+    position: absolute;
+    transform: rotate(90deg) translateX(-50%);
+    top: 50%;
+    right: 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.active {
+    color: #4e73df !important;
+}
+
+.right-left:hover {
+    color: #4e73df !important;
+}

@@ -8,20 +8,12 @@
 
 @section('redirect')
     <a href="{{ route('admin.category.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fa-solid fa-left-long text-white-50 pr-2"></i>
-        Danh sách danh mục
+        Thêm danh mục
+        <i class="fa-solid fa-right-long"></i>
     </a>
 @endsection
 
 @section('content')
-
-    @if ($errors->any())
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
 
     @if (session('msg'))
         <div class="alert alert-success text-center">
@@ -34,8 +26,7 @@
             <thead>
                 <tr style="background-color: #C0C0C0; color: #333;">
                     <th class="align-middle text-center" scope="col">STT</th>
-                    <th class="align-middle text-center" scope="col">Tên danh mục</th>
-                    <th class="align-middle text-center" scope="col" width="150px">Loại danh mục</th>
+                    <th class="align-middle text-center" scope="col">Danh mục cha</th>
                     <th class="align-middle text-center" scope="col" width="100px">Edit</th>
                 </tr>
             </thead>
@@ -47,8 +38,6 @@
 
                             <td class="align-middle"><span>{{ $category->name }}</span></td>
 
-                            <td class="align-middle">{!! $category->type == 1 ? 'Product' : 'Post' !!}</td>
-
                             <td>
                                 <div class="d-flex justify-content-around">
                                     <div class="">
@@ -56,7 +45,7 @@
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                     </div>
-                                    <div class="">
+                                    <div class="remove">
                                         <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST">
                                             @method('DELETE')
                                             @csrf

@@ -35,10 +35,11 @@
                 <tbody>
                     @foreach ($orders as $index => $order)
                         <tr style="vertical-align: middle !important;">
-                            <td>{{ $order->code_orders }}</td>
-                            <td>{{ $order->customer->full_name }}</td>
-                            <td>{{ $order->customer->phone }}</td>
-                            <td>{{ $order->quantity }} (sản phẩm)</td>
+                            <td># {{ $order->code_order }}</td>
+                            {{-- @dd($order->consignees) --}}
+                            <td>{{ $order->consignees[0]->name }}</td>
+                            <td>{{ $order->consignees[0]->phone }}</td>
+                            <td>{{ $order->quantity }} (Sp)</td>
                             <td>{{ $order->total_money }}</td>
                             <td>
                                 @if ($order->order_statusID == 1)

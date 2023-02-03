@@ -31,33 +31,58 @@
 
     <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        <div class="container-fluid">
+            <div class="row">
 
-        <div class="form-group">
-            <label for="name">Tên danh mục</label>
-            <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }}">
+                <div class="form-group col-lg-6">
+                    <label for="name">Tên danh mục</label>
+                    <input type="text" name="name" class="form-control" id="title" value="{{ old('name') }}">
+                    @error('name')
+                        <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            @error('name')
-                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-            @enderror
+                <div class="form-group col-lg-6">
+                    <label for="name">Slug</label>
+                    <input type="text" name="slug" class="form-control" id="slug" value="{{ old('slug') }}">
+                    @error('slug')
+                        <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                    @enderror
+                </div>
 
-        </div>
+                <div class="form-group col-lg-6">
+                    <label for="category_id">Danh mục cha</label>
+                    <select name="category_id" id="category_id" class="form-control">
+                        <option value="">--- Không ---</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
+                    </select>
 
-        <div class="form-group">
-            <label for="type">Loại danh mục</label>
-            <select name="type" id="type" class="form-control">
-                <option value="">--- Chọn danh mục ---</option>
-                <option value="1">Sản phẩm</option>
-                <option value="2">Bài viết</option>
-            </select>
+                    @error('type')
+                        <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                    @enderror
 
-            @error('type')
-                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-            @enderror
+                </div>
 
-        </div>
-
-        <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Thêm mới">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary" value="Thêm mới">
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function() {
+            $("#title").keyup(function() {
+                $("#slug").val(renSlug($(this).val()))
+            });
+
+            $("#slug").val(renSlug($("#title").val()))
+        });
+    </script>
 @endsection

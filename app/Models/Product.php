@@ -9,6 +9,12 @@ use App\Models\Brand;
 
 use Illuminate\Support\Facades\DB;
 
+use App\Models\Attribute;
+
+use App\Models\Categories;
+
+use App\Models\Image;
+
 class Product extends Model
 {
     use HasFactory;
@@ -20,13 +26,14 @@ class Product extends Model
         'name',
         'category_id',
         'brand_id',
+        'import_price',
         'price',
-        'sale',
-        'color',
-        'quantity',
+        'input_quantity',
+        'quantity_stock',
+        'quantity_sold',
         'avatar',
         'image',
-        'title',
+        'information',
         'detail',
     ];
 
@@ -46,7 +53,7 @@ class Product extends Model
         return $products;
     }
 
-    public function scopeSearch($query)
+    public function scopeSearch ($query)
     {
         if (!empty(request()->brand)) {
             $keyBrand = request()->brand;
@@ -72,8 +79,44 @@ class Product extends Model
         return $query;
     }
 
+    public function scopeSearchAdmin ($query) {
+        if(!empty(request()->category)){
+            $category = Categories::where('slug', request()->category)->get();
+
+            $query = $query->where('category_id', $category[0]->id);
+        }
+        if(!empty(request()->brand)){
+            $brand = Brand::where('slug', request()->brand)->get();
+
+            $query = $query->where('brand_id', $brand[0]->id);
+        }
+
+        if(!empty(request()->keyword)){
+            $query = $query->where('name', 'like', '%'.request()->keyword.'%');
+        }
+
+        $query = $query->get();
+
+        return $query;
+    }
+
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
+    }
+
+    public function cartegory ()
+    {
+        return $this->belongsTo(Categories::class, 'category_id', 'id');
+    }
+
+    public function attribute ()
+    {
+        return $this->hasOne(Attribute::class);
+    }
+
+    public function image ()
+    {
+        return $this->hasMany(Image::class, 'product_id', 'id');
     }
 }

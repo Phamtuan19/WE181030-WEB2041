@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBrandTable extends Migration
+class CreateAttributeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateBrandTable extends Migration
      */
     public function up()
     {
-        Schema::create('brand', function (Blueprint $table) {
-            $table->integer('id')->autoIncrement();
-            $table->string('name');
-            $table->string('brand_image');
+        Schema::create('attribute', function (Blueprint $table) {
+            $table->integerIncrements('id');
+            $table->string('color');
+            $table->string('memory')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateBrandTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('brand');
+        Schema::dropIfExists('attribute');
     }
 }

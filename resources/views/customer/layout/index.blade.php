@@ -98,19 +98,20 @@
                         </li>
 
                         <li class="nav-item cart-item">
-                            <a class="nav-link nav-link_custom" aria-current="page" href="#">
+                            <a class="nav-link nav-link_custom" aria-current="page" href="{{ route('store.cart') }}">
                                 <i class="fa-solid fa-cart-shopping"></i>
+                                <span class="quantity-cart">0</span>
                             </a>
 
                             <div class="dropdown-nav">
                                 <div class="dropdown-count">
-                                    Có <strong class="dropdown-count_strong"></strong> trong giỏ hàng của bạn
+                                    Có <strong class="dropdown-count_strong">0</strong> sản phẩm trong giỏ hàng của bạn
                                 </div>
                                 <div class="dropdown-items">
                                 </div>
 
                                 <div class="dropdown-totals">
-                                    Tổng phụ: <strong>0₫</strong>
+                                    Tổng phụ: <strong class="total_money">0₫</strong>
                                 </div>
 
                                 <div class="dropdown-btn">
@@ -350,60 +351,14 @@
             },
         });
 
+        // Ajax loading
         $(document).ready(function() {
-            function renderDropdown(data, carts) {
-                const dropdown = data.map(function(value, index) {
-                    return `
-                        <div class="dro-item">
-                            <div class="item-picture">
-                                <a href="#">
-                                    <img src="http://127.0.0.1:8000/${value.avatar}" alt="" class="dro-item_img">
-                                </a>
-                            </div>
-                            <div class="item-product">
-                                <div class="item-product_name">
-                                    <a href="#">${value.name}</a>
-                                </div>
-                                <div class="item-product_price">
-                                    Đơn giá: <span>${value.price}đ</span>
-                                </div>
-                                <div class="item-product_quantity">
-                                    Số lượng: <span>${carts[index].quantity}</span>
-                                </div>
-                            </div>
-                        </div>
-                        `
-                })
 
-                $('.dropdown-items').html(dropdown)
+            const cartArr = JSON.parse(localStorage.getItem('cart'));
 
-            }
+            renderCart_(cartArr);
 
-            // tạo mảng 3 dữ liệu render
-            function renderA() {
-                const cartArr = JSON.parse(localStorage.getItem('cart'));
-                let code = []
-                let quantity = [];
-                if (cartArr) {
-                    cartArr.forEach(e => {
-                        code.push(e.product_code)
-                    });
-                }
-
-                // render quantity product cart
-                $('.dropdown-count_strong').html(code.length + " mục");
-
-                const codeArr = code.slice(0, 3);
-                $.ajax({
-                    type: "GET",
-                    url: "{{ route('cart') }}?product_code=" + code.join(','),
-                    // dataType: 'array',
-                    success: (data) => renderDropdown(data, cartArr),
-                })
-            }
-
-            renderA()
-        })
+        });
     </script>
 
 </body>

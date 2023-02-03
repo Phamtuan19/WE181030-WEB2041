@@ -19,13 +19,12 @@ class CreateProductsTable extends Migration
             $table->string('name')->nullable();
             $table->integer('category_id');
             $table->integer('brand_id');
-            $table->integer('price');
-            $table->integer('sale')->nullable();
-            $table->integer('quantity');
-            $table->string('color');
-            $table->text('avatar');
-            $table->text('image');
-            $table->text('title');
+            $table->integer('import_price'); // giá nhập hàng
+            $table->integer('price')->nullable(); // giá bán ra
+            $table->integer('input_quantity'); // số lượng hàng nhập
+            $table->integer('quantity_stock')->nullable(); // số lượng trong kho
+            $table->integer('quantity_sold')->nullable(); // số lượng đã bán
+            $table->text('information'); // thông tin sản phẩm
             $table->text('detail');
             $table->timestamps();
 

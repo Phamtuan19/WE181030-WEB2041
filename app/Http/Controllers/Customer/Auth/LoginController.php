@@ -12,6 +12,7 @@ use App\Models\Customers;
 class LoginController extends Controller
 {
     //
+
     protected function guard()
     {
         return Auth::guard('customers');

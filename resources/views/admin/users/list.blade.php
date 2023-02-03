@@ -36,7 +36,6 @@
             <thead>
                 <tr>
                     <th>STT</th>
-                    <th>Tên người dùng</th>
                     <th>Tài khoản đăng nhập</th>
                     <th>Số điện thoại</th>
                     <th>Email</th>
@@ -50,7 +49,6 @@
                     @foreach ($users as $key => $user)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $user->name }}</td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->phone }}</td>
                             <td>{{ $user->email }}</td>
