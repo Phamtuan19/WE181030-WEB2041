@@ -26,31 +26,28 @@ class EditRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
             'username' => [
                 'required',
                 'string',
                 'min:6',
                 'max:255',
-                Rule::unique('users')->ignore($this->id, 'id'),
+                Rule::unique('users')->ignore($this->user->id),
             ],
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:255',
-                Rule::unique('users')->ignore($this->id, 'id'),
+                Rule::unique('users')->ignore($this->user->id),
             ],
             'phone' => [
                 'required',
                 'regex:/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/',
-                // 'unique:users',
-                Rule::unique('users')->ignore($this->id, 'id'),
+                Rule::unique('users')->ignore($this->user->id),
             ],
             'position' => 'required',
             'is_active' => 'required',
-            'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required',
+            'password' => 'required|min:6|',
         ];
     }
 
@@ -65,21 +62,18 @@ class EditRequest extends FormRequest
             'regex' => ':attribute không đúng định dạng',
             'max' => ':attribute không được quá :max ký tự',
             'min' => ':attribute phải lớn hơn :min ký tự',
-            'confirmed' => ':attribute không trùng khớp',
         ];
     }
 
     public function attributes()
     {
         return [
-            'name' => 'Tên tài khoản',
             'username' => 'Tài khoản đăng nhập',
             'email' => 'Email',
             'phone' => 'Số điện thoại',
             'role_id' => 'Role',
             'status' => 'Trạng thái',
             'password' => 'Mật khẩu',
-            'password_confirmation' => 'Mật khẩu nhập lại',
         ];
     }
 }

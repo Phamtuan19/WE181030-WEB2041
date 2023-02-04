@@ -27,6 +27,7 @@ class CreateProductsTable extends Migration
             $table->text('information'); // thông tin sản phẩm
             $table->text('detail');
             $table->timestamps();
+            $table->date('deleted_at')->nullable();
 
             $table->foreign('category_id')
                 ->references('id')

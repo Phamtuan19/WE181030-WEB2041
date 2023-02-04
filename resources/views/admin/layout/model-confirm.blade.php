@@ -19,7 +19,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
                 <form id="form-modal" action="" method="POST">
-                    @method('DELETE')
+                    {{-- @method('DELETE') --}}
                     @csrf
                     <button type="submit" class="btn btn-success">Xác nhận</button>
                 </form>

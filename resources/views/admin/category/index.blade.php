@@ -25,49 +25,62 @@
         <table class="table table-bordered" id="" width="100%" style="font-size: 14px;">
             <thead>
                 <tr style="background-color: #C0C0C0; color: #333;">
-                    <th class="align-middle text-center" scope="col">STT</th>
-                    <th class="align-middle text-center" scope="col">Danh mục cha</th>
-                    <th class="align-middle text-center" scope="col" width="100px">Edit</th>
+                    <th scope="col" width="60px">STT</th>
+                    <th scope="col" width="300px">Danh mục</th>
+                    <th scope="col" width="300px">danh mục con</th>
+                    <th scope="col" width="150px">Edit</th>
+                    <th scope="col" width="150px">Delete</th>
                 </tr>
             </thead>
             <tbody>
-                @if ($categories->count() > 0)
-                    @foreach ($categories as $key => $category)
-                        <tr>
-                            <td class="align-middle text-center" scope="row">{{ $key + 1 }}</td>
+                {{-- @if ($categories->count() > 0) --}}
+                {{-- @dd( showCategories($categories)) --}}
+                @foreach ($categories as $key => $category)
+                    <tr>
+                        <td scope="row">{{ $key + 1 }}</td>
 
-                            <td class="align-middle"><span>{{ $category->name }}</span></td>
+                        <td class="align-middle"><span>{{ $category['name'] }}</span></td>
 
-                            <td>
-                                <div class="d-flex justify-content-around">
-                                    <div class="">
-                                        <a href="{{ route('admin.category.show', $category->id) }}" class="btn" style="color: black;">
-                                            <i class="fa-regular fa-pen-to-square"></i>
-                                        </a>
-                                    </div>
-                                    <div class="remove">
-                                        <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-
-                                            <button class="btn" style="border: none; ">
-                                                <i class="fa-solid fa-trash" style="color: red"></i>
-                                                <input type="submit" value="Xóa" class="d-none">
-                                            </button>
-
-                                        </form>
-
-                                    </div>
-                                </div>
+                        @if ($category['children'])
+                            <td class="align-middle" style="text-align: left !important; padding-left: 40px !important">
+                                @foreach ($category['children'] as $children)
+                                    <p>--- {{ $children['name'] }}</p>
+                                @endforeach
                             </td>
-                        </tr>
-                    @endforeach
-                @endif
+                        @endif
+
+                        {{-- <td>
+                            <div class="d-flex justify-content-around">
+                                <div class="">
+                                    <a href="{{ route('admin.category.show', $category['id']) }}" class="btn"
+                                        style="color: black;">
+                                        <i class="fa-regular fa-pen-to-square"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="remove">
+                                <form action="{{ route('admin.category.destroy', $category['id']) }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+
+                                    <button class="btn" style="border: none; ">
+                                        <i class="fa-solid fa-trash" style="color: red"></i>
+                                        <input type="submit" value="Xóa" class="d-none">
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        </td> --}}
+                    </tr>
+                @endforeach
+                {{-- @endif --}}
 
             </tbody>
         </table>
     </div>
 
 @endsection
-
-

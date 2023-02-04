@@ -14,22 +14,29 @@ class Categories extends Model
     protected $fillable = [
         'name',
         'slug',
-        'category_id',
+        'parent_id',
     ];
 
-    // public function getAll($keywords = null) {
-    //     $products = DB::table($this->table)->orderBy('created_at', 'desc');
+    public function scopeSubCategory($query)
+    {
+        $query = $query->get();
 
-    //     if(!empty($keywords)){
-    //         $products = $products->where(function ($query) use ($keywords) {
-    //             $query->where('name', 'like', '%'. $keywords. '%');
-    //                 // ->orWhere('username', 'like', '%'. $keywords. '%');
-    //         });
-    //     }
+        $rootQuery = $query->where('parent_id', null)->toArray();
 
-    //     $products = $products->get();
+        foreach ($rootQuery as $key => $item) {
+            $rootQuery[$key]['children'] = $query->where('parent_id', $item['id'])->toArray();
 
-    //     return $products;
+            // foreach ($item['children'] as $child) {
+            //     $child->children = $query->where('parent_id', $child['id'])->toArray();
+            // }
 
-    // }
+        }
+
+        return $rootQuery;
+    }
+
+    public function children()
+    {
+        return $this->belongsTo(Category::class, 'id', 'parent_id');
+    }
 }

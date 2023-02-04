@@ -34,6 +34,59 @@ class Order extends Model
         'total_money',
     ];
 
+    public function scopeSearch($query, $orderStatus = null, $keyword = null, $sortArr = null)
+    {
+        $order_status_id = '';
+        if(!empty($orderStatus)){
+            $order_status_id = OrderStatus::select('id')->where('slug', 'like', '%'.$orderStatus.'%')->get();
+        }
+
+        // dd($order_status_id);
+
+        $keyword_ = '';
+        if(!empty($keyword)){
+            $keyword_ = Consignees::select('order_id')->where('phone', 'like', '%'.$keyword.'%')->get();
+        }
+
+        if(!empty($order_status_id)){
+            $query = $query->where('order_statusID', $order_status_id[0]->id);
+        }
+
+        // logic xắp xếp
+        $orderBy = 'created_at';
+        $orderType = 'desc';
+
+        if (!empty($sortArr) && is_array($sortArr)) {
+            if (!empty($sortArr['sortBy']) && !empty($sortArr['sortType'])) {
+                $orderBy = trim($sortArr['sortBy']);
+                $orderType = trim($sortArr['sortType']);
+            }
+        }
+
+        $query = $query->orderBy($orderBy, $orderType)->get();
+
+
+        // Xử lý tìm kiếm bằng input 
+        $arr = [];
+
+        if(!empty($keyword_)){
+            foreach($query as $item) {
+                foreach($keyword_ as $value) {
+                    if($item->id == $value->order_id){
+                        array_push($arr, $item);
+                    }
+                }
+            }
+
+            return $arr;
+        }
+
+        $arr = $query;
+
+        return $arr;
+
+    }
+
     public function orderDetail()
     {
         return $this->hasMany(OrderDetail::class);
@@ -44,12 +97,12 @@ class Order extends Model
         return $this->belongsTo(Customers::class, 'customer_id', 'id');
     }
 
-    public function orderStatus ()
+    public function orderStatus()
     {
         return $this->belongsTo(OrderStatus::class, 'order_statusID', 'id');
     }
 
-    public function consignees ()
+    public function consignees()
     {
         return $this->hasMany(Consignees::class);
     }

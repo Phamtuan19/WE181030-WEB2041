@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateOrderStatusTable extends Migration
+class AddSoftdeleteToProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateOrderStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('order_status', function (Blueprint $table) {
-            $table->tinyIncrements('id');
-            $table->string('name', 255)->nullable();
-            $table->string('slug', 255)->nullable();
-            $table->timestamps();
+        Schema::table('products', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -28,6 +25,8 @@ class CreateOrderStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order_status');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 }

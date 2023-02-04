@@ -22,7 +22,9 @@ class CategoryController extends Controller
     {
         $categories = new Categories();
 
-        $categories = $categories->get();
+        $categories = $categories->subCategory();
+
+        // dd($categories);
 
         return view('admin.category.index', compact('categories'));
     }
@@ -31,7 +33,7 @@ class CategoryController extends Controller
     {
         $categories = new Categories();
 
-        $categories = $categories->where('category_id', null)->get();
+        $categories = $categories->get();
 
         return view('admin.category.create', compact('categories'));
     }
@@ -56,7 +58,7 @@ class CategoryController extends Controller
         $data = [
             'name' => $request->name,
             'slug' => $request->slug,
-            'category_id' => $request->category_id,
+            'parent_id' => $request->category_id,
         ];
 
         $this->table->create($data);
@@ -64,13 +66,11 @@ class CategoryController extends Controller
         return back()->with('msg', 'Thêm danh mục thành công');
     }
 
-    public function show($id)
+    public function show(Categories $category)
     {
         $categories = new Categories();
 
-        $category = $categories->find($id);
-
-        $categories = $categories->where('category_id', null)->get();
+        $categories = $categories->get();
 
         return view('admin.category.show', compact('categories', 'category'));
     }

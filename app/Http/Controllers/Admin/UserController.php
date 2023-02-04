@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Models\Position;
 
+use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Validation\Rule;
+
+
 class UserController extends Controller
 {
     //
@@ -30,7 +35,7 @@ class UserController extends Controller
         $users = new User();
 
         $keywords = null;
-        if(!empty($request->keywords)){
+        if (!empty($request->keywords)) {
             $keywords = $request->keywords;
         }
 
@@ -71,32 +76,26 @@ class UserController extends Controller
     }
 
     // Hiển thị một dữ liệu theo tham số truyền vào.
-    public function show($id)
+    public function show(User $user)
     {
-        $user = $this->users->find($id);
+        $positions = Position::all();
 
-        return view('admin.users.edit', compact('user'));
+        return view('admin.users.edit', compact('user', 'positions'));
     }
 
     // Cập nhật dữ liệu một danh mục theo tham số truyền vào.
-    public function update(EditRequest $request, $id)
+    public function update(EditRequest $request, User $user)
     {
         // dd($request->all());
 
-        $data = [
-            'username' => $request->username,
-            'name' => $request->name,
-            'email' => $request->email,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'position_id' => $request->position,
-            'is_active' => $request->is_active,
-            'password' => Hash::make($request->password),
-        ];
+        $user->username = $request->username;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->position_id = $request->position;
+        $user->is_active = $request->is_active;
+        $user->password = Hash::make($request->password);
 
-        // dd($data);
-
-        $this->users->find($id)->update($data);
+        $user->save();
 
         return redirect()->back()->with('msg', 'Sửa thông tin người dùng thành công');
     }
@@ -111,6 +110,5 @@ class UserController extends Controller
 
     public function edit()
     {
-
     }
 }

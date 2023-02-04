@@ -20,6 +20,10 @@ use App\Http\Controllers\admin\OrderController;
 
 use App\Http\Controllers\admin\CutomerController;
 
+use App\Http\Controllers\admin\ImagesController;
+
+use App\Http\Controllers\admin\DashboardController;
+
 use Illuminate\Http\Request;
 
 /*
@@ -40,9 +44,13 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('admin')->name('admin.')->group(function () {
 
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
         Route::resource("users", UserController::class)->except(['edit']);
 
         Route::resource('products', ProductController::class);
+
+        // Route::post('products/erase/{id}', [ProductController::class, 'softErase'])->name('softErase');
 
         Route::resource('category', CategoryController::class)->except(['edit']);
 
@@ -51,6 +59,10 @@ Route::middleware('auth')->group(function () {
         Route::resource('orders', OrderController::class)->except('edit', 'store');
 
         Route::get('customers', [CutomerController::class, 'index'])->name('customers');
+
+        Route::get('images', [ImagesController::class, 'index'])->name('images');
+
+        Route::post('delete/image/{image}', [ImagesController::class, 'delete'])->name('delete_image');
     });
 });
 

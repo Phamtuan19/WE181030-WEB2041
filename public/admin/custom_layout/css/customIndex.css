@@ -19,10 +19,16 @@
     border-radius: 5px 5px 0 0;
 }
 
+th, td {
+    color: #333 !important;
+}
+
 th a {
     color: #333 !important;
     text-decoration: none !important;
 }
+
+d-block
 
 /* =============================================  End content =============================================*/
 
@@ -80,4 +86,21 @@ th, td {
 
 .right-left:hover {
     color: #4e73df !important;
+}
+
+/* ===================================== Modal Comfirm ============================================ */
+.content-modal i {
+    font-size: 50px !important;
+    display: block !important;
+    text-align: center !important;
+    color: red !important;
+}
+
+.content-modal_title {
+    text-align: center !important;
+    text-align: center !important;
+    margin-top: 18px;
+    margin-bottom: 0;
+    color: #007bff;
+    font-size: 18px;
 }

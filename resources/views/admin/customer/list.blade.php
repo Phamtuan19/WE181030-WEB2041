@@ -50,7 +50,7 @@
                     @foreach ($customers as $key => $customer)
                         <tr>
                             <td>{{ $key + 1 }}</td>
-                            <td>{{ $customer->full_name }}</td>
+                            <td>{{ $customer->name }}</td>
                             {{-- <td>{{ $customer->username }}</td> --}}
                             <td>{{ $customer->phone }}</td>
                             <td>{{ $customer->email }}</td>

@@ -36,18 +36,39 @@ function deleteFilePublic($files = [])
 
 // fomat money
 if (!function_exists('currency_format')) {
-    function currency_format($number, $suffix = 'đ') {
+    function currency_format($number, $suffix = '')
+    {
         if (!empty($number)) {
             return number_format($number, 0, ',', '.') . "{$suffix}";
         }
     }
 }
 
-function isActiveCustomer($email){
+function isActiveCustomer($email)
+{
     $count = Customers::where('email', $email)->where('is_active', 1)->count();
 
-    if($count > 0) {
+    if ($count > 0) {
         return true;
     }
     return false;
+}
+
+
+function showCategories($categories, $parentId = null, $char = '')
+{
+    if ($categories) {
+        foreach ($categories as $key => $category) {
+            if ($category->parent_id == $parentId) {
+
+                echo '<option value="'. $category->id .'">'. $char. $category->name. '</option>';
+
+                // Xóa chuyên mục đã lặp
+                unset($categories[$key]);
+
+                // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
+                showCategories($categories, $category->id, $char.'---- ');
+            }
+        }
+    }
 }

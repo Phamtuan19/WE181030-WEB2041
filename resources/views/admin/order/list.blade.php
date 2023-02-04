@@ -1,19 +1,6 @@
 @extends('admin.layout.index')
 
-@extends('admin.layout.model-confirm')
-
 @section('page_heading', 'Danh sách đơn hàng')
-
-@section('link')
-    <link rel="stylesheet" href="{{ asset('customer/css/modal-confirm.css') }}">
-@endsection
-
-@section('redirect')
-    <a href="" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fa-solid fa-left-long text-white-50 pr-3"></i>
-        Tạo đơn hàng
-    </a>
-@endsection
 
 @section('content')
 
@@ -24,17 +11,60 @@
     @endif
 
     <div class="container-fluid">
+
+        <form action="">
+            <div class="row">
+                <div class="col-lg-3 form-group">
+                    <select name="order_status" id="" class="form-control">
+                        <option value="">--Tất cả trạng thái--</option>
+                        @foreach ($orderStatus as $status)
+                            <option value="{{ $status->slug }}" {{ request()->order_status == $status->slug ? 'selected' : false }}>{{ $status->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-lg-3 form-group">
+                    <input type="text" name="keyword" class="form-control" placeholder="Nhập từ khóa tìm kiếm" value="{{ request()->keyword }}">
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" value="Tìm kiếm">
+                </div>
+            </div>
+        </form>
+
         <div class="row">
+
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Mã đơn hàng</th>
+                        <th scope="col">
+                            <a href="?sort-by=code_order&sort-type={{$sortType}}">Mã đơn hàng
+                            <i class="fa-solid fa-right-left right-left"></i>
+                            </a>
+                        </th>
                         <th scope="col">khách hàng</th>
                         <th scope="col">Số điện thoại</th>
-                        <th scope="col">Số lượng</th>
-                        <th scope="col">Tổng tiền</th>
-                        <th scope="col">Trạng thái</th>
-                        <th scope="col">Ngày đặt</th>
+                        <th scope="col">
+                            <a href="?sort-by=quantity&sort-type={{$sortType}}">Số lượng
+                            <i class="fa-solid fa-right-left right-left"></i>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a href="?sort-by=total_money&sort-type={{$sortType}}">Tổng tiền
+                            <i class="fa-solid fa-right-left right-left"></i>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a href="?sort-by=order_statusID&sort-type={{$sortType}}">Trạng thái
+                            <i class="fa-solid fa-right-left right-left"></i>
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a href="?sort-by=date_order&sort-type={{$sortType}}">Ngày đặt
+                            <i class="fa-solid fa-right-left right-left"></i>
+                            </a>
+                        </th>
                         <th scope="col" width="100px">Tác vụ</th>
                     </tr>
                 </thead>
@@ -69,13 +99,6 @@
                                             style="color: black;">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
-                                    </div>
-                                    <div class="">
-                                        <button class="btn btn-delete" id="btn" style="border: none; " data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal" data-id="{{ $order->code_order }}">
-                                            <i class="fa-solid fa-trash" style="color: red"></i>
-                                            <input type="submit" value="Xóa" class="d-none">
-                                        </button>
                                     </div>
                                 </div>
                             </td>

@@ -2,7 +2,7 @@
 
 @section('page_heading', 'Thêm sản phẩm')
 
-@extends('admin.layout.model-confirm')
+{{-- @extends('admin.layout.model-confirm') --}}
 
 @section('link')
     <link rel="stylesheet" href="{{ asset('customer/css/modal-confirm.css') }}">
@@ -155,15 +155,46 @@
         {{-- {!! $products->appends(['category' => request()->category, 'brand' => request()->brand, 'keyword' => request()->keyword])->links() !!} --}}
     </div>
 
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fs-5" id="exampleModalLabel" style="color: red">Cảnh Báo</h5>
+                    <button type="button" class="btn-close" style="border: none; background-color: #fff"
+                        data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fa-regular fa-circle-xmark"></i>
+                    </button>
+                </div>
+                <div class="modal-body content-modal">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <p class="content-modal_title">
+                        Xóa sản phẩm sẽ ảnh hướng tới dữ liệu !
+                        <br>
+                        Bạn chắc chắn muốn xóa ?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+                    <form id="form-modal" action="" method="POST">
+                        {{-- @method('PATCH') --}}
+                        @csrf
+                        <button type="submit" class="btn btn-success">Xác nhận</button>
+                        <input type="text" name="deleted_at" value="xóa mềm" hidden>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('js')
     <script>
-        $(document).ready(function () {
-            $(".btn-delete").click(function () {
-                $("#form-modal").attr('action', "http://127.0.0.1:8000/admin/products/" + $(this).data("id"));
-                console.log($("#form-modal").attr('action'));
-            })
-        })
+        // $(document).ready(function () {
+        //     $(".btn-delete").click(function () {
+        //         $("#form-modal").attr('action', "http://127.0.0.1:8000/admin/products/" + $(this).data("id"));
+        //         console.log($("#form-modal").attr('action'));
+        //     })
+        // })
     </script>
 @endsection

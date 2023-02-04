@@ -54,9 +54,7 @@
                     <label for="category_id">Danh mục cha</label>
                     <select name="category_id" id="category_id" class="form-control">
                         <option value="">--- Không ---</option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
-                        @endforeach
+                        {{ showCategories($categories) }}
                     </select>
 
                     @error('type')

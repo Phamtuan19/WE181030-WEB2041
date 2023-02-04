@@ -1,5 +1,7 @@
 @extends('admin.layout.index')
 
+@extends('admin.layout.model-confirm')
+
 @section('page_heading')
     chỉnh sửa sản phẩm: #{{ $product->code }}
 @endsection
@@ -103,6 +105,24 @@
                                         <label class="form-check-label" for="check_memory_{{ $value }}">
                                             {{ $value }}
                                         </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="container-fluid">
+                            <div class="row" style="margin-left: -1.5rem; margin-right: -1.5rem">
+                                {{-- @dd($product->image) --}}
+                                @foreach ($product->image as $item)
+                                    <div class="col-lg-2 ">
+                                        <img src="http://127.0.0.1:8000/{{ $item->image }}" alt=""
+                                            style="width: 100%;">
+                                        <i class="fa-regular fa-circle-xmark btn-delete"
+                                            style="position: absolute; cursor: pointer; border: none;"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                            data-id="{{ $item->id }}"></i>
                                     </div>
                                 @endforeach
                             </div>
@@ -215,6 +235,7 @@
             </div>
         </div>
     </form>
+
 @endsection
 
 @section('js')
@@ -223,32 +244,11 @@
         CKEDITOR.replace('title');
         CKEDITOR.replace('detail');
 
-        $(document).ready(function() {
-            if (window.File && window.FileList && window.FileReader) {
-                $("#files_image").on("change", function(e) {
-                    var files = e.target.files,
-                        filesLength = files.length;
-                    for (var i = 0; i < filesLength; i++) {
-                        var f = files[i]
-                        var fileReader = new FileReader();
-                        fileReader.onload = (function(e) {
-                            var file = e.target;
-                            $("<span class=\"pip\">" +
-                                "<img class=\"imageThumb\" src=\"" + e.target.result +
-                                "\" title=\"" + file.name + "\"/>" +
-                                "<br/><span class=\"remove\"><i class=\"fa-solid\ fa-circle-xmark\"></i></span>" +
-                                "</span>").insertAfter("#files_image");
-                            $(".remove").click(function() {
-                                $(this).parent(".pip").remove();
-                            });
-                        });
-                        fileReader.readAsDataURL(f);
-                    }
-                    console.log(files);
-                });
-            } else {
-                alert("Your browser doesn't support to File API")
-            }
-        });
+            $(document).ready(function() {
+                $(".btn-delete").click(function() {
+                    $("#form-modal").attr('action', "http://127.0.0.1:8000/admin/delete/image/" + $(this).data("id"));
+                    console.log($("#form-modal").attr('action'));
+                })
+            })
     </script>
 @endsection

@@ -17,16 +17,52 @@ class OrderController extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
 
         $orders = new Order();
         $products = new Product();
 
-        $orders = Order::select('*')->orderBy('id', 'DESC')->get();
+        $orderStatus = OrderStatus::all();
+
         $products = $products->get();
 
-        return view('admin.order.list', compact('orders', 'products'));
+        // xử lý tìm kiếm
+        $order_status = null;
+        $keyword = null;
+
+        if(!empty($request->order_status)) {
+            $order_status = $request->order_status;
+        }
+        if(!empty($request->keyword)) {
+            $keyword = $request->keyword;
+        }
+
+        $sortBy = $request->input('sort-by');
+        $sortType = $request->input('sort-type');
+
+        $allowSort = ['asc', 'desc'];
+
+        if (!empty($sortType) && in_array($sortType, $allowSort)) {
+            if ($sortType == 'desc') {
+                $sortType = 'asc';
+            } else {
+                $sortType = 'desc';
+            }
+        } else {
+            $sortType = 'asc';
+        }
+
+        $sortArr = [
+            'sortBy' => $sortBy,
+            'sortType' => $sortType,
+        ];
+
+        $orders = Order::search($order_status, $keyword, $sortArr);
+
+        // dd($orders);
+
+        return view('admin.order.list', compact('orders', 'products', 'orderStatus', 'sortType'));
     }
 
     public function show(Order $order)
@@ -38,8 +74,6 @@ class OrderController extends Controller
         $order_details = new OrderDetail();
 
         $order_details = $order_details->where('order_id', $order->id)->get();
-
-        // dd($order_details);
 
         return view('admin.order.show', compact('order', 'order_status', 'order_details'));
     }
@@ -65,10 +99,5 @@ class OrderController extends Controller
 
             return back()->with('msg', 'Thêm ghi chú thành công');
         }
-    }
-
-    public function destroy (Order $order) {
-
-        return back()->with('msg', 'Xóa thành công');
     }
 }

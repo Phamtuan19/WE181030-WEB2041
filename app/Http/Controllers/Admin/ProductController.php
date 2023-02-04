@@ -37,7 +37,7 @@ class ProductController extends Controller
 
         $brands = new Brand();
 
-        $categories = $categories->where('category_id', '8')->get();
+        $categories = $categories->where('parent_id', '8')->get();
 
         $brands = $brands->get();
 
@@ -199,7 +199,7 @@ class ProductController extends Controller
 
     public function update(Request $request, $id)
     {
-        // dd($request->method());
+        // dd(!empty($request->deleted_at));
 
         $products = new Product();
 
@@ -255,8 +255,10 @@ class ProductController extends Controller
         return back()->with('msg', 'Thay đổi thành công');
     }
 
-    public function destroy(Product $product)
+    public function destroy($id)
     {
+
+        $product = Product::find($id);
 
         if (is_array($product->image)) {
             $imageArr = [];
@@ -265,9 +267,28 @@ class ProductController extends Controller
             }
             deleteFilePublic($imageArr);
         }
-        
+
         $product->delete();
 
         return back()->with('msg', 'Xóa thành công');
     }
+
+    // public function softErase(Request $request, $id)
+    // {
+    //     // dd($request->method());
+
+    //     // if ($request->method() == 'PATCH') {
+
+    //     $product = Product::find($id);
+
+    //     // dd($product);
+
+    //     $product->deleted_at = date('Y-m-d H:i:s');
+
+    //     $product->save();
+
+    //     return back()->with('msg', 'Đã đưa sản phẩm vào thùng rác');
+    //     // }
+
+    // }
 }

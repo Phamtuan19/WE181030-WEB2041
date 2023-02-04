@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Brand;
@@ -98,7 +99,7 @@ class Product extends Model
             }
         }
 
-        $query = $query->orderBy($orderBy, $orderType)->get();
+        $query = $query->orderBy($orderBy, $orderType)->where('deleted_at', null)->get();
 
         return $query;
     }
