@@ -25,8 +25,8 @@
                     </div>
                     <div class="" style="text-align: center">
                         <div class="form-group" style="margin-bottom: 0 !important ; padding: 12px 0 0 0">
-                            <label for="">{{ $image->product->name }}</label>
-                            <label for="">{{ date_format($image->created_at, "H:i:s / d-m-Y ") }}</label>
+                            {{-- <label for="">{{ $image->product->name }}</label>
+                            <label for="">{{ date_format($image->created_at, "H:i:s / d-m-Y ") }}</label> --}}
                             <br>
                         </div>
                     </div>

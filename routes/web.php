@@ -58,7 +58,7 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('orders', OrderController::class)->except('edit', 'store');
 
-        Route::get('customers', [CutomerController::class, 'index'])->name('customers');
+        Route::resource('customers', CutomerController::class);
 
         Route::get('images', [ImagesController::class, 'index'])->name('images');
 

@@ -28,7 +28,9 @@ th a {
     text-decoration: none !important;
 }
 
-d-block
+input, select {
+    height: 46px !important;
+}
 
 /* =============================================  End content =============================================*/
 

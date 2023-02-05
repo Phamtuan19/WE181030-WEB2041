@@ -35,12 +35,42 @@ class UserController extends Controller
         $users = new User();
 
         $keywords = null;
+
+        $is_active = null;
+
+        if(!empty($request->is_active)){
+            $is_active = $request->is_active;
+        }
+
         if (!empty($request->keywords)) {
             $keywords = $request->keywords;
         }
 
-        $users = $users->getAll($keywords);
-        return view('admin.users.list', compact('users'));
+        // sử lý xắp xếp
+        $sortBy = $request->input('sort-by');
+        $sortType = $request->input('sort-type');
+
+        $allowSort = ['asc', 'desc'];
+
+        if (!empty($sortType) && in_array($sortType, $allowSort)) {
+            if ($sortType == 'desc') {
+                $sortType = 'asc';
+            } else {
+                $sortType = 'desc';
+            }
+        } else {
+            $sortType = 'asc';
+        }
+
+        $sortArr = [
+            'sortBy' => $sortBy,
+            'sortType' => $sortType,
+        ];
+
+        $users = $users->searchUser($is_active, $keywords, $sortArr);
+
+
+        return view('admin.users.list', compact('users', 'sortType'));
     }
 
     public function create()
@@ -63,9 +93,9 @@ class UserController extends Controller
             'position_id' => $request->position,
             'is_active' => 1,
             'password' => Hash::make($request->password),
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
-
-        // dd($data);
 
         $create_user = $users->insert($data);
 

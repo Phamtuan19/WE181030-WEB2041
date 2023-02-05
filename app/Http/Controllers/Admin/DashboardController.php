@@ -12,21 +12,28 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $orders = Order::all();
-        $orderSuccess = [];
+        $orders = new Order();
 
+        $orderUnconfimred = $orders->where('order_statusID', 1)->get();
+
+        $orderConfirmed = $orders->where('order_statusID', 2)->get();
+
+        $orderShipping = $orders->where('order_statusID', 3)->get();
+
+        $orderSuccess = $orders->where('order_statusID', 4)->get();
+
+        $orderError = $orders->where('order_statusID', 5)->get();
+
+        $orders = $orders->get();
+
+        $totalOrderProduct = 0;
         $totalOrderSuccess = 0;
-        foreach ($orders as $order) {
-            if($order->order_statusID == 4){
+        foreach ($orderSuccess as $item) {
+            $totalOrderSuccess += $item->total_money;
 
-                $totalOrderSuccess += $order->total_money;
-
-                array_push($orderSuccess, $order);
-            }
+            $totalOrderProduct += $item->quantity;
         }
-        // dd($a);
-        // dd(count($orderSuccess));
 
-        return view('admin.dashboard.dashboard', compact('orderSuccess', 'totalOrderSuccess'));
+        return view('admin.dashboard.dashboard', compact('orderSuccess', 'totalOrderSuccess', 'totalOrderProduct', 'orderError', 'orderUnconfimred', 'orderConfirmed', 'orderShipping'));
     }
 }

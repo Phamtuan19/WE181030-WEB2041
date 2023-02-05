@@ -52,24 +52,43 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getAll ($keywords = null)
+    public function scopeSearchUser($query, $is_active = null, $keywords = null, $sortArr)
     {
-        $users = DB::table($this->table)
-        ->orderBy('created_at', 'DESC');
+        if (!empty($is_active)) {
+            if ($is_active == "active") {
+                $active = 1;
+            } else {
+                $active = 0;
+            }
+            $query = $query->where('is_active', $active);
+        }
+        // dd($keywords);
 
-        if(!empty($keywords)) {
-            $users = $users->where(function ($query) use ($keywords) {
-                $query->where('name', 'like', '%'. $keywords. '%')
-                    ->orWhere('username', 'like', '%'. $keywords. '%');
+        if (!empty($keywords)) {
+
+            $query = $query->where(function ($query) use ($keywords) {
+                $query = $query->where('username', 'like', '%' . $keywords . '%')
+                    ->orwhere('phone', 'like', '%' . $keywords . '%');
             });
         }
 
-        $users = $users->paginate(3)->withQueryString();
+        // logic xắp xếp
+        $orderBy = 'created_at';
+        $orderType = 'desc';
+
+        if (!empty($sortArr) && is_array($sortArr)) {
+            if (!empty($sortArr['sortBy']) && !empty($sortArr['sortType'])) {
+                $orderBy = trim($sortArr['sortBy']);
+                $orderType = trim($sortArr['sortType']);
+            }
+        }
+
+        $query = $query->orderBy($orderBy, $orderType)->get();
         // $users->get();
-        return $users;
+        return $query;
     }
 
-    public function position ()
+    public function position()
     {
         return $this->belongsTo(Position::class);
     }
