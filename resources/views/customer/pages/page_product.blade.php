@@ -20,8 +20,8 @@
                             <div class="swiper-wrapper">
                                 @foreach ($product->image as $value)
                                     <div class="d-flex justify-content-center swiper-slide">
-                                        <img src="http://127.0.0.1:8000/{{ $value->image }}" class="product_img"
-                                            alt="" data-image="{{ $value->image }}">
+                                        <img src="{{ $value->path }}" class="product_img"
+                                            alt="" data-image="{{ $value->path }}">
                                     </div>
                                 @endforeach
                             </div>
@@ -35,7 +35,7 @@
                             @foreach ($product->image as $value)
                                 <div class=" d-flex justify-content-center swiper-slide"
                                     style="border: 1px solid #ededed; padding: 2px; overflow: hidden;">
-                                    <img src="http://127.0.0.1:8000/{{ $value->image }}" class="product_img_mini"
+                                    <img src="{{ $value->path }}" class="product_img_mini"
                                         alt="">
                                 </div>
                             @endforeach

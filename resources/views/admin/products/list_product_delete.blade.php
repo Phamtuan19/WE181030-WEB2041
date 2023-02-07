@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 
-@section('page_heading', 'Thêm sản phẩm')
+@section('page_heading', 'Danh sách sản phẩm đã xóa')
 
 {{-- @extends('admin.layout.model-confirm') --}}
 
@@ -9,10 +9,10 @@
 @endsection
 
 @section('redirect')
-    <a href="{{ route('admin.products.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    {{-- <a href="{{ route('admin.products.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
         <i class="fa-solid fa-plus  text-white-50 pr-2" style="color: white !important"></i>
         Thêm sản phẩm
-    </a>
+    </a> --}}
 @endsection
 
 @section('content')
@@ -187,7 +187,7 @@
                         @csrf
                         @method('PATCH')
                         <button type="submit" class="btn btn-success">Xác nhận</button>
-                        <input type="text" name="deleted_at" value="xóa mềm" hidden>
+                        <input type="text" name="duty" value="restore" hidden>
                     </form>
                 </div>
             </div>

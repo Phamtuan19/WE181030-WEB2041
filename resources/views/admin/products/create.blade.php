@@ -41,7 +41,7 @@
                         <select name="category" id="category" class="form-control">
                             <option value="">--- Chọn danh mục ---</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
 
@@ -72,7 +72,7 @@
                                 @foreach ($colors as $index => $color)
                                     <div class="form-check col-lg-3 mb-3">
                                         <input class="form-check-input" type="checkbox" name="color[]"
-                                            value="{{ $index }}" id="check_color_{{ $index }}">
+                                            value="{{ $index }}" id="check_color_{{ $index }}" style="margin-top: -0.6rem !important;">
                                         <label class="form-check-label" for="check_color_{{ $index }}">
                                             {{ $index }}
                                         </label>
@@ -89,7 +89,7 @@
                                 @foreach ($memory as $value)
                                     <div class="form-check col-lg-3 mb-3">
                                         <input class="form-check-input" type="checkbox" name="memory[]"
-                                            value="{{ $value }}" id="check_memory_{{ $value }}">
+                                            value="{{ $value }}" id="check_memory_{{ $value }}" style="margin-top: -0.6rem !important;">
                                         <label class="form-check-label" for="check_memory_{{ $value }}">
                                             {{ $value }}
                                         </label>
@@ -147,10 +147,9 @@
                     </div>
 
                     <div class="field form-group">
-                        <label for="product_image">Ảnh sản phẩm</label>
-                        <input type="file" id="files_image" class="form-control" name="images[]" multiple
-                            style="padding: 7.6px 12px" />
-                        @error('product_image')
+                        <label for="images">Ảnh sản phẩm</label>
+                        <input type="file" id="images" class="form-control" name="images[]" multiple />
+                        @error('images')
                             <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
                         @enderror
                     </div>

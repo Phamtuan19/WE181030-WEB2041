@@ -29,7 +29,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.category.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="container-fluid">
             <div class="row">
@@ -51,8 +51,8 @@
                 </div>
 
                 <div class="form-group col-lg-6">
-                    <label for="category_id">Danh mục cha</label>
-                    <select name="category_id" id="category_id" class="form-control">
+                    <label for="parent_id">Danh mục cha</label>
+                    <select name="parent_id" id="parent_id" class="form-control">
                         <option value="">--- Không ---</option>
                         {{ showCategories($categories) }}
                     </select>

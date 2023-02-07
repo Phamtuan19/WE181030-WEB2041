@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="product-img">
                                     <a href="{{ route('store.product', $product->id) }}">
-                                        <img src="http://127.0.0.1:8000/{{ $product->image[0]->image }}"
+                                        <img src="{{ $product->image[0]->path }}"
                                             class="product-image" alt="">
                                     </a>
                                 </div>
@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="product-img">
                                     <a href="{{ route('store.product', $product->id) }}">
-                                        <img src="http://127.0.0.1:8000/{{ $product->image[0]->image }}" class="product-image"
+                                        <img src="{{ $product->image[0]->path }}" class="product-image"
                                             alt="">
                                     </a>
                                 </div>

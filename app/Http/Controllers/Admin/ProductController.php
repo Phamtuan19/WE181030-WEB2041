@@ -19,6 +19,8 @@ use App\Models\Image;
 
 use App\Models\Brand;
 
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+
 class ProductController extends Controller
 {
     //
@@ -37,7 +39,9 @@ class ProductController extends Controller
 
         $brands = new Brand();
 
-        $categories = $categories->where('parent_id', '8')->get();
+        $category_parent = $categories->where('id', 1)->get();
+
+        $subcategory = $categories->where('parent_id', $category_parent[0]->id)->get();
 
         $brands = $brands->get();
 
@@ -45,7 +49,7 @@ class ProductController extends Controller
 
         $categoryKey = null;
 
-        $brnadKey = null;
+        $brandKey = null;
 
         $keyword = null;
 
@@ -54,7 +58,7 @@ class ProductController extends Controller
         }
 
         if (!empty($request->brand)) {
-            $brnadKey = $request->brand;
+            $brandKey = $request->brand;
         }
 
         if (!empty($request->keyword)) {
@@ -82,15 +86,23 @@ class ProductController extends Controller
             'sortType' => $sortType,
         ];
 
-        $products = $products->searchAdmin($categoryKey, $brnadKey, $keyword, $sortArr);
+        $products = $products->searchAdmin($categoryKey, $brandKey, $keyword, $sortArr);
 
-        return view('admin.products.index', compact('products', 'categories', 'brands', 'sortType'));
+
+        return view('admin.products.index', compact('category_parent', 'subcategory', 'products', 'brands', 'sortType'));
     }
 
     public function create()
     {
-        $categories = DB::table('category')->get();
-        $brands = DB::table('brand')->get();
+        $categories = new Categories();
+
+        $category = $categories->where('id', 1)->get();
+
+        $categories = $categories->where('parent_id', $category[0]->id)->get();
+
+        // dd($categories);
+
+        $brands = DB::table('brands')->get();
 
         $colors = [
             'Yellow' => '#FFFF00',
@@ -115,12 +127,11 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        // dd($request->all());
+        $products = new Product();
+
         $attributes = new Attribute();
 
-        $images = new Image();
-
-        $public_path = 'uploads/products/';
+        $table_Images = new Image();
 
         $dataProduct = [
             'code' => rand(100000, 9000000),
@@ -135,46 +146,69 @@ class ProductController extends Controller
             'detail' => $request->detail,
         ];
 
-        $createProduct = $this->table->create($dataProduct);
 
-        if ($createProduct) {
-            // dd($request->file('images'));
-            if ($request->file('images')) {
-                $files = $request->file('images');
-                $imagesJson = uploadFile($public_path, $files);
-            }
+        $saveProduct = $products->create($dataProduct);
 
-            foreach ($imagesJson as $image) {
-                $dataImage = [
-                    'product_id' => $createProduct->id,
-                    'image' => $image,
-                    'is_avatar' => 0,
-                ];
+        if ($saveProduct) {
 
-                $images->insert($dataImage);
-            }
-
+            // Save Table Attribute
             $dataAttribute = [
-                'product_id' => $createProduct->id,
+                'product_id' => $saveProduct->id,
                 'color' => json_encode($request->color),
                 'memory' => json_encode($request->memory),
             ];
 
             $attributes->insert($dataAttribute);
 
+            // Save Cloudinary and Table images
+            if ($request->hasFile('images')) {
+
+                $images = $request->file('images');
+
+                foreach ($images as $index => $image) {
+                    $url = Cloudinary::upload($image->getRealPath(), [
+                        'folder' => 'duan_laravel/Products',
+                    ]);
+
+                    if ($index == 0) {
+                        $dataImage = [
+                            'product_id' => $saveProduct->id,
+                            'path' => $url->getSecurePath(),
+                            'public_id' => $url->getPublicId(),
+                            'is_avatar' => 1,
+                            'created_at' => date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ];
+                    } else {
+                        $dataImage = [
+                            'product_id' => $saveProduct->id,
+                            'path' => $url->getSecurePath(),
+                            'public_id' => $url->getPublicId(),
+                            'is_avatar' => null,
+                            'created_at' => date('Y-m-d H:i:s'),
+                            'updated_at' => date('Y-m-d H:i:s'),
+                        ];
+                    }
+
+                    $table_Images->insert($dataImage);
+                }
+            }
+
             return back()->with('msg', 'Thêm sản phẩm thành công');
         }
-
-        return back()->with('msg', 'Thêm sản phẩm thất bại');
     }
 
     public function show($id)
     {
         $product = $this->table->find($id);
 
-        $categories = DB::table('category')->get();
+        $categories = new Categories();
 
-        $brands = DB::table('brand')->get();
+        $brands = new Brand();
+
+        $categories = $categories->where('parent_id', 1)->get();
+
+        $brands = $brands->get();
 
         $colors = [
             'Yellow',
@@ -197,21 +231,13 @@ class ProductController extends Controller
         return view('admin.products.show', compact('product', 'categories', 'brands', 'colors', 'memory'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        // dd(!empty($request->deleted_at));
-
-        $products = new Product();
-
-        $product = $products->find($id);
-
         $attributes = new Attribute();
 
-        $attribute = $attributes->where('product_id', $id)->get()[0];
+        $attribute = $attributes->where('product_id', $product->id)->get()[0];
 
-        $images = new Image();
-
-        $public_path = 'uploads/products/';
+        $table_Images = new Image();
 
 
         // Save Table Product
@@ -224,35 +250,41 @@ class ProductController extends Controller
         $product->information = $request->information;
         $product->detail = $request->detail;
 
-        $product->save();
+        $saveProduct = $product->save();
 
-        // Save Table Attribute
-        if ($request->color) {
+        if ($saveProduct) {
+
+            // Save Table Attribute
             $attribute->color = json_encode($request->color);
-        }
-        if ($request->memory) {
             $attribute->memory = json_encode($request->memory);
-        }
 
-        $attribute->update();
+            $attribute->save();
 
-        // Save Table Image
-        if (!empty($request->images)) {
+            // Save Cloudinary and Table images
+            if ($request->hasFile('images')) {
 
-            $files = $request->file('images');
-            $imagesJson = uploadFile($public_path, $files);
+                $images = $request->file('images');
 
-            foreach ($imagesJson as $iamge) {
-                $dataImage = [
-                    'product_id' => $id,
-                    'image' => $iamge,
-                    'is_avatar' => 0,
-                ];
-                $images->insert($dataImage);
+                foreach ($images as $image) {
+                    $url = Cloudinary::upload($image->getRealPath(), [
+                        'folder' => 'duan_laravel/Products',
+                    ]);
+
+                    $dataImage = [
+                        'product_id' => $product->id,
+                        'path' => $url->getSecurePath(),
+                        'public_id' => $url->getPublicId(),
+                        'is_avatar' => null,
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'updated_at' => date('Y-m-d H:i:s'),
+                    ];
+
+                    $table_Images->insert($dataImage);
+                }
             }
-        }
 
-        return back()->with('msg', 'Thay đổi thành công');
+            return back()->with('msg', 'Thêm sản phẩm Thành công');
+        }
     }
 
     public function destroy($id)
@@ -273,22 +305,85 @@ class ProductController extends Controller
         return back()->with('msg', 'Xóa thành công');
     }
 
-    // public function softErase(Request $request, $id)
-    // {
-    //     // dd($request->method());
+    public function softErase(Request $request, Product $product)
+    {
 
-    //     // if ($request->method() == 'PATCH') {
+        // dd($request->method());
+        if ($request->method() == 'PATCH') {
 
-    //     $product = Product::find($id);
+            if ($request->duty == 'restore') {
+                $product->deleted_at = null;
 
-    //     // dd($product);
+                $product->save();
 
-    //     $product->deleted_at = date('Y-m-d H:i:s');
+                return back()->with('msg', 'Khôi phục sản phẩm thành công');
+            }
 
-    //     $product->save();
+            $product->deleted_at = date('Y-m-d H:i:s');
 
-    //     return back()->with('msg', 'Đã đưa sản phẩm vào thùng rác');
-    //     // }
+            $product->save();
 
-    // }
+            return back()->with('msg', 'Đã đưa sản phẩm vào thùng rác');
+        }
+    }
+
+    public function listSoftErase(Request $request)
+    {
+        $products = new Product();
+
+        $categories = new Categories();
+
+        $brands = new Brand();
+
+        $category_parent = $categories->where('id', 1)->get();
+
+        $subcategory = $categories->where('parent_id', $category_parent[0]->id)->get();
+
+        $brands = $brands->get();
+
+        // sử lý tìm kiếm
+
+        $categoryKey = null;
+
+        $brandKey = null;
+
+        $keyword = null;
+
+        if (!empty($request->category)) {
+            $categoryKey = $request->category;
+        }
+
+        if (!empty($request->brand)) {
+            $brandKey = $request->brand;
+        }
+
+        if (!empty($request->keyword)) {
+            $keyword = $request->keyword;
+        }
+
+        // sử lý xắp xếp
+        $sortBy = $request->input('sort-by');
+        $sortType = $request->input('sort-type');
+
+        $allowSort = ['asc', 'desc'];
+
+        if (!empty($sortType) && in_array($sortType, $allowSort)) {
+            if ($sortType == 'desc') {
+                $sortType = 'asc';
+            } else {
+                $sortType = 'desc';
+            }
+        } else {
+            $sortType = 'asc';
+        }
+
+        $sortArr = [
+            'sortBy' => $sortBy,
+            'sortType' => $sortType,
+        ];
+
+        $products = $products->searchProductDelete($categoryKey, $brandKey, $keyword, $sortArr);
+
+        return view('admin.products.list_product_delete', compact('category_parent', 'subcategory', 'products', 'brands', 'sortType'));
+    }
 }

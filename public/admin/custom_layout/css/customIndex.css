@@ -32,6 +32,10 @@ input, select {
     height: 46px !important;
 }
 
+input[type="file"] {
+    padding: 7px 12px !important;
+}
+
 /* =============================================  End content =============================================*/
 
 

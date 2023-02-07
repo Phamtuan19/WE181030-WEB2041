@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAttributeTable extends Migration
+class CreatePositionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateAttributeTable extends Migration
      */
     public function up()
     {
-        Schema::create('attribute', function (Blueprint $table) {
-            $table->integerIncrements('id');
-            $table->string('color');
-            $table->string('memory')->nullable();
+        Schema::create('positions', function (Blueprint $table) {
+            $table->tinyInteger('id')->autoIncrement();
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateAttributeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attribute');
+        Schema::dropIfExists('positions');
     }
 }

@@ -9,7 +9,7 @@ class Categories extends Model
 {
     use HasFactory;
 
-    protected $table = 'category';
+    protected $table = 'categories';
 
     protected $fillable = [
         'name',
@@ -17,7 +17,7 @@ class Categories extends Model
         'parent_id',
     ];
 
-    public function scopeSubCategory($query)
+    public function subCategory($query)
     {
         $query = $query->get();
 
@@ -37,6 +37,6 @@ class Categories extends Model
 
     public function children()
     {
-        return $this->belongsTo(Category::class, 'id', 'parent_id');
+        return $this->belongsTo(Categories::class, 'id', 'parent_id');
     }
 }

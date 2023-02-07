@@ -43,8 +43,8 @@
         </div>
 
         <div class="form-group mb-4">
-            <label for="avatar">Ảnh đại Thương hiệu</label>
-            <input type="file" name="avatar[]" class="form-control" id="avatar" style="padding: 3px 12px">
+            <label for="image">Ảnh đại Thương hiệu</label>
+            <input type="file" name="image" class="form-control" id="image" style="padding: 3px 12px">
 
             @error('avatar')
                 <span class="text-danger" style="font-size: 16px">{{ $message }}</span>

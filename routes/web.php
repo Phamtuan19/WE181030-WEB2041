@@ -50,9 +50,11 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('products', ProductController::class);
 
-        // Route::post('products/erase/{id}', [ProductController::class, 'softErase'])->name('softErase');
+        Route::patch('product/softErase/{product}', [ProductController::class, 'softErase'])->name('softErase');
 
-        Route::resource('category', CategoryController::class)->except(['edit']);
+        Route::get('product/erase', [ProductController::class, 'listSoftErase'])->name('erase');
+
+        Route::resource('categories', CategoryController::class)->except(['edit']);
 
         Route::resource('brand', BrandController::class)->except(['edit']);
 
@@ -60,9 +62,10 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('customers', CutomerController::class);
 
-        Route::get('images', [ImagesController::class, 'index'])->name('images');
+        Route::resource('images', ImagesController::class);
 
-        Route::post('delete/image/{image}', [ImagesController::class, 'delete'])->name('delete_image');
+        Route::patch('images/avatar/{image}', [ImagesController::class, 'updateAvatar'])->name('avatar');
+
     });
 });
 

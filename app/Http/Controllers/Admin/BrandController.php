@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
+
 use App\Models\Brand;
+
 use Illuminate\Validation\Rule;
+
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BrandController extends Controller
 {
@@ -32,31 +37,40 @@ class BrandController extends Controller
 
     public function store(Request $request)
     {
+        $brands = new Brand();
+
         $rules = [
-            'name' => 'required|unique:brand',
-            'avatar' => 'required',
+            'name' => 'required|unique:brands',
+            'image' => 'required|mimes:jpeg,png,jpg',
         ];
 
         $message = [
             'name.required' => 'Tên thương hiệu không được để trống',
             'name.unique' => 'Tên thương hiệu đã tồn tại',
-            'avatar.required' => 'Hình ảnh thương hiệu không được để trống',
+            'image.required' => 'Hình ảnh thương hiệu không được để trống',
+            'image.mimes' => 'Hình ảnh phải là loại jpeg, png, jpg',
         ];
 
         $request->validate($rules, $message);
 
-        $public_path = 'uploads/brand/';
 
-        $brand_image = uploadFile($public_path, $request->file('avatar'));
+        // $brand_image = uploadFile($public_path, $request->file('avatar'));
 
-        $data = [
-            'name' => $request->name,
-            'brand_image' => $brand_image[0],
-        ];
+        if ($request->hasFile('image')) {
 
-        $this->table->create($data);
+            $url = Cloudinary::upload($request->file('image')->getRealPath(), [
+                'folder' => 'duan_laravel/Brand',
+            ])->getSecurePath();
 
-        return back()->with('msg', 'Thêm danh thương hiệu thành công');
+            $data = [
+                'name' => $request->name,
+                'path_image' => $url,
+            ];
+
+            $brands->insert($data);
+
+            return back()->with('msg', 'Thêm danh thương hiệu thành công');
+        }
     }
 
     public function show($id)
@@ -98,7 +112,7 @@ class BrandController extends Controller
         }
 
         if (!empty($request->avatar)) {
-            
+
             $brand->name = $request->name;
             $brand->brand_image = $brand_image[0];
 

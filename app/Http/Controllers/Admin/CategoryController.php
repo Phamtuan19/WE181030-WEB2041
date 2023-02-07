@@ -22,7 +22,7 @@ class CategoryController extends Controller
     {
         $categories = new Categories();
 
-        $categories = $categories->subCategory();
+        $categories = $categories->get();
 
         // dd($categories);
 
@@ -40,9 +40,12 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+
+        $categories = new Categories();
+
         $rules = [
-            'name' => 'required|unique:category|max:255',
-            'slug' => 'required|unique:category|max:255',
+            'name' => 'required|unique:categories|max:255',
+            'slug' => 'required|unique:categories|max:255',
         ];
 
         $message = [
@@ -58,10 +61,12 @@ class CategoryController extends Controller
         $data = [
             'name' => $request->name,
             'slug' => $request->slug,
-            'parent_id' => $request->category_id,
+            'parent_id' => $request->parent_id,
         ];
 
-        $this->table->create($data);
+        // dd($data);
+
+        $categories->insert($data);
 
         return back()->with('msg', 'Thêm danh mục thành công');
     }

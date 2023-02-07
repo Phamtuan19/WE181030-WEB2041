@@ -35,7 +35,7 @@
                 <tr style="background-color: #C0C0C0; color: #333;">
                     <th class="align-middle text-center" scope="col" width="100px">STT</th>
                     <th class="align-middle text-center" scope="col" width="150px">Ảnh đại diện</th>
-                    <th class="align-middle text-center" scope="col" >Tên danh mục</th>
+                    <th class="align-middle text-center" scope="col">Tên danh mục</th>
                     <th class="align-middle text-center" scope="col" width="200px">Edit</th>
                     <th class="align-middle text-center" scope="col" width="200px">Remove</th>
                 </tr>
@@ -48,9 +48,8 @@
 
                             <td>
                                 <div class="d-flex justify-content-center">
-                                    @if (!empty($brand->brand_image))
-                                        {{-- @dd(json_decode($product->images, true)) --}}
-                                        <img src="{{ asset($brand->brand_image) }}" alt=""
+                                    @if (!empty($brand->path_image))
+                                        <img src="{{ $brand->path_image }}" alt=""
                                             style="width: 50px; height: 50px;">
                                     @endif
                                 </div>
@@ -61,7 +60,8 @@
                             <td>
                                 <div class="d-flex justify-content-around">
                                     <div>
-                                        <a href="{{ route('admin.brand.show', $brand->id) }}" class="btn" style="color: black;">
+                                        <a href="{{ route('admin.brand.show', $brand->id) }}" class="btn"
+                                            style="color: black;">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                     </div>
@@ -83,6 +83,10 @@
                             </td>
                         </tr>
                     @endforeach
+                @else
+                    <td colspan="5">
+                        <h3>Không có thương hiệu sản phẩm</h3>
+                    </td>
                 @endif
 
             </tbody>
@@ -90,5 +94,3 @@
     </div>
 
 @endsection
-
-

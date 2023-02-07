@@ -15,6 +15,7 @@ class Image extends Model
     protected $fillable = [
         'product_id',
         'image',
+        'public_id',
         'is_avatar',
     ];
 

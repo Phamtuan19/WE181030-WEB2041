@@ -113,8 +113,8 @@
                             <tr>
                                 <th>1</th>
                                 <td>
-                                    <img src="http://127.0.0.1:8000/{{ $detail->product->image[0]->image }}" alt=""
-                                        style="width: 80px; height: 60px;">
+                                    <img src="{{ $detail->product->image[0]->path }}" alt=""
+                                        style="width: 80px; height: 80px !important">
                                 </td>
                                 <th>{{ $detail->product->name }}</th>
                                 <td>{{ $detail->quantity }}</td>

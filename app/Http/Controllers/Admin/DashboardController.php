@@ -14,26 +14,30 @@ class DashboardController extends Controller
     {
         $orders = new Order();
 
-        $orderUnconfimred = $orders->where('order_statusID', 1)->get();
+        $orders = $orders->dashboard();
 
-        $orderConfirmed = $orders->where('order_statusID', 2)->get();
+        // dd($orders);
 
-        $orderShipping = $orders->where('order_statusID', 3)->get();
+        // $orderUnconfimred = $orders->where('order_statusID', 1)->get();
 
-        $orderSuccess = $orders->where('order_statusID', 4)->get();
+        // $orderConfirmed = $orders->where('order_statusID', 2)->get();
 
-        $orderError = $orders->where('order_statusID', 5)->get();
+        // $orderShipping = $orders->where('order_statusID', 3)->get();
 
-        $orders = $orders->get();
+        // $orderSuccess = $orders->where('order_statusID', 4)->get();
 
-        $totalOrderProduct = 0;
-        $totalOrderSuccess = 0;
-        foreach ($orderSuccess as $item) {
-            $totalOrderSuccess += $item->total_money;
+        // $orderError = $orders->where('order_statusID', 5)->get();
 
-            $totalOrderProduct += $item->quantity;
-        }
+        // $orders = $orders->get();
 
-        return view('admin.dashboard.dashboard', compact('orderSuccess', 'totalOrderSuccess', 'totalOrderProduct', 'orderError', 'orderUnconfimred', 'orderConfirmed', 'orderShipping'));
+        // $totalOrderProduct = 0;
+        // $totalOrderSuccess = 0;
+        // foreach ($orderSuccess as $item) {
+        //     $totalOrderSuccess += $item->total_money;
+
+        //     $totalOrderProduct += $item->quantity;
+        // }
+
+        return view('admin.dashboard.dashboard', compact('orders'));
     }
 }

@@ -9,7 +9,7 @@ class Attribute extends Model
 {
     use HasFactory;
 
-    protected $table = 'attribute';
+    protected $table = 'attributes';
 
     protected $primaryKey = 'id';
 
@@ -19,5 +19,5 @@ class Attribute extends Model
         'memory'
     ];
 
-    
+
 }

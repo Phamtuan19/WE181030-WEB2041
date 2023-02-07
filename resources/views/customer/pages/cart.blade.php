@@ -22,11 +22,11 @@
                         <table class="table">
                             <thead>
                                 <tr style="font-size: 14px;">
-                                    <th scope="col" width="100px">Hình ảnh</th>
-                                    <th scope="col">Tên sản phẩm</th>
-                                    <th scope="col">Giá sản phẩm</th>
-                                    <th scope="col">Số lượng</th>
-                                    <th scope="col" width="50px"></th>
+                                    <th scope="col" width="200px">Hình ảnh</th>
+                                    <th scope="col" style="text-align: left !important;">Tên sản phẩm</th>
+                                    <th scope="col" style="text-align: left !important;">Giá sản phẩm</th>
+                                    <th scope="col" style="text-align: left !important;">Số lượng</th>
+                                    <th scope="col" width="50px" style="text-align: left !important;"></th>
                                 </tr>
                             </thead>
                             <tbody class="cart-table_body">
@@ -111,9 +111,9 @@
                         return `
                     <tr style="vertical-align: middle;">
                         <td>
-                            <img src="http://127.0.0.1:8000/${e.image}" alt="" style="width: 100%;">
+                            <img src="${e.image}" alt="" style="width: 100%;">
                         </td>
-                        <td>
+                        <td style="text-align: left !important;">
                             <div class="form-group">
                                 <input type="text" class="form-control" value="${e.name}" disabled style="border: none; padding: 3px 0; background-color: #fff; font-size: 14px">
                             </div>
@@ -123,10 +123,10 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" value="Màu sắc: RED" disabled style="border: none; padding: 3px 0; background-color: #fff;  color: #86868B;font-size: 14px">
                             </div>
-                            <a href="" style="color: #0066cc !important">Sửa</a>
+                            <a href="" style="color: #0066cc !important; ">Sửa</a>
                         </td>
 
-                        <th style="font-size: 14px">${formatNumber(e.price, ',', '.')}</th>
+                        <th style="font-size: 14px; text-align: left !important;">${formatNumber(e.price, ',', '.')}</th>
                         <td>
                             <div class="form-group">
                                 <input type="number" class="form-control" value="${e.quantity}" disabled style="width: 60px; padding: 6px 10px; background-color: #f5f5f7; font-size: 14px">

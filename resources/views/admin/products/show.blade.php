@@ -1,7 +1,5 @@
 @extends('admin.layout.index')
 
-@extends('admin.layout.model-confirm')
-
 @section('page_heading')
     chỉnh sửa sản phẩm: #{{ $product->code }}
 @endsection
@@ -31,6 +29,12 @@
     @if (session('msg'))
         <div class="alert alert-success text-center">
             {{ session('msg') }}
+        </div>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger text-center">
+            {{ session('error') }}
         </div>
     @endif
 
@@ -83,7 +87,7 @@
                                     <div class="form-check col-lg-3 mb-3">
                                         <input class="form-check-input" type="checkbox" name="color[]"
                                             value="{{ $value }}" id="check_color_{{ $value }}"
-                                            {!! in_array($value, json_decode($product->attribute->color, true)) ? 'checked' : false !!}>
+                                            {!! in_array($value, json_decode($product->attribute->color, true)) ? 'checked' : false !!} style="margin-top: -0.6rem !important">
                                         <label class="form-check-label" for="check_color_{{ $value }}">
                                             {{ $value }}
                                         </label>
@@ -101,7 +105,8 @@
                                     <div class="form-check col-lg-3 mb-3">
                                         <input class="form-check-input" type="checkbox" name="memory[]"
                                             value="{{ $value }}" id="check_memory_{{ $value }}"
-                                            {!! in_array($value, json_decode($product->attribute->memory, true)) ? 'checked' : false !!}>
+                                            {!! in_array($value, json_decode($product->attribute->memory, true)) ? 'checked' : false !!} style="margin-top: -0.6rem !important">
+
                                         <label class="form-check-label" for="check_memory_{{ $value }}">
                                             {{ $value }}
                                         </label>
@@ -114,15 +119,29 @@
                     <div class="form-group">
                         <div class="container-fluid">
                             <div class="row" style="margin-left: -1.5rem; margin-right: -1.5rem">
-                                {{-- @dd($product->image) --}}
+                                <label for="" class="col-lg-12 mb-3" style="padding: 0 0;">Danh sách hình
+                                    ảnh</label>
                                 @foreach ($product->image as $item)
                                     <div class="col-lg-2 ">
-                                        <img src="http://127.0.0.1:8000/{{ $item->image }}" alt=""
-                                            style="width: 100%;">
-                                        <i class="fa-regular fa-circle-xmark btn-delete"
-                                            style="position: absolute; cursor: pointer; border: none;"
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                            data-id="{{ $item->id }}"></i>
+                                        <img src="{{ $item->path }}" alt="" style="width: 100%;">
+
+                                        @if ($item->is_avatar == 1)
+                                            <i class="fa-solid fa-check icon_avatar"></i>
+                                        @endif
+
+                                        <div class="edit_image">
+                                            <i class="fa-regular fa-pen-to-square icon_edit" data-id="{{ $item->id }}">
+                                            </i>
+
+                                            <div class="image_edit " style="">
+                                                <p class="mb-0 choose_avatar" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" data-id="{{ $item->id }}">Avatar</p>
+                                                <p class="mb-1 Change_image" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" data-id="{{ $item->id }}">Change</p>
+                                                <p class="mb-1 delete_image" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" data-id="{{ $item->id }}">Delete</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 @endforeach
                             </div>
@@ -187,24 +206,6 @@
                     </div>
                 </div>
 
-                {{-- <div class="col-lg-12 mb-3">
-                    <label for="">Hình ảnh sản phẩm (Chọn ảnh đại diện / Xóa ảnh)</label>
-                    <div class="container-fluid">
-                        <div class="row">
-                            @foreach ($product->image as $value)
-                                <div class="col-lg-1 form-check">
-                                    <img class="imageThumb" src="http://127.0.0.1:8000/{{ $value->image }}"
-                                        alt="">
-                                    <input class="form-check-input" type="radio" name="is_avarta"
-                                        id="is_avatar_{{ $value->id }}" style="left: 50%;">
-                                    <input class="form-check-input check_avatar" type="checkbox" name="remove_image[]"
-                                        id="remove_image_{{ $value->id }}">
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div> --}}
-
                 <div class="col-lg-12 form-group mt-4">
                     <label for="title">Thông tin sản phẩm</label>
                     <textarea name="title" id="title">
@@ -236,6 +237,14 @@
         </div>
     </form>
 
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+            </div>
+        </div>
+    </div>
+
 @endsection
 
 @section('js')
@@ -244,11 +253,99 @@
         CKEDITOR.replace('title');
         CKEDITOR.replace('detail');
 
-            $(document).ready(function() {
-                $(".btn-delete").click(function() {
-                    $("#form-modal").attr('action', "http://127.0.0.1:8000/admin/delete/image/" + $(this).data("id"));
-                    console.log($("#form-modal").attr('action'));
-                })
+        $(document).ready(function() {
+            $(".btn-delete").click(function() {
+                $("#form-modal").attr('action', "http://127.0.0.1:8000/admin/delete/image/" + $(this).data(
+                    "id"));
+                console.log($("#form-modal").attr('action'));
             })
+
+            let delete_image = function() {
+                return `
+                    <div class="content-modal_info">
+                        <div class="modal-body content-modal" style="text-align: center">
+                            <img src="https://img.icons8.com/flat-round/256/question-mark.png" alt="" width="72px">
+                            <p class="content-modal_title">
+                                Chọn chọn làm ảnh đại điện
+                                <br>
+                                hoặc
+                                <br>
+                                Xóa sản phẩm !
+                            </p>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+                            <form id="form-modal" class="image_delete" action="" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-danger">Xóa ảnh</button>
+                            </form>
+                        </div>
+                    </div>
+                `;
+            }
+
+            let Change_image = function() {
+                return `
+                    <form action="" method="POST" class="form_edit_img" enctype="multipart/form-data">
+                        @csrf
+                        @method('PATCH')
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Hình ảnh mới:</label>
+                                <input type="file" class="form-control" id="recipient-name" name="image">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                        </div>
+                    </form>
+                `;
+            }
+
+            let choose_avatar = function() {
+                return `
+                    <form action="" method="POST" class="form_edit_img" enctype="multipart/form-data">
+                        @csrf
+                        @method('PATCH')
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Chọn ảnh đại diện:</label>
+                                <input type="text" class="form-control" id="recipient-name" name="is_avatar" value="1" hidden>
+                            </div>
+                            <div style="text-align: center">
+                                <i class="fa-solid fa-circle-check" style="font-size: 50px; color: #00FF00"></i>
+
+                                <p class="mt-3" style="color: #007bff">Xác nhận chọn ảnh làm ảnh đại diện sản phẩm</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-primary">Xác nhận</button>
+                        </div>
+                    </form>
+                `;
+            }
+
+            $(".delete_image").click(function() {
+                $(".modal-content").html(delete_image);
+                $(".image_delete").attr('action', 'http://127.0.0.1:8000/admin/images/' + $(this).data(
+                    'id'));
+            })
+
+            $(".Change_image").click(function() {
+                $(".modal-content").html(Change_image);
+                $(".form_edit_img").attr('action', 'http://127.0.0.1:8000/admin/images/' + $(this).data(
+                    'id'));
+            })
+
+            $(".choose_avatar").click(function() {
+                $(".modal-content").html(choose_avatar);
+                $(".form_edit_img").attr('action', 'http://127.0.0.1:8000/admin/images/avatar/' + $(this)
+                    .data('id'));
+            })
+
+        })
     </script>
 @endsection

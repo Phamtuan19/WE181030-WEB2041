@@ -37,3 +37,57 @@ input[type="file"] {
     background: white;
     color: black;
 }
+
+/* ============================================================================= */
+
+.delete_image:hover {
+    color: blue;
+}
+
+.icon_avatar {
+    position: absolute;
+    bottom: 0;
+    right: -3px;
+    color: red;
+}
+
+.edit_image {
+    position: absolute;
+    cursor: pointer;
+    border: none;
+    top: 0;
+    right: -4px;
+}
+
+.image_edit {
+    display: none;
+    background-color: #FFF;
+    z-index: 99999;
+    padding: 6px 12px;
+    border-radius: 5px;
+    position: absolute;
+    right: -10px;
+    top: 30px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.edit_image .icon_edit:hover {
+    color: blue;
+}
+
+.image_edit::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: -30px;
+    border: 20px solid;
+    border-color: transparent transparent #FFF transparent;
+}
+
+.image_edit p:hover {
+    color: blue;
+}
+
+.edit_image:hover .image_edit {
+    display: block !important;
+}

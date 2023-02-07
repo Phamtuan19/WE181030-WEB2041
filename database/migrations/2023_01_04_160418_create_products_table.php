@@ -16,26 +16,26 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->integerIncrements('id');
             $table->string('code')->nullable();
-            $table->string('name')->nullable();
-            $table->integer('category_id');
-            $table->integer('brand_id');
-            $table->integer('import_price'); // giá nhập hàng
+            $table->string('name', 255)->nullable();
+            $table->integer('category_id')->nullable();
+            $table->integer('brand_id')->nullable();
+            $table->integer('import_price')->nullable(); // giá nhập hàng
             $table->integer('price')->nullable(); // giá bán ra
             $table->integer('input_quantity'); // số lượng hàng nhập
             $table->integer('quantity_stock')->nullable(); // số lượng trong kho
             $table->integer('quantity_sold')->nullable(); // số lượng đã bán
-            $table->text('information'); // thông tin sản phẩm
-            $table->text('detail');
+            $table->text('information')->nullable(); // thông tin sản phẩm
+            $table->text('detail')->nullable();
             $table->timestamps();
             $table->date('deleted_at')->nullable();
 
             $table->foreign('category_id')
                 ->references('id')
-                ->on('category');
+                ->on('categories');
 
             $table->foreign('brand_id')
                 ->references('id')
-                ->on('brand');
+                ->on('brands');
         });
     }
 

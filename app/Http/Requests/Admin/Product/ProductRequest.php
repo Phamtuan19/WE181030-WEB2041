@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
             'input_quantity' => ['required', 'integer', 'min:1'],
             // 'avatar' => ['required'],
             // 'product_image' => ['required'],
-            'detail' => ['required'],
+            // 'detail' => ['required'],
         ];
     }
 

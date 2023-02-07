@@ -71,15 +71,15 @@ class Product extends Model
         return $query;
     }
 
-    public function scopeSearchAdmin($query, $categoryKey = null, $brnadKey = null, $keyword = null, $sortArr = null)
+    public function scopeSearchAdmin($query, $categoryKey = null, $brandKey = null, $keyword = null, $sortArr = null)
     {
         // logic tìm kiếm
         if (!empty($categoryKey)) {
             $category = Categories::where('slug', $categoryKey)->get();
             $query = $query->where('category_id', $category[0]->id);
         }
-        if (!empty($brnadKey)) {
-            $brand = Brand::where('slug', $brnadKey)->get();
+        if (!empty($brandKey)) {
+            $brand = Brand::where('name', $brandKey)->get();
 
             $query = $query->where('brand_id', $brand[0]->id);
         }
@@ -87,10 +87,9 @@ class Product extends Model
         if (!empty($keyword)) {
             $query = $query->where('name', 'like', '%' . $keyword . '%');
         }
-
         // logic xắp xếp
         $orderBy = 'created_at';
-        $orderType = 'desc';
+        $orderType = 'ASC';
 
         if (!empty($sortArr) && is_array($sortArr)) {
             if (!empty($sortArr['sortBy']) && !empty($sortArr['sortType'])) {
@@ -101,6 +100,38 @@ class Product extends Model
 
         $query = $query->orderBy($orderBy, $orderType)->where('deleted_at', null)->get();
 
+        return $query;
+    }
+
+    public function scopeSearchProductDelete($query, $categoryKey = null, $brandKey = null, $keyword = null, $sortArr = null)
+    {
+        // logic tìm kiếm
+        if (!empty($categoryKey)) {
+            $category = Categories::where('slug', $categoryKey)->get();
+            $query = $query->where('category_id', $category[0]->id);
+        }
+        if (!empty($brandKey)) {
+            $brand = Brand::where('name', $brandKey)->get();
+
+            $query = $query->where('brand_id', $brand[0]->id);
+        }
+
+        if (!empty($keyword)) {
+            $query = $query->where('name', 'like', '%' . $keyword . '%');
+        }
+        // logic xắp xếp
+        $orderBy = 'created_at';
+        $orderType = 'ASC';
+
+        if (!empty($sortArr) && is_array($sortArr)) {
+            if (!empty($sortArr['sortBy']) && !empty($sortArr['sortType'])) {
+                $orderBy = trim($sortArr['sortBy']);
+                $orderType = trim($sortArr['sortType']);
+            }
+        }
+
+        $query = $query->orderBy($orderBy, $orderType)->where('deleted_at', '!=' ,null)->get();
+        // dd($query);
         return $query;
     }
 

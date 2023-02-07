@@ -37,7 +37,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -97,6 +97,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('admin.products.create') }}">Thêm sản phẩm</a>
                         <a class="collapse-item" href="{{ route('admin.products.index') }}">Danh sách sản phẩm</a>
+                        <a class="collapse-item" href="{{ route('admin.erase') }}">Sản phẩm đã xóa</a>
                     </div>
                 </div>
             </li>
@@ -112,7 +113,7 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         {{-- <a class="collapse-item" href="{{ route('admin.products.create') }}">Thêm sản phẩm</a> --}}
-                        <a class="collapse-item" href="{{ route('admin.images') }}">Thư viện</a>
+                        <a class="collapse-item" href="{{ route('admin.images.index') }}">Thư viện</a>
                     </div>
                 </div>
             </li>
@@ -127,8 +128,8 @@
                 <div id="collapseCategories" class="collapse" aria-labelledby="headingCB"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.category.create') }}">Thêm danh mục </a>
-                        <a class="collapse-item" href="{{ route('admin.category.index') }}">Danh sách danh mục</a>
+                        <a class="collapse-item" href="{{ route('admin.categories.create') }}">Thêm danh mục </a>
+                        <a class="collapse-item" href="{{ route('admin.categories.index') }}">Danh sách danh mục</a>
                     </div>
                 </div>
             </li>
