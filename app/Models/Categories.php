@@ -25,11 +25,6 @@ class Categories extends Model
 
         foreach ($rootQuery as $key => $item) {
             $rootQuery[$key]['children'] = $query->where('parent_id', $item['id'])->toArray();
-
-            // foreach ($item['children'] as $child) {
-            //     $child->children = $query->where('parent_id', $child['id'])->toArray();
-            // }
-
         }
 
         return $rootQuery;
@@ -37,6 +32,6 @@ class Categories extends Model
 
     public function children()
     {
-        return $this->belongsTo(Categories::class, 'id', 'parent_id');
+        return $this->hasMany(Categories::class, 'parent_id');
     }
 }

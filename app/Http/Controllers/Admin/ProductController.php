@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Product;
 
-use App\Http\Requests\Admin\Product\ProductRequest;
+use App\Http\Requests\Admin\Product\CreateProductRequest;
 
 use Illuminate\Support\Facades\DB;
 
@@ -125,13 +125,15 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories', 'brands', 'colors', 'memory'));
     }
 
-    public function store(ProductRequest $request)
+    public function store(CreateProductRequest $request)
     {
         $products = new Product();
 
         $attributes = new Attribute();
 
         $table_Images = new Image();
+
+        dd($request->all());
 
         $dataProduct = [
             'code' => rand(100000, 9000000),
@@ -140,6 +142,7 @@ class ProductController extends Controller
             'brand_id' => $request->brand,
             'import_price' => $request->import_price,
             'price' => $request->price,
+            'promotion_price' => $request->promotion_price,
             'input_quantity' => $request->input_quantity,
             'quantity_stock' => $request->input_quantity,
             'information' => $request->information,

@@ -6,25 +6,47 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+
 use App\Providers\RouteServiceProvider;
+
 use App\Models\Customers;
 
 class LoginController extends Controller
 {
-    //
-
-    protected function guard()
-    {
-        return Auth::guard('customers');
-    }
-
     public function login()
     {
         return view('customer.auth.login');
     }
 
+    public function username()
+    {
+        return 'email';
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        $request->validate(
+            [
+                $this->username() => 'required|string|email',
+                'password' => 'required|string|min:8',
+            ],
+            [
+                'required' => ':attribute không được để trống',
+                'string' => ':attribute không đúng định dạng',
+                'min' => ':attribute phải lớn hơn :min ký tự',
+                'email' => ':attribute không đúng định dạng',
+            ],
+            [
+                $this->username() => 'Email',
+                'password' => 'Mật khẩu',
+            ]
+        );
+    }
+
     public function postLogin(Request $request)
     {
+        $this->validateLogin($request);
+
         $dataLogin = $request->except(['_token']);
 
         if (isActiveCustomer($dataLogin['email'])) {
@@ -37,7 +59,7 @@ class LoginController extends Controller
             return back()->with('msg', 'Email hoặc Mật khẩu không hợp lệ');
         }
 
-        return back()->with('msg', 'Tài khoản chưa đc kích hoạt');
+        return back()->with('msg', 'Tài khoản chưa đc kích hoạt hoặc bị khóa.');
     }
 
     public function index()

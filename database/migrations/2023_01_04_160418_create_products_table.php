@@ -21,6 +21,7 @@ class CreateProductsTable extends Migration
             $table->integer('brand_id')->nullable();
             $table->integer('import_price')->nullable(); // giá nhập hàng
             $table->integer('price')->nullable(); // giá bán ra
+            $table->integer('promotion_price')->nullable(); // giá khuyến mãi
             $table->integer('input_quantity'); // số lượng hàng nhập
             $table->integer('quantity_stock')->nullable(); // số lượng trong kho
             $table->integer('quantity_sold')->nullable(); // số lượng đã bán

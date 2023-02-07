@@ -15,7 +15,9 @@ use App\Models\Consignees;
 
 use Illuminate\Support\Facades\Auth;
 
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\MailNotify;
 
 use App\Http\Requests\Customer\PaymentRequest;
 
@@ -28,15 +30,10 @@ class PaymentController extends Controller
 
         $customer = $customers->find(Auth::guard('customers')->id());
 
-        // dd(Auth::name());
-
-        // $purchase_forms = DB::table('purchase_form')->get();
-
-        // dd(Auth::guard('customers')->user());
-
         return view('customer.pages.pay', compact('customer'));
     }
 
+    // Tạo đơn hàng mới
     public function checkPayment(PaymentRequest $request)
     {
         $orders = new Order();
@@ -58,12 +55,12 @@ class PaymentController extends Controller
             'updated_at' => date('Y-m-d H:i:'),
         ];
 
-        $order = $orders->create($dataOrder);
+        $saveOrder = $orders->create($dataOrder);
 
-        $order_id = $order->id;
+        $saveOrder_id = $saveOrder->id;
 
         $dataConsignees = [
-            'order_id' => $order_id,
+            'order_id' => $saveOrder_id,
             'name' => $request->name,
             'phone' => $request->phone,
             'email' => $request->email,
@@ -83,7 +80,7 @@ class PaymentController extends Controller
 
         foreach ($products_code as $index => $code) {
             $dataOrderDetail = [
-                'order_id' => $order_id,
+                'order_id' => $saveOrder_id,
                 'product_code' => $code,
                 'price' => $price[$index],
                 'quantity' => $quantity[$index],
@@ -93,6 +90,25 @@ class PaymentController extends Controller
 
             $order_details->insert($dataOrderDetail);
         }
+
+        // Gửi mail cho người đặt hàng
+
+        $send = null;
+        if(isset($request->email)){
+            $send = $request->email;
+        }else {
+            $send = Auth::guard('customers')->user()->email;
+        }
+
+        $orderDetails = $order_details->where('order_id', $saveOrder->id)->get();
+
+        $data = [
+            'order' => $saveOrder,
+            'order_details' => $orderDetails,
+            'ordering_person' => Auth::guard('customers')->user(),
+        ];
+
+        Mail::to($send)->send(new MailNotify($data));
 
         return back()->with('msg', 'ok');
     }

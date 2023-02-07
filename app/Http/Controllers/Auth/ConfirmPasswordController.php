@@ -26,7 +26,7 @@ class ConfirmPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::ADMIN;
 
     /**
      * Create a new controller instance.
@@ -36,5 +36,13 @@ class ConfirmPasswordController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    protected function validationErrorMessages()
+    {
+        return [
+            'password.required' => 'Mật khẩu không được để trống',
+            'current_password' => 'Mật khẩu không chính xác',
+        ];
     }
 }

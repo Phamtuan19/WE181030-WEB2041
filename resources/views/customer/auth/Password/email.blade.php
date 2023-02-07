@@ -39,13 +39,13 @@
 
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block bg-login-image"
-                                style="background: url(https://petmaster.vn/petroom/wp-content/uploads/2020/03/thanh-bieu-cam-cho-husky.jpg); background-position: center; background-size: cover;">
+                                style="background: url(https://image.vtc.vn/resize/th/upload/2021/04/23/cho-8-11373235.jpg); background-position: center; background-size: cover;">
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Quên mật khẩu.</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Quên mật khẩu</h1>
                                     </div>
 
                                     @if (session('msg'))
@@ -54,18 +54,18 @@
                                         </div>
                                     @endif
 
-                                    <form action="{{ route('password.email') }}" method="POST">
-                                        @csrf
+                                    {{-- <form action="{{ route('store.resetPassword') }}" method="POST"> --}}
+                                        {{-- @csrf --}}
+
                                         {{-- Email --}}
                                         <div class="form-group">
                                             <input type="text"
                                                 class="form-control form-control-user @error('email') is-invalid @enderror"
-                                                id="exampleInputEmail" name="email"
-                                                value="{{ old('username')}}"
+                                                id="exampleInputEmail" name="email" value="{{ old('username') }}"
                                                 placeholder="Nhập địa chỉ email..."
                                                 style="padding: 1.5rem 1rem; border-radius: 1rem;">
                                             @error('email')
-                                                <span class="invalid-feedback" role="alert">
+                                                <span class="invalid-feedback ml-3" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
                                             @enderror
@@ -75,14 +75,14 @@
                                             Xác nhận
                                         </button>
 
-                                    </form>
+                                    {{-- </form> --}}
 
                                     <hr>
-                                    <div class="text-center">
-                                        @if (Route::has('password.reset'))
-                                            <a class="small" href="{{ route('login') }}">Vể trang Đăng nhập !</a>
-                                        @endif
-                                    </div>
+                                    @if (request()->path() == 'store/password/reset')
+                                        <div class="text-center">
+                                            <a class="small mr-3" href="{{ route('store.login') }}">Đăng nhập.</a>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -109,50 +109,3 @@
 </body>
 
 </html>
-{{--
-
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Quên mật khẩu</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">Email</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Xác nhận
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@endsection --}}

@@ -24,7 +24,11 @@ use App\Http\Controllers\admin\ImagesController;
 
 use App\Http\Controllers\admin\DashboardController;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Customer\Auth\ForgotPasswordController;
+
+use App\Http\Controllers\Customer\Auth\ResetPasswordController;
+
+use App\Http\Controllers\Customer\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +43,10 @@ use Illuminate\Http\Request;
 
 Auth::routes();
 
+Route::get('/', function () {
+    return redirect(route('store.home'));
+});
+
 
 Route::middleware('auth')->group(function () {
 
@@ -50,10 +58,6 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('products', ProductController::class);
 
-        Route::patch('product/softErase/{product}', [ProductController::class, 'softErase'])->name('softErase');
-
-        Route::get('product/erase', [ProductController::class, 'listSoftErase'])->name('erase');
-
         Route::resource('categories', CategoryController::class)->except(['edit']);
 
         Route::resource('brand', BrandController::class)->except(['edit']);
@@ -62,10 +66,14 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('customers', CutomerController::class);
 
-        Route::resource('images', ImagesController::class);
-
+        // update product avatar
         Route::patch('images/avatar/{image}', [ImagesController::class, 'updateAvatar'])->name('avatar');
 
+        // Xóa mềm sản phẩm
+        Route::patch('product/softErase/{product}', [ProductController::class, 'softErase'])->name('softErase');
+
+        // khôi phục sản phẩm đã xóa
+        Route::get('product/erase', [ProductController::class, 'listSoftErase'])->name('erase');
     });
 });
 
@@ -79,22 +87,40 @@ Route::prefix('store')->name('store.')->group(function () {
 
     Route::get('cart', [HomeController::class, 'indexCart'])->name('cart');
 
-    // Route::middleware('guest:customers')->group(function () {
-        Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
+    Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
 
-        Route::post('check-order', [PaymentController::class, 'checkPayment'])->name('checkOrder');
+    Route::post('check-order', [PaymentController::class, 'checkPayment'])->name('checkOrder');
 
-        Route::get('order-success', [HomeController::class, 'orderSuccess'])->name('orderSuccess');
-    // });
-});
+    Route::get('order-success', [HomeController::class, 'orderSuccess'])->name('orderSuccess');
 
-Route::prefix('customers')->name('customers.')->group(function () {
+    // authentication guard Customers
     Route::get('/login', [LoginController::class, 'login'])->middleware('guest:customers')->name('login');
 
     Route::post('/login', [LoginController::class, 'postLogin'])->middleware('guest:customers');
+
+    // Reset password
+    Route::get('password/reset', [ForgotPasswordController::class, 'index'])->name('resetPassword');
+
+    Route::post('password/reset', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('guest:customers')->name('postResetPassword');
+
+    // Đăng ký
+    Route::get('/register', [RegisterController::class, 'index'])->name('register');
+
+    Route::post('register', [RegisterController::class, 'postRegister'])->name('postRegister');
 
     Route::post('/logout', function () {
         Auth::guard('customers')->logout();
         return redirect()->route('store.home');
     })->middleware('auth:customers')->name('logout');
 });
+
+// Route::prefix('customers')->name('customers.')->group(function () {
+//     Route::get('/login', [LoginController::class, 'login'])->middleware('guest:customers')->name('login');
+
+//     Route::post('/login', [LoginController::class, 'postLogin'])->middleware('guest:customers');
+
+//     Route::post('/logout', function () {
+//         Auth::guard('customers')->logout();
+//         return redirect()->route('store.home');
+//     })->middleware('auth:customers')->name('logout');
+// });

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
+use Illuminate\Validation\Rules;
+
 class ResetPasswordController extends Controller
 {
     /*
@@ -26,5 +28,26 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = RouteServiceProvider::ADMIN;
+
+    protected function rules()
+    {
+        return [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => ['required', 'confirmed', 'min:8'],
+        ];
+    }
+
+    protected function validationErrorMessages()
+    {
+        return [
+            'token.required' => 'Token không được để trống',
+            'email.required' => 'Email không được để trống',
+            'email.email' => 'Email không đúng định dạng',
+            'password.required' => 'Mật khẩu không được để trống',
+            'password.confirmed' => 'Xác nhận mật khẩu không khớp',
+            'password.min' => 'Mật khẩu phải lớn hơn :min ký tự',
+        ];
+    }
 }

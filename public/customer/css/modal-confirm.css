@@ -1,9 +1,9 @@
 
 .content-modal i {
-    font-size: 50px !important;
+    font-size: 34px !important;
     display: block !important;
     text-align: center !important;
-    color: red !important;
+    color: #FFF !important;
 }
 
 .content-modal_title {
@@ -13,4 +13,11 @@
     margin-bottom: 0;
     color: #007bff;
     font-size: 18px;
+}
+
+.fa-question:before {
+    content: "\3f";
+    background-color: #dc3545;
+    padding: 12px 18px;
+    border-radius: 50%;
 }

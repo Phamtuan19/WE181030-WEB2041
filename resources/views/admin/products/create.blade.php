@@ -24,12 +24,6 @@
         </ul>
     @endif
 
-    @if (session('msg'))
-        <div class="alert alert-success text-center">
-            {{ session('msg') }}
-        </div>
-    @endif
-
     <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
         <div class="container-fluid">
             <div class="row">
@@ -41,7 +35,7 @@
                         <select name="category" id="category" class="form-control">
                             <option value="">--- Chọn danh mục ---</option>
                             @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected': false }}>{{ $category->name }}</option>
                             @endforeach
                         </select>
 
@@ -56,7 +50,7 @@
                         <select name="brand" id="brand" class="form-control">
                             <option value="">--- Chọn danh mục ---</option>
                             @foreach ($brands as $brand)
-                                <option value="{{ $brand->id }}">{{ $brand->name }}</option>
+                                <option value="{{ $brand->id }}" {{ old('brand') == $brand->id ? 'selected': false }}>{{ $brand->name }}</option>
                             @endforeach
                         </select>
 
@@ -72,12 +66,17 @@
                                 @foreach ($colors as $index => $color)
                                     <div class="form-check col-lg-3 mb-3">
                                         <input class="form-check-input" type="checkbox" name="color[]"
-                                            value="{{ $index }}" id="check_color_{{ $index }}" style="margin-top: -0.6rem !important;">
+                                            value="{{ $index }}" id="check_color_{{ $index }}"
+                                            {!! old('color') == $index ? 'checked' : false !!} style="margin-top: -0.6rem !important;">
                                         <label class="form-check-label" for="check_color_{{ $index }}">
                                             {{ $index }}
                                         </label>
+
                                     </div>
                                 @endforeach
+                                @error('color')
+                                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -89,12 +88,17 @@
                                 @foreach ($memory as $value)
                                     <div class="form-check col-lg-3 mb-3">
                                         <input class="form-check-input" type="checkbox" name="memory[]"
-                                            value="{{ $value }}" id="check_memory_{{ $value }}" style="margin-top: -0.6rem !important;">
+                                            value="{{ $value }}" id="check_memory_{{ $value }}"
+                                            style="margin-top: -0.6rem !important;" {!! old('color') == $index ? 'checked' : false !!}>
                                         <label class="form-check-label" for="check_memory_{{ $value }}">
                                             {{ $value }}
                                         </label>
+
                                     </div>
                                 @endforeach
+                                @error('memory')
+                                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -125,7 +129,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="import_price">Giá sản phẩm</label>
+                        <label for="import_price">Giá nhập</label>
                         <input type="text" name="import_price" class="form-control" id="import_price"
                             value="{{ old('import_price') }}">
 
@@ -136,11 +140,22 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="price">Giá khuyến mãi</label>
+                        <label for="price">Giá bán</label>
                         <input type="text" name="price" class="form-control" id="price"
                             value="{{ old('price') }}">
 
                         @error('price')
+                            <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                        @enderror
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="promotion_price">Giá khuyến mãi</label>
+                        <input type="text" name="promotion_price" class="form-control" id="promotion_price"
+                            value="{{ old('promotion_price') }}">
+
+                        @error('promotion_price')
                             <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
                         @enderror
 
@@ -157,7 +172,7 @@
 
 
                 <div class="col-lg-12 form-group">
-                    <label for="title">Thông tin sản phẩm</label>
+                    <label for="title">Mô tả sản phẩm</label>
                     <textarea name="title" id="title">
 
                     </textarea>

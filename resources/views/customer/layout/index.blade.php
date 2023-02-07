@@ -126,17 +126,23 @@
                                 <i class="fa-solid fa-user"></i>
 
                             </a>
-                            <div class="admin_name-dropdown d-none">
-                                <a href="{{ route('customers.logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    đăng xuất
-                                </a>
-                                <form id="logout-form" action="{{ route('customers.logout') }}" method="POST"
-                                    class="d-none">
-                                    @csrf
-                                    {{-- <input type="hidden" name="_token"
-                                        value="0gHkalwIcbQsMg9fQWmF3TczWs7mkDXVeEbJx4A4"> --}}
-                                </form>
+                            <div class="admin_name-dropdown d-none" style="width: 120px;">
+                                @if (Auth::guard('customers')->check())
+                                    <a href="{{ route('store.logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Đăng xuất
+                                    </a>
+                                    <form id="logout-form" action="{{ route('store.logout') }}" method="POST"
+                                        class="d-none">
+                                        @csrf
+                                        {{-- <input type="hidden" name="_token"
+                                value="0gHkalwIcbQsMg9fQWmF3TczWs7mkDXVeEbJx4A4"> --}}
+                                    </form>
+                                @else
+                                    <a href="{{ route('store.login') }}">
+                                        Đăng nhập
+                                    </a>
+                                @endif
                             </div>
                         </li>
                     </ul>

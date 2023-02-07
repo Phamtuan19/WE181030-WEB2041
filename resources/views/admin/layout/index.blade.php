@@ -102,23 +102,6 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseImage"
-                    aria-expanded="true" aria-controls="collapseImage">
-                    <i class="fa-solid fa-image"></i>
-                    <span>Quản lý Hình ảnh</span>
-                </a>
-                <div id="collapseImage" class="collapse" aria-labelledby="headingProduct"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        {{-- <a class="collapse-item" href="{{ route('admin.products.create') }}">Thêm sản phẩm</a> --}}
-                        <a class="collapse-item" href="{{ route('admin.images.index') }}">Thư viện</a>
-                    </div>
-                </div>
-            </li>
-
-
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories"
                     aria-expanded="true" aria-controls="collapseCategories">

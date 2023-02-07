@@ -73,7 +73,7 @@ class LoginController extends Controller
     protected function sendFailedLoginResponse(Request $request)
     {
         throw ValidationException::withMessages([
-            $this->username() => 'Đã sảy ra sự cố. Xin vui lòng kiểm tra thông tin tài khoản',
+            $this->username() => 'Xin vui lòng kiểm tra thông tin tài khoản',
         ]);
     }
 

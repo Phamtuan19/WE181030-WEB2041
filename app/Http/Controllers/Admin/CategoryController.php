@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 
 class CategoryController extends Controller
 {
+
     protected $table;
 
     public function __construct()
@@ -24,7 +25,7 @@ class CategoryController extends Controller
 
         $categories = $categories->get();
 
-        // dd($categories);
+        // dd($category);
 
         return view('admin.category.index', compact('categories'));
     }

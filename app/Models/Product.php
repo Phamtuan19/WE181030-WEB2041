@@ -29,6 +29,7 @@ class Product extends Model
         'brand_id',
         'import_price',
         'price',
+        'promotion_price',
         'input_quantity',
         'quantity_stock',
         'quantity_sold',

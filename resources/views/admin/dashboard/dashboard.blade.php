@@ -269,7 +269,7 @@
                             <td class="" style="height: 100;">
                                 <div class="d-flex justify-content-around">
                                     <div class="">
-                                        <a href="" class="btn" style="color: black;">
+                                        <a href="{{ route('admin.orders.show', $order->id) }}" class="btn" style="color: black;">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                     </div>

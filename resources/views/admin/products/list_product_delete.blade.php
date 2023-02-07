@@ -167,18 +167,16 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title fs-5" id="exampleModalLabel" style="color: red">Cảnh Báo</h5>
+                    <h5 class="modal-title fs-5" id="exampleModalLabel" style="color: red">Thông báo</h5>
                     <button type="button" class="btn-close" style="border: none; background-color: #fff"
                         data-bs-dismiss="modal" aria-label="Close">
                         <i class="fa-regular fa-circle-xmark"></i>
                     </button>
                 </div>
                 <div class="modal-body content-modal">
-                    <i class="fa-solid fa-circle-exclamation"></i>
+                    <small><i class="fa-solid fa-question "></i></small>
                     <p class="content-modal_title">
-                        Xóa sản phẩm sẽ ảnh hướng tới dữ liệu !
-                        <br>
-                        Bạn chắc chắn muốn xóa ?
+                        Bạn có muốn khôi phục hình ảnh
                     </p>
                 </div>
                 <div class="modal-footer">

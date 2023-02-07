@@ -85,7 +85,7 @@
                             </div>
 
                             <div class="checkout-buttons">
-                                <a href="{{ Auth::guard('customers')->check() ? route('store.payment') : route('customers.login') }}"
+                                <a href="{{ Auth::guard('customers')->check() ? route('store.payment') : route('store.login') }}"
                                     class="btn btn-primary checkout-button">Tiến hành đặt hàng</a>
                             </div>
                         </div>
