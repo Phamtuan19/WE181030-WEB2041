@@ -24,6 +24,10 @@ use App\Http\Controllers\admin\ImagesController;
 
 use App\Http\Controllers\admin\DashboardController;
 
+use App\Http\Controllers\admin\PostController;
+
+use App\Http\Controllers\admin\SliderController;
+
 use App\Http\Controllers\Customer\Auth\ForgotPasswordController;
 
 use App\Http\Controllers\Customer\Auth\ResetPasswordController;
@@ -66,6 +70,22 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('customers', CutomerController::class);
 
+        Route::resource('posts', PostController::class);
+
+        // View Post Content
+        Route::get('post/content/{post}', [PostController::class, 'postContent'])->name('postContent');
+
+        // xóa mềm bài viết
+        Route::get('/listSoftErase', [PostController::class, 'listSoftErase'])->name('listSoftErase');
+
+        // khôi phục bài viết đã xóa
+        Route::patch('post/softErase/{post}', [PostController::class, 'postSoftErase'])->name('post_softErase');
+
+        // thay đổi hình ảnh
+        Route::patch('images/{image}', [ImagesController::class, 'updateImage'])->name('updateImage');
+
+        Route::delete('images/{image}', [ImagesController::class, 'updateImage'])->name('updateImage');
+
         // update product avatar
         Route::patch('images/avatar/{image}', [ImagesController::class, 'updateAvatar'])->name('avatar');
 
@@ -74,6 +94,9 @@ Route::middleware('auth')->group(function () {
 
         // khôi phục sản phẩm đã xóa
         Route::get('product/erase', [ProductController::class, 'listSoftErase'])->name('erase');
+
+        // Danh sách pages store
+        Route::get('slider', [SliderController::class, 'index'])->name('slider');
     });
 });
 

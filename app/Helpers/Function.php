@@ -36,10 +36,10 @@ function deleteFilePublic($files = [])
 
 // fomat money
 if (!function_exists('currency_format')) {
-    function currency_format($number, $suffix = '')
+    function currency_format($number, $suffix = 'đ')
     {
         if (!empty($number)) {
-            return number_format($number, 0, ',', '.') . "{$suffix}";
+            return number_format($number, 0, ',', '.') . ' ' ."{$suffix}";
         }
     }
 }
@@ -72,3 +72,4 @@ function showCategories($categories, $parentId = null, $char = '')
         }
     }
 }
+

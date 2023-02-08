@@ -23,14 +23,11 @@
                     <div class="swiper-wrapper">
                         @foreach ($products as $product)
                             <div class="product swiper-slide">
-                                <div class="product-label mb-3">
-                                    <div class="flag-installment">Trả góp 0%</div>
-                                    <div class="percent-deal">Giảm {!! currency_format($product->import_price - $product->price) !!}</div>
-                                </div>
+                                <span class="flag-installment">Trả góp 0%</span>
+                                <span class="percent-deal">Giảm {!! currency_format($product->import_price - $product->price) !!}</span>
                                 <div class="product-img">
                                     <a href="{{ route('store.product', $product->id) }}">
-                                        <img src="{{ $product->image[0]->path }}"
-                                            class="product-image" alt="">
+                                        <img src="{{ $product->image[0]->path }}" class="product-image" alt="">
                                     </a>
                                 </div>
                                 <div class="product-name">
@@ -38,10 +35,25 @@
                                         <span>{{ $product->name }}</span>
                                     </a>
                                 </div>
-                                <div class="product-price">
+                                <div class="product-price mb-3">
                                     <span class="old-price">{{ currency_format($product->import_price) }}</span>
                                     <span class="actual-price">{{ currency_format($product->price) }}</span>
                                 </div>
+
+                                <div class="d-flex justify-content-between">
+
+                                    <button class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="right"
+                                        data-bs-title="Add to cart">
+                                        <i class="fa-solid fa-heart"></i>
+                                    </button>
+
+                                    <button class="btn btn-dark" data-bs-toggle="tooltip" data-bs-placement="right"
+                                        data-bs-title="Add to cart">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </button>
+
+                                </div>
+
                             </div>
                         @endforeach
                     </div>
@@ -71,8 +83,7 @@
                                 </div>
                                 <div class="product-img">
                                     <a href="{{ route('store.product', $product->id) }}">
-                                        <img src="{{ $product->image[0]->path }}" class="product-image"
-                                            alt="">
+                                        <img src="{{ $product->image[0]->path }}" class="product-image" alt="">
                                     </a>
                                 </div>
                                 <div class="product-name">
@@ -132,5 +143,8 @@
                 },
             }
         });
+
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>
 @endsection

@@ -1,0 +1,67 @@
+
+/* ==================================== Upload File image Avatar ========================================== */
+
+#picture__input {
+    display: none;
+  }
+
+  .picture {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #aaa;
+    border: 2px dashed currentcolor;
+    cursor: pointer;
+    font-family: sans-serif;
+    transition: color 300ms ease-in-out, background 300ms ease-in-out;
+    outline: none;
+    overflow: hidden;
+  }
+
+  .picture:hover {
+    color: #777;
+    background: #ccc;
+  }
+
+  .picture:active {
+    border-color: turquoise;
+    color: turquoise;
+    background: #eee;
+  }
+
+  .picture:focus {
+    color: #777;
+    background: #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .picture__img {
+    max-width: 100%;
+  }
+
+/* ==================================== End Upload File image Avatar ========================================== */
+
+
+/* ==================================== Custome Select 2 ========================================== */
+.select2-container .select2-selection--single {
+    min-height: 46px !important;
+    vertical-align: middle!important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 26px;
+    position: absolute;
+    top: 10px !important;
+    right: 1px;
+    width: 20px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 42px !important;
+    padding: 0 12px !important;
+}
+/* ==================================== End Custome Select 2 ========================================== */

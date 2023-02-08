@@ -23,9 +23,8 @@ class CategoryController extends Controller
     {
         $categories = new Categories();
 
-        $categories = $categories->get();
-
-        // dd($category);
+        $categories = $categories->subCategory($categories);
+        dd($categories);
 
         return view('admin.category.index', compact('categories'));
     }

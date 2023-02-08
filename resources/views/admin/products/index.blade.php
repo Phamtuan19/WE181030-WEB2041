@@ -2,12 +2,6 @@
 
 @section('page_heading', 'Thêm sản phẩm')
 
-{{-- @extends('admin.layout.model-confirm') --}}
-
-@section('link')
-    <link rel="stylesheet" href="{{ asset('customer/css/modal-confirm.css') }}">
-@endsection
-
 @section('redirect')
     <a href="{{ route('admin.products.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
         <i class="fa-solid fa-plus  text-white-50 pr-2" style="color: white !important"></i>
@@ -197,12 +191,5 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready(function () {
-            $(".btn-delete").click(function () {
-                $("#form-modal").attr('action', "http://127.0.0.1:8000/admin/product/softErase/" + $(this).data("id"));
-                console.log($("#form-modal").attr('action'));
-            })
-        })
-    </script>
+    <script src="{{ asset('admin/custom_admin/products/js/index.js') }}"></script>
 @endsection

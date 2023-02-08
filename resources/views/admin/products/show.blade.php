@@ -5,8 +5,7 @@
 @endsection
 
 @section('link')
-    <link rel="stylesheet" href="{{ asset('admin/custom_layout/css/product_create.css') }}">
-    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    <link rel="stylesheet" href="{{ asset('admin/custom_admin/products/css/show.css') }}">
 @endsection
 
 @section('redirect')
@@ -196,19 +195,25 @@
 
                     </div>
 
-                    <div class="field form-group">
-                        <label for="product_image">Thêm ảnh sản phẩm</label>
-                        <input type="file" id="files_image" class="form-control" name="images[]" multiple
-                            style="padding: 7.6px 12px" />
-                        @error('product_image')
-                            <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                        @enderror
+                    <div class="form-group ">
+                        <div class="my-2 box-reset_images">
+                            <label for="images">Ảnh sản phẩm</label>
+                            <input type="file" class="form-control" id="images" name="images[]"
+                                onchange="preview_images();" multiple />
+                            <input onclick="return resetForm();" type="reset" class="btn btn-danger reset_images"
+                                name='reset_images' value="Reset" />
+
+                            @error('images')
+                                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="row mt-2" id="image_preview"></div>
                     </div>
                 </div>
 
                 <div class="col-lg-12 form-group mt-4">
                     <label for="title">Thông tin sản phẩm</label>
-                    <textarea name="title" id="title">
+                    <textarea name="title" id="ck-title">
                         {{ empty(old('title')) ? $product->title : old('title') }}
                     </textarea>
 
@@ -220,7 +225,7 @@
 
                 <div class="form-group col-lg-12">
                     <label for="detail">Thông số kỹ thuật</label>
-                    <textarea name="detail" id="detail">
+                    <textarea name="detail" id="ck-detail">
                         {{ empty(old('detail')) ? $product->detail : old('detail') }}
                     </textarea>
 
@@ -239,113 +244,18 @@
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
+            <form id="form-modal" class="form_edit_img" action="" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="_method" class="form-method" value="" >
+                <div class="modal-content">
 
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 
 @endsection
 
 @section('js')
-    <script src="https://cdn.ckeditor.com/[version.number]/[distribution]/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace('title');
-        CKEDITOR.replace('detail');
-
-        $(document).ready(function() {
-            $(".btn-delete").click(function() {
-                $("#form-modal").attr('action', "http://127.0.0.1:8000/admin/delete/image/" + $(this).data(
-                    "id"));
-                console.log($("#form-modal").attr('action'));
-            })
-
-            let delete_image = function() {
-                return `
-                    <div class="content-modal_info">
-                        <div class="modal-body content-modal" style="text-align: center">
-                            <img src="https://img.icons8.com/flat-round/256/question-mark.png" alt="" width="72px">
-                            <p class="content-modal_title">
-                                Chọn chọn làm ảnh đại điện
-                                <br>
-                                hoặc
-                                <br>
-                                Xóa sản phẩm !
-                            </p>
-                        </div>
-                        <div class="modal-footer justify-content-center">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
-                            <form id="form-modal" class="image_delete" action="" method="POST">
-                                @method('DELETE')
-                                @csrf
-                                <button type="submit" class="btn btn-danger">Xóa ảnh</button>
-                            </form>
-                        </div>
-                    </div>
-                `;
-            }
-
-            let Change_image = function() {
-                return `
-                    <form action="" method="POST" class="form_edit_img" enctype="multipart/form-data">
-                        @csrf
-                        @method('PATCH')
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Hình ảnh mới:</label>
-                                <input type="file" class="form-control" id="recipient-name" name="image">
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
-                            <button type="submit" class="btn btn-primary">Xác nhận</button>
-                        </div>
-                    </form>
-                `;
-            }
-
-            let choose_avatar = function() {
-                return `
-                    <form action="" method="POST" class="form_edit_img" enctype="multipart/form-data">
-                        @csrf
-                        @method('PATCH')
-                        <div class="modal-body">
-                            <div class="mb-3">
-                                <label for="recipient-name" class="col-form-label">Chọn ảnh đại diện:</label>
-                                <input type="text" class="form-control" id="recipient-name" name="is_avatar" value="1" hidden>
-                            </div>
-                            <div style="text-align: center">
-                                <i class="fa-solid fa-circle-check" style="font-size: 50px; color: #00FF00"></i>
-
-                                <p class="mt-3" style="color: #007bff">Xác nhận chọn ảnh làm ảnh đại diện sản phẩm</p>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
-                            <button type="submit" class="btn btn-primary">Xác nhận</button>
-                        </div>
-                    </form>
-                `;
-            }
-
-            $(".delete_image").click(function() {
-                $(".modal-content").html(delete_image);
-                $(".image_delete").attr('action', 'http://127.0.0.1:8000/admin/images/' + $(this).data(
-                    'id'));
-            })
-
-            $(".Change_image").click(function() {
-                $(".modal-content").html(Change_image);
-                $(".form_edit_img").attr('action', 'http://127.0.0.1:8000/admin/images/' + $(this).data(
-                    'id'));
-            })
-
-            $(".choose_avatar").click(function() {
-                $(".modal-content").html(choose_avatar);
-                $(".form_edit_img").attr('action', 'http://127.0.0.1:8000/admin/images/avatar/' + $(this)
-                    .data('id'));
-            })
-
-        })
-    </script>
+    <script src="{{ asset('admin/custom_admin/products/js/show.js') }}"></script>
 @endsection

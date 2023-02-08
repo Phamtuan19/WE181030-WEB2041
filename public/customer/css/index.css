@@ -311,20 +311,21 @@ p {
 
 /* =============================================  Product =============================================*/
 .product {
-    min-height: 450px;
-    padding: 12px 20px 24px 20px;
-    /* border: 1px solid #ccc; */
+    position: relative;
     border-radius: 5px;
-    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
     border: 1px solid #ccc;
     overflow: hidden;
 }
 
 .flag-installment {
+    position: absolute;
+    top: 8px;
+    left: 6px;
+    z-index: 1;
     background: #fff;
     color: #be1e2d;
     border: 1px solid #feb913;
-    border-radius: 2px;
+    border-radius: 5px !important;
     -webkit-border-radius: 2px;
     font-size: 11px;
     display: inline-block;
@@ -334,14 +335,14 @@ p {
 }
 
 .percent-deal {
+    position: absolute;
+    top: 8px;
+    right: 5px;
+    z-index: 99999;
     background: #be1e2d;
     color: #fff;
-    border: 1px solid #feb913;
-    border-radius: 2px;
-    -webkit-border-radius: 2px;
+    border-radius: 5px !important;
     font-size: 13px;
-    display: inline-block;
-    margin-right: 4px;
     padding: 3px 6px;
     cursor: pointer;
 }
@@ -353,28 +354,28 @@ p {
 .product-image {
     width: 100%;
     height: auto;
+    transform: scale(0.8);
 }
 
 .product-name {
     text-align: center;
     font-weight: 700;
     font-size: 18px;
-    line-height: 27px;
     color: #1D1D1F;
-    min-height: 54px;
-    margin-top: 24px;
+    padding: 14px 0;
 }
 
 .product-name span {
+    padding: 0 14px;
+    display: block;
     color: #1D1D1F;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+    max-width: 100%;
     overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .product-price {
-    /* margin-top: 6px; */
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-around;
@@ -398,7 +399,7 @@ p {
 }
 
 .product:hover .product-image {
-    transform: scale(1.1);
+    transform: scale(0.9);
     transition: all 0.5s;
 }
 
@@ -553,6 +554,11 @@ p {
 .card:hover .card-image {
     transition: all 0.5s;
     transform: scale(1);
+}
+
+.add-to-cart {
+    background-color: #1D1D1F;
+
 }
 
 /* =============================================  END =============================================*/

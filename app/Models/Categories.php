@@ -22,8 +22,9 @@ class Categories extends Model
         $query = $query->get();
 
         $rootQuery = $query->where('parent_id', null)->toArray();
-
+        // dd($rootQuery);
         foreach ($rootQuery as $key => $item) {
+            // dd($item);
             $rootQuery[$key]['children'] = $query->where('parent_id', $item['id'])->toArray();
         }
 

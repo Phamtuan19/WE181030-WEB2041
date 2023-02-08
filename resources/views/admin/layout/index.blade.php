@@ -22,7 +22,7 @@
     <script src="https://kit.fontawesome.com/03e43a0756.js" crossorigin="anonymous"></script>
 
     {{-- css custom layout --}}
-    <link rel="stylesheet" href="{{ asset('admin/custom_layout/css/customIndex.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/custom_admin/customIndex.css') }}">
 
     @yield('link')
 
@@ -37,7 +37,8 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center"
+                href="{{ route('admin.dashboard') }}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -79,8 +80,9 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="buttons.html">Buttons</a>
-                        <a class="collapse-item" href="cards.html">Cards</a>
+                        <a class="collapse-item" href="{{ route('admin.posts.create') }}">Thêm bài viết</a>
+                        <a class="collapse-item" href="{{ route('admin.posts.index') }}">Danh sách bài viết</a>
+                        <a class="collapse-item" href="{{ route('admin.listSoftErase') }}">Bài viết đã xóa</a>
                     </div>
                 </div>
             </li>
@@ -188,16 +190,17 @@
 
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{{ route('admin.slider') }}">
                     <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span></a>
+                    <span>Banner</span>
+                </a>
             </li>
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="tables.html">
                     <i class="fas fa-fw fa-table"></i>
-                    <span>Tables</span></a>
+                    <span>Menu</span></a>
             </li>
 
             <!-- Divider -->
@@ -372,6 +375,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
+
+    <script src="//cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+
+    <script src="{{ asset('admin/custom_admin/customIndex.js') }}"></script>
+
     @yield('js')
 
 

@@ -83,11 +83,11 @@ function render_Cart_product(cartArr) {
 }
 
 /* ================== Total Money =================== */
-function renderTotalMoney () {
+function renderTotalMoney() {
     const cartArr = JSON.parse(localStorage.getItem('cart'));
     let total = 0;
 
-    if(cartArr != null) {
+    if (cartArr != null) {
         cartArr.forEach((e) => {
             total += e.quantity * e.price
         })
@@ -124,18 +124,10 @@ function removeItemCart(product_code, cartname = '') {
 }
 
 /* ================== Format money =================== */
-function formatNumber(nStr, decSeperate, groupSeperate) {
-    nStr += '';
-    x = nStr.split(decSeperate);
-    x1 = x[0];
-    x2 = x.length > 1 ? '.' + x[1] : '';
-    var rgx = /(\d+)(\d{3})/;
-    while (rgx.test(x1)) {
-        x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
-    }
-    return x1 + x2 + ' VND';
+function formatNumber(number) {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(parseFloat(number));
 }
-
+console.log(formatNumber(1000))
 
 /* ================== Render Totals =================== */
 function renderTotals() {

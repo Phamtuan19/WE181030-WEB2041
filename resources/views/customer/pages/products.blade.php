@@ -16,37 +16,51 @@
                 </div>
             </div>
             @foreach ($products as $product)
+                {{-- @dd($product['avatar'][0]['path']) --}}
                 <div class=" col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                    <div class="product" style="min-height: 400px !important">
-                        <div class="product-label mb-3">
-                            <div class="flag-installment">Trả góp 0%</div>
-                            <div class="percent-deal">Giảm {!! currency_format($product->price - $product->sale) !!}</div>
-                        </div>
-                        <div class="product-img mb-3">
-                            <a href="{{ route('store.product', $product->id) }}">
-                                <img src="{{ asset($product->image[0]->image) }}" class="product-image" alt="">
-                            </a>
-                        </div>
-                        <div class="product-name mb-3">
-                            <a href="{{ route('store.product', $product->id) }}">
-                                <span>{{ $product->name }}</span>
-                            </a>
-                        </div>
-                        <div class="product-price mb-3">
-                            <span class="old-price">{{ currency_format($product->import_price) }}</span>
-                            <span class="actual-price">{{ currency_format($product->price) }}</span>
-                        </div>
+                    <div class="product">
+                        <span class="flag-installment">Trả góp 0%</span>
+                        @if ($product['promotion_price'])
+                            <span class="percent-deal">Giảm {!! currency_format($product['price'] - $product['promotion_price']) !!}</span>
+                        @endif
+
+                        <div class="product-img">
+
+                            @if ($product['avatar'] != null)
+                                <a href="{{ route('store.product', $product['id']) }}">
+                                    <img src="{{ $product['avatar'][0]['path'] }}" class="product-image" alt="">
+                                </a>
+                            @else
+                                <a href="{{ route('store.product', $product->id) }}">
+                                    <img src="{{ $product->image[0]->path }}" class="product-image" alt="">
+                                </a>
+                            @break
+                        @endif
+                    </div>
+                    <div class="product-name">
+                        <a href="{{ route('store.product', $product['id']) }}">
+                            <span>{{ $product['name'] }}</span>
+                        </a>
+                    </div>
+                    <div class="product-price mb-3">
+                        @if ($product['promotion_price'] != null)
+                            <span class="old-price">{{ currency_format($product['price']) }}</span>
+                            <span class="actual-price">{{ currency_format($product['promotion_price']) }}</span>
+                        @else
+                            <span class="actual-price">{{ currency_format($product['price']) }}</span>
+                        @endif
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
     </div>
+</div>
 
-    </div>
-    {{-- End --}}
+</div>
+{{-- End --}}
 
-    </div>
-    </div>
+</div>
+</div>
 
 @endsection
 

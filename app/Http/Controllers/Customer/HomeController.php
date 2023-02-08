@@ -19,6 +19,7 @@ use App\Models\Order;
 use App\Models\Brand;
 
 use App\Models\Consignees;
+use App\Models\Image;
 
 class HomeController extends Controller
 {
@@ -42,9 +43,20 @@ class HomeController extends Controller
 
         $brands = new Brand();
 
+        $images = new Image();
+
         $brands = $brands->get();
 
-        $products = $products->get();
+        // $productArr1 = $products->get();
+
+        $products = $products->select('id', 'code', 'name', 'price', 'promotion_price')->get()->toArray();
+
+        foreach ($products as $key => $product) {
+            $products[$key]['avatar'] = $images->select('path')
+                ->where('product_id', $product['id'])->where('is_avatar', 1)->get()->toArray();
+        }
+
+        // dd($products);
 
         return view('customer.pages.products', compact('products', 'brands'));
     }

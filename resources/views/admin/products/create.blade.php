@@ -3,8 +3,7 @@
 @section('page_heading', 'Thêm sản phẩm')
 
 @section('link')
-    <link rel="stylesheet" href="{{ asset('admin/custom_layout/css/product_create.css') }}">
-    <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    <link rel="stylesheet" href="{{ asset('admin/custom_admin/products/js/product_create.css') }}">
 @endsection
 
 @section('redirect')
@@ -35,7 +34,9 @@
                         <select name="category" id="category" class="form-control">
                             <option value="">--- Chọn danh mục ---</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected': false }}>{{ $category->name }}</option>
+                                <option value="{{ $category->id }}"
+                                    {{ old('category') == $category->id ? 'selected' : false }}>{{ $category->name }}
+                                </option>
                             @endforeach
                         </select>
 
@@ -50,7 +51,8 @@
                         <select name="brand" id="brand" class="form-control">
                             <option value="">--- Chọn danh mục ---</option>
                             @foreach ($brands as $brand)
-                                <option value="{{ $brand->id }}" {{ old('brand') == $brand->id ? 'selected': false }}>{{ $brand->name }}</option>
+                                <option value="{{ $brand->id }}" {{ old('brand') == $brand->id ? 'selected' : false }}>
+                                    {{ $brand->name }}</option>
                             @endforeach
                         </select>
 
@@ -102,6 +104,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group ">
+                        <div class="my-2 box-reset_images">
+                            <label for="images">Ảnh sản phẩm</label>
+                            <input type="file" class="form-control" id="images" name="images[]"
+                                onchange="preview_images();" multiple />
+                            <input onclick="return resetForm();" type="reset" class="btn btn-danger reset_images"
+                                name='reset_images' value="Reset" />
+
+                            @error('images')
+                                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="row mt-2" id="image_preview"></div>
+                    </div>
+
                 </div>
 
 
@@ -160,20 +178,12 @@
                         @enderror
 
                     </div>
-
-                    <div class="field form-group">
-                        <label for="images">Ảnh sản phẩm</label>
-                        <input type="file" id="images" class="form-control" name="images[]" multiple />
-                        @error('images')
-                            <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                        @enderror
-                    </div>
                 </div>
 
 
                 <div class="col-lg-12 form-group">
                     <label for="title">Mô tả sản phẩm</label>
-                    <textarea name="title" id="title">
+                    <textarea name="title" id="ck-title">
 
                     </textarea>
 
@@ -185,7 +195,7 @@
 
                 <div class="form-group col-lg-12">
                     <label for="detail">Thông số kỹ thuật</label>
-                    <textarea name="detail" id="detail">
+                    <textarea name="detail" id="ck-detail">
                         {{-- {{ old('detail') }} --}}
                         <table border="0" cellpadding="0" style="width:100%">
                             <tbody>
@@ -317,37 +327,5 @@
 @endsection
 
 @section('js')
-    <script src="https://cdn.ckeditor.com/[version.number]/[distribution]/ckeditor.js"></script>
-    <script>
-        CKEDITOR.replace('title');
-        CKEDITOR.replace('detail');
-
-        $(document).ready(function() {
-            if (window.File && window.FileList && window.FileReader) {
-                $("#files_image").on("change", function(e) {
-                    var files = e.target.files,
-                        filesLength = files.length;
-                    for (var i = 0; i < filesLength; i++) {
-                        var f = files[i]
-                        var fileReader = new FileReader();
-                        fileReader.onload = (function(e) {
-                            var file = e.target;
-                            $("<span class=\"pip\">" +
-                                "<img class=\"imageThumb\" src=\"" + e.target.result +
-                                "\" title=\"" + file.name + "\"/>" +
-                                "<br/><span class=\"remove\"><i class=\"fa-solid\ fa-circle-xmark\"></i></span>" +
-                                "</span>").insertAfter("#files_image");
-                            $(".remove").click(function() {
-                                $(this).parent(".pip").remove();
-                            });
-                        });
-                        fileReader.readAsDataURL(f);
-                    }
-                    console.log(files);
-                });
-            } else {
-                alert("Your browser doesn't support to File API")
-            }
-        });
-    </script>
+    <script src="{{ asset('admin/custom_admin/products/js/create.js') }}"></script>
 @endsection
