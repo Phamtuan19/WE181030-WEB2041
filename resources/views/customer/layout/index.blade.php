@@ -12,337 +12,280 @@
 
     <!-- {{-- CDN Bootstrap --}} -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 
     <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,300&display=swap"
-        rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Encode+Sans&family=Montserrat:ital,wght@0,500;1,400&family=Pattaya&family=Roboto:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,300&display=swap');
     </style>
 
     <link rel="stylesheet" href="{{ asset('customer/css/index.css') }}" />
 
-    <title>@yield('ttile')</title>
+    {{-- <title>@yield('ttile')</title> --}}
+    <title>Trang chủ</title>
 </head>
 
 <body>
     <!-- NavBar -->
 
-    <div class="navbar-custom sticky-top">
+
+    <header class="header" style="display: block">
         <div class="container">
-            <div class="row">
-                <div class="col-2">
-                    <a href="{{ route('store.home') }}" class="d-flex align-items-center">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfJ28zNBVMe0zS7qTP82M2WvNp_LUMM_6fNA&usqp=CAU"
-                            alt="" class="nav-logo">
-                        <div class="nav-name_shop ms-2">
-                            <span class="name_shop">X - Shop</span>
-                        </div>
-                    </a>
-                </div>
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container-fluid">
+                    <div class="nav-logo">
+                        <a class="navbar-brand" href="#">
+                            <img class="nav-logo "
+                                src="https://scontent.fhan2-5.fna.fbcdn.net/v/t1.15752-9/329959193_1211155973158597_5307414547449285977_n.png?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=M09cjkosAYwAX8TPFhX&_nc_ht=scontent.fhan2-5.fna&oh=03_AdRhUjA_nellvbDNKY1EjGLYndIusvnquFPj2vgNZicazw&oe=640BC6AA"
+                                alt="">
+                        </a>
+                    </div>
 
-                <div class="col-lg-4">
-                    <ul class="navbar-nav nav-bar">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-item_a" href="#">
-                                Điện Thoại
-                            </a>
-                        </li>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                        <li class="nav-item cart-item">
-                            <a class="nav-link nav-item_a" aria-current="page" href="#">
-                                Laptop
-                            </a>
-                        </li>
+                    {{-- @dd(request()->path == 'store' ? 'nav-active' : '') --}}
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link nav-link_a {{ request()->path() === '/' ? 'nav-active' : '' }}" aria-current="page" href="{{ route('store.home') }}">Home</a>
+                            </li>
+                            {{-- @dd(request()->path()) --}}
+                            <li class="nav-item">
+                                <a class="nav-link nav-link_a {{ request()->path() === 'dien-thoai' ? 'nav-active' : '' }}" aria-current="page" href="{{ route('store.mobile') }}">Điện thoại</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link nav-item_a" href="#">
-                                Máy tính bảng
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-item_a" href="#">
-                                Phụ kiện
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                            <li class="nav-item">
+                                <a class="nav-link nav-link_a {{ request()->path() ==='bai-viet' ? 'nav-active' : '' }}" aria-current="page" href="{{ route('store.list.posts') }}">Bài viết</a>
+                            </li>
 
-                <div class="col-4">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nhập vào sản phẩm bạn muốn tìm kiếm...">
+                            <li class="nav-item">
+                                <a class="nav-link nav-link_a {{ request()->path() === 'Laptop' ? 'nav-active' : '' }}" aria-current="page" href="#">Laptop</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link nav-link_a {{ request()->path() === 'phu kien' ? 'nav-active' : '' }}" aria-current="page" href="#">Phụ kiện</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav--icon">
+                        <section class="search">
+                            <div class="box-nav_icon">
+                                <i class="fa-solid fa-magnifying-glass icon"></i>
+                            </div>
+
+                            <div class="search-box">
+                                <div class="container ">
+                                    <form action="">
+                                        <div class="d-flex container-search ">
+                                            <input class="search-box__input" type="text" placeholder="Search">
+                                            <button class="search-box__btn">Submit</button>
+                                            <div class="close__input">
+                                                <i class="fas fa-times close-icon"></i>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="cart">
+                            <div class="box-nav_icon">
+                                <a href="" class="nav-icon_link" style="color: #666">
+                                    <i class="fa-solid fa-cart-shopping icon"></i>
+                                </a>
+
+                                <span class="cart_total">4</span>
+                            </div>
+
+                            <ul class="container-cart pb-2">
+                                <li class="cart-item justify-content-center">
+                                    <p class="mb-0 cart-title">Có <small class="cart-title_total">4</small> sản phẩm
+                                        trong giỏ hàng</p>
+                                </li>
+                                <li class="cart-item">
+                                    <img src="https://res.cloudinary.com/dizwixa7c/image/upload/v1675878779/duan_laravel/Products/piha6kcgfhz9uy51mjnm.jpg"
+                                        alt="" class="cart-link_image">
+
+                                    <a href="" class="cart-link cart-link_name">
+                                        <span class="cart-name">Samsung Galaxy Tab S6 Lite 2022</span>
+                                    </a>
+
+                                    <span class="cart-link cart-link_quantity">1</span>
+
+                                </li>
+
+                                <li class="cart-item">
+                                    <img src="https://res.cloudinary.com/dizwixa7c/image/upload/v1675878779/duan_laravel/Products/piha6kcgfhz9uy51mjnm.jpg"
+                                        alt="" class="cart-link_image">
+
+                                    <a href="" class="cart-link cart-link_name">
+                                        <span class="cart-name">Samsung Galaxy Tab S6 Lite 2022</span>
+                                    </a>
+
+                                    <span class="cart-link cart-link_quantity">1</span>
+
+                                </li>
+                            </ul>
+                        </section>
+
+                        <section class="login">
+                            <div class="box-nav_icon">
+                                <i class="fa-solid fa-user icon"></i>
+                            </div>
+
+                            <ul class="container-login">
+                                <li class="login-item">
+                                    <a href="{{ route('store.login') }}" class="login-link">Login</a>
+                                </li>
+
+                                <li class="login-item">
+                                    <a href="" class="login-link">Tạo tài khoản</a>
+                                </li>
+                            </ul>
+                        </section>
                     </div>
                 </div>
-
-                {{-- <div class="col-lg-2"></div> --}}
-
-                <div class="col-lg-2">
-                    <ul class="navbar-nav nav-bar">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-link_custom dropdown-toggle" href="#" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fa-regular fa-file-lines"></i>
-                            </a>
-
-                            <ul class="dropdown-menu nav-item_menu">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-
-                        <li class="nav-item cart-item">
-                            <a class="nav-link nav-link_custom" aria-current="page" href="{{ route('store.cart') }}">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                <span class="quantity-cart">0</span>
-                            </a>
-
-                            <div class="dropdown-nav">
-                                <div class="dropdown-count">
-                                    Có <strong class="dropdown-count_strong">0</strong> sản phẩm trong giỏ hàng của bạn
-                                </div>
-                                <div class="dropdown-items">
-                                </div>
-
-                                <div class="dropdown-totals">
-                                    Tổng phụ: <strong class="total_money">0₫</strong>
-                                </div>
-
-                                <div class="dropdown-btn">
-                                    <a href="{{ route('store.cart') }}" class="dropdown-btn_buttom">Đi tới giỏ hàng
-                                    </a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <li class="nav-item customer_name">
-                            <a class="nav-link nav-link_custom admin_name" href="#">
-                                <i class="fa-solid fa-user"></i>
-
-                            </a>
-                            <div class="admin_name-dropdown d-none" style="width: 120px;">
-                                @if (Auth::guard('customers')->check())
-                                    <a href="{{ route('store.logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Đăng xuất
-                                    </a>
-                                    <form id="logout-form" action="{{ route('store.logout') }}" method="POST"
-                                        class="d-none">
-                                        @csrf
-                                        {{-- <input type="hidden" name="_token"
-                                value="0gHkalwIcbQsMg9fQWmF3TczWs7mkDXVeEbJx4A4"> --}}
-                                    </form>
-                                @else
-                                    <a href="{{ route('store.login') }}">
-                                        Đăng nhập
-                                    </a>
-                                @endif
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            </nav>
         </div>
-    </div>
-
+    </header>
     {{-- End NavBar --}}
 
-    <!--Start of Dropdown-->
+    <main class="main-wrapper">
 
-
-    <!-- Slider Show -->
-    @if (request()->path() == 'store')
-        <div class="container slidershow_countdown">
-            <div class="row" style="padding: 6px 12px">
-                <!-- SliderShow -->
-                <div class="col-lg-12 p-0">
-                    <div class="swiper mySwiper-slider">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
-                                    alt="" style="width: 100%; height: 327px;">
+        <!-- Slider Show -->
+        @if (request()->path() == 'store')
+            <div class="container-fluid mt-1">
+                <div class="row" style="">
+                    <div class="col-lg-12 px-0">
+                        <div class="swiper mySwiper-slider">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="https://shopdunk.com/images/thumbs/0011623_banner PC valentine (1).jpeg"
+                                        alt="" class="slider_image">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="https://shopdunk.com/images/thumbs/0011621_Banner PC (2) (1).png"
+                                        alt="" class="slider_image">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="https://shopdunk.com/images/thumbs/0011615_banner PC iphone 14 Pro Max (9).jpeg"
+                                        alt="" class="slider_image">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="https://shopdunk.com/images/thumbs/0011626_Banner PC (29).png"
+                                        alt="" class="slider_image">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="https://shopdunk.com/images/thumbs/0011613_banner PC ipad gen 9 (2).jpeg"
+                                        alt="" class="slider_image">
+                                </div>
                             </div>
-                            <div class="swiper-slide">
-                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
-                                    alt="" style="width: 100%; height: 327px;">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
-                                    alt="" style="width: 100%; height: 327px;">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
-                                    alt="" style="width: 100%; height: 327px;">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
-                                    alt="" style="width: 100%; height: 327px;">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
-                                    alt="" style="width: 100%; height: 327px;">
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/1/13/638092080505734826_F-C1_1200x300.png"
-                                    alt="" style="width: 100%; height: 327px;">
-                            </div>
+                            <div class="swiper-pagination"></div>
                         </div>
-                        <div class="swiper-pagination"></div>
                     </div>
-                </div>
-
-                <!-- support and incentives -->
-                <div class="support">
-                    <!-- Js render -->
                 </div>
             </div>
-        </div>
-    @endif
+        @endif
 
-    <!-- Content -->
-    <div class="container content ">
-        {{-- <form action=""> --}}
-        <div class="row">
-            @if (request()->path() == 'store/products')
-                <div class="col-lg-2">
-                    <div class="mt-2">
-                        <p class="filter-title mb-2">Hãng sản xuất</p>
+        <!-- Content -->
+        @yield('content-product')
 
-                        <div class="px-3">
-                            <form action="" method="GET">
-                                <div class="form-check">
-                                    <input class="form-check-input checkBrand" type="checkbox" name="brand[]"
-                                        value="all" id="brand" />
-                                    <label class="form-check-label" for="brand">Tất cả</label>
-                                </div>
+    </main>
 
-                                @foreach ($brands as $key => $brand)
-                                    <div class="form-check">
-                                        <input class="form-check-input checkBrand" type="checkbox" name="brand[]"
-                                            value="{{ $brand->id }}" id="{{ $brand->name }}" />
-                                        <label class="form-check-label"
-                                            for="{{ $brand->name }}">{{ $brand->name }}</label>
-                                    </div>
-                                @endforeach
 
-                            </form>
+        {{-- Footer --}}
+        <footer class="footer">
+            <div class="container">
+                <ul class="row footer-item">
+                    <li class="col-lg-4">
+                        <h5 class="footer-title">thông tin cửa hàng</h5>
+                        <p class="footer-link">Địa chỉ: 60 29th Street Sanfrancisco, CA 99110 507 UNICON TRADED CENTER
+                            UNITED States of Americal
+                        </p>
+                        <p class="footer-link">Điện thoại: (+00) 123 666 888 </p>
+                        <span class="footer-link">Email: Phamtuan19hd@gmail.com </span>
+                    </li>
+
+                    <li class="col-lg-2">
+                    </li>
+
+                    <li class="col-lg-3">
+                        <h5 class="footer-title">Hướng dẫn mua online</h5>
+                        <div class="p-info">
+                            <i class="fas fa-chevron-right icon-right"></i>
+                            <p><a class="footer-link" href="">liên hệ với chúng tôi</a></p>
                         </div>
-                    </div>
-                    {{-- </form> --}}
+                        <div class="p-info footer-link">
+                            <i class="fas fa-chevron-right icon-right"></i>
+                            <p><a href="">Tin khuyến mãi</a></p>
+                        </div>
+                        <div class="p-info footer-link">
+                            <i class="fas fa-chevron-right icon-right"></i>
+                            <p><a href="">Hướng dẫn mua trả góp</a></p>
+                        </div>
+                        <div class="p-info footer-link">
+                            <i class="fas fa-chevron-right icon-right"></i>
+                            <p><a href="">Chính sách trả góp</a></p>
+                        </div>
+                    </li>
 
-                    <form method="GET" action="">
-                        <div class="mt-4">
-                            <p class="filter-title mb-2">Mức Giá</p>
-
-                            <div class="px-3">
-                                <div class="form-check">
-                                    <input class="form-check-input checkAll" checked type="checkbox" name="price[]"
-                                        value="all" id="check-price-all" />
-                                    <label class="form-check-label" for="check-price-all">Tất cả</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input selectedId" type="checkbox" name="price[]"
-                                        value="2" id="price_2" />
-                                    <label class="form-check-label" for="price_2">Dưới 2 triệu</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input selectedId" type="checkbox" name="price[]"
-                                        value="3" id="price_2-4" />
-                                    <label class="form-check-label" for="price_2-4">Từ 2 - 4 triệu</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input selectedId" type="checkbox" name="price[]"
-                                        value="4" id="price_4-7" />
-                                    <label class="form-check-label" for="price_4-7">Từ 4 - 7 triệu</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input selectedId" type="checkbox" name="price[]"
-                                        value="5" id="price_7-13" />
-                                    <label class="form-check-label" for="price_7-13">Từ 7 - 13 triệu</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input selectedId" type="checkbox" name="price[]"
-                                        value="6" id="price_13" />
-                                    <label class="form-check-label" for="price_13">Trên 13 triệu</label>
-                                </div>
+                    <li class="col-lg-3">
+                        <h5 class="footer-title">Hệ thống cửa hàng</h5>
+                        <div class="p-info footer-link">
+                            <i class="fas fa-chevron-right icon-right"></i>
+                            <p><a href="">Chính sách đổi trả</a></p>
+                        </div>
+                        <div class="p-info footer-link">
+                            <i class="fas fa-chevron-right icon-right"></i>
+                            <p><a href="">Hệ thống bảo hành</a></p>
+                        </div>
+                        <div class="p-info footer-link">
+                            <i class="fas fa-chevron-right icon-right"></i>
+                            <p><a href="">Giới thiệu máy đổi trả</a></p>
+                        </div>
+                        <div class="p-info footer-link">
+                            <i class="fas fa-chevron-right icon-right"></i>
+                            <p><a href="">Kiểm tra hàng Apple chính hãng</a></p>
+                        </div>
+                    </li>
+                    {{-- <li class="col-lg-4">
+                        <h5 class="footer-title">Latest News</h5>
+                        <div class="news-item">
+                            <img class="news-img"
+                                src="https://tmbidigitalassetsazure.blob.core.windows.net/rms3-prod/attachments/37/1200x1200/Chicken-Pizza_exps30800_FM143298B03_11_8bC_RMS.jpg"
+                                alt="">
+                            <div class="news-text">
+                                <h5 class="footer-date">January 18 12 2022</h5>
+                                <p>Anyways REPS is a NYC arency repres enting photographers</p>
                             </div>
                         </div>
-                    </form>
-                </div>
-            @endif
-
-            {{-- Render Product --}}
-            @if (request()->path() == 'store/products')
-                <div class="col-lg-10">
-                    @yield('content-product')
-                </div>
-            @else
-                <div class="col-lg-12">
-                    @yield('content-product')
-                </div>
-            @endif
-        </div>
-
-    </div>
-
-    <!-- footer -->
-    @if (request()->path() != 'store/payment' &&
-            request()->path() != 'store/cart' &&
-            request()->path() != 'store/orderSuccess')
-        <footer class="mt-4 py-4" style="background-color: #ef0000; color: white">
-            <div class="container">
-                <div class="row">
-                    <div class="col-3 footer-colum">
-                        <h6>Về chúng tôi</h6>
-
-                        <div class="column-list d-flex gap-3 flex-column">
-                            <a href="" class="nav-link">Tin tức</a>
-                            <a href="" class="nav-link">Giới thiệu</a>
-                            <a href="" class="nav-link">Tuyển dụng</a>
-                            <a href="" class="nav-link">Hệ thống đại lý</a>
-                            <a href="" class="nav-link">Chính sách tích điểm</a>
+                        <div class="news-item">
+                            <img class="news-img"
+                                src="https://chianui.vn/wp-content/uploads/2019/06/B%C3%92-2-T%E1%BA%A6NG_resize_min-800x800.jpg"
+                                alt="">
+                            <div class="news-text">
+                                <h5 class="footer-date">December 13 2 2022</h5>
+                                <p>Unas risus suscript lorem issum dolor sit amet lore risus suscript </p>
+                            </div>
                         </div>
-                    </div>
-
-                    <!-- Hỗ trợ khách hàng -->
-                    <div class="col-3 footer-colum">
-                        <h6>Hỗ trợ khách hàng</h6>
-
-                        <div class="column-list d-flex gap-3 flex-column">
-                            <a href="" class="nav-link">Chính sách, Quy định chung</a>
-                            <a href="" class="nav-link">Chính sách vận chuyển</a>
-                            <a href="" class="nav-link">Chính sách bảo hàng</a>
-                            <a href="" class="nav-link">Chính sách đổi trả</a>
-                            <a href="" class="nav-link">Hướng dãn mua hàng online</a>
-                        </div>
-                    </div>
-
-                    <!-- Hệ thống cửa hàng -->
-                    <div class="col-6 footer-colum">
-                        <h6>Hệ thống cửa hàng</h6>
-
-                        <div class="column-list d-flex gap-3 flex-column ">
-                            <p>
-                                -
-                                <span>Cơ sở 1: Số 215 Giáp Nhất, Nhân Chính, Thanh Xuân, Hà Nội</span>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                    </li> --}}
+                    <p class="copyright">@Copyright Phạm Tuấn Developer</p>
+                </ul>
             </div>
         </footer>
-    @endif
+        <section id="loading" style="display: none;"></section>
 
 
     <!-- CDN Fontawesome -->
@@ -371,13 +314,22 @@
         });
 
         // Ajax loading
-        $(document).ready(function() {
+        // $(document).ready(function() {
 
-            const cartArr = JSON.parse(localStorage.getItem('cart'));
+        //     const cartArr = JSON.parse(localStorage.getItem('cart'));
 
-            renderCart_(cartArr);
+        //     renderCart_(cartArr);
 
-        });
+        //     $(".box-nav_icon").click(function() {
+        //         $(".search-box").addClass('search-active');
+        //     })
+
+        //     $(".close-icon").click(function() {
+        //         $(".search-box").removeClass('search-active');
+        //     })
+        // });
+
+
     </script>
 
 </body>

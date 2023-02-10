@@ -19,7 +19,12 @@ use App\Models\Order;
 use App\Models\Brand;
 
 use App\Models\Consignees;
+
 use App\Models\Image;
+
+use App\Models\Post;
+
+use App\Models\Comment;
 
 class HomeController extends Controller
 {
@@ -30,11 +35,13 @@ class HomeController extends Controller
 
         $brands = new Brand();
 
-        $products = $products->get();
+        $newProduct = $products->orderBy('created_at', 'DESC')->where('deleted_at', '=', null)->paginate(4);
 
         $brands = $brands->get();
 
-        return view('customer.pages.home', compact('products', 'brands'));
+        // dd($products);
+
+        return view('customer.pages.home', compact('newProduct', 'brands'));
     }
 
     public function indexMobile(Request $request)
@@ -87,5 +94,32 @@ class HomeController extends Controller
         $orders = $orders->get();
 
         return view('customer.pages.orderSuccess', compact('orders'));
+    }
+
+    public function indexPosts()
+    {
+        $posts = new Post();
+
+        $posts = $posts->get();
+
+        $date1 = "2023-02-08";
+        $date2 = date('Y-m-d');
+
+        // dd(_date_diff(strtotime($date1), time()));
+
+        return view('customer.pages.post', compact('posts'));
+    }
+
+    public function showPosts(Post $post)
+    {
+        $comments = new Comment();
+
+        // foreach($post->comments as $comment){
+
+        //     dd($comment->customer);
+        // }
+
+        // $comments = $comments->where('post_id', $post->)
+        return view('customer.pages.show_post', compact('post'));
     }
 }

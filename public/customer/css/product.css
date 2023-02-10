@@ -1,0 +1,14 @@
+
+
+.filter-active {
+    color: red !important;
+    display: inline-flex !important;
+}
+
+.filter-active::after {
+    content: "\f00c";
+    display: block;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    margin-left: 6px;
+}

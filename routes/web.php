@@ -16,6 +16,8 @@ use App\Http\Controllers\Customer\Auth\LoginController;
 
 use App\Http\Controllers\Customer\PaymentController;
 
+use App\Http\Controllers\Customer\CommentController;
+
 use App\Http\Controllers\admin\OrderController;
 
 use App\Http\Controllers\admin\CutomerController;
@@ -115,6 +117,15 @@ Route::prefix('store')->name('store.')->group(function () {
     Route::post('check-order', [PaymentController::class, 'checkPayment'])->name('checkOrder');
 
     Route::get('order-success', [HomeController::class, 'orderSuccess'])->name('orderSuccess');
+
+    Route::get('/danh-sach-bai-viet', [HomeController::class, 'indexPosts'])->name('list.posts');
+
+    Route::get('/danh-sach-bai-viet/{post}', [HomeController::class, 'showPosts'])->name('show.posts');
+
+    // Comments
+
+    Route::resource('comments', CommentController::class);
+
 
     // authentication guard Customers
     Route::get('/login', [LoginController::class, 'login'])->middleware('guest:customers')->name('login');
