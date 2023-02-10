@@ -114,12 +114,24 @@ class HomeController extends Controller
     {
         $comments = new Comment();
 
-        // foreach($post->comments as $comment){
+        $query = $comments->get();
 
-        //     dd($comment->customer);
-        // }
+        $comments = $comments->whereNull('parent_id')->get()->toArray();
 
-        // $comments = $comments->where('post_id', $post->)
+        foreach ($comments as $key => $item){
+            $comments[$key]['parent'] = $query->where('parent_id', $item['id'])->toArray();
+        }
+
+        // dd($comments);
+        $arrComment = [];
+        foreach ($comments as $item){
+            if($item['post_id'] == $post->id){
+                array_push($arrComment, $item);
+            }
+        }
+
+        dd($arrComment);
+
         return view('customer.pages.show_post', compact('post'));
     }
 }

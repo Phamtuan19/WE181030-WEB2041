@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Post;
+
 class CommentController extends Controller
 {
     /**
@@ -108,5 +110,34 @@ class CommentController extends Controller
     public function destroy(Comment $Comment)
     {
         //
+    }
+
+
+    public function reply(Request $request, $id)
+    {
+
+        // dd($request->all());
+        $request->validate(
+            [
+                'comment_parent_id' => 'required',
+            ],
+            [
+                'comment_parent_id.required' => 'Bạn chưa viết bình luận',
+            ]
+        );
+
+        $comments = new Comment();
+
+        $comment = $comments->find($id);
+
+        $dataReply = [
+            'post_id' => $comment->post_id,
+            'customer_id' => Auth::guard('customers')->id(),
+            'parent_id' => $comment->id,
+            'content' => $request->comment_parent_id,
+        ];
+
+        $comments->create($dataReply);
+        return back();
     }
 }

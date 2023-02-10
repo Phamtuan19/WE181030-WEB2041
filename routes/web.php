@@ -126,6 +126,8 @@ Route::prefix('store')->name('store.')->group(function () {
 
     Route::resource('comments', CommentController::class);
 
+    Route::post('comments/reply/{comment}', [CommentController::class, 'reply'])->name('comments.reply');
+
 
     // authentication guard Customers
     Route::get('/login', [LoginController::class, 'login'])->middleware('guest:customers')->name('login');
