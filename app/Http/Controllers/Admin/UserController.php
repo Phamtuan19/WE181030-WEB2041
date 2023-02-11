@@ -91,7 +91,7 @@ class UserController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'position_id' => $request->position,
-            'is_active' => 1,
+            'is_active' => null,
             'password' => Hash::make($request->password),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),

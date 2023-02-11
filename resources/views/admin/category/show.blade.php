@@ -7,7 +7,7 @@
 @endsection
 
 @section('redirect')
-    <a href="{{ route('admin.category.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+    <a href="{{ route('admin.categories.index') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
         <i class="fa-solid fa-left-long text-white-50 pr-2"></i>
         Danh sách danh mục
     </a>
@@ -30,7 +30,7 @@
     @endif
 
     @if (!empty($category))
-        <form action="{{ route('admin.category.update', $category->id) }}" method="POST">
+        <form action="{{ route('admin.categories.update', $category->id) }}" method="POST">
             @csrf
             @method('PATCH');
 
@@ -56,13 +56,13 @@
                     </div>
 
                     <div class="form-group col-lg-6">
-                        <label for="category_id">Danh mục cha</label>
-                        <select name="category_id" id="category_id" class="form-control">
+                        <label for="parent_id">Danh mục cha</label>
+                        <select name="parent_id" id="parent_id" class="form-control">
                             <option value="">--- Không ---</option>
                             {{ showCategories($categories) }}
                         </select>
 
-                        @error('type')
+                        @error('parent_id')
                             <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
                         @enderror
 

@@ -20,11 +20,15 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone')->unique();
             $table->tinyInteger('position_id')->nullable();
-            $table->boolean('is_active')->default('1')->comment('1 = true ; 0 = false');
             $table->string('password');
+            $table->string('avatar')->nullable();
+            $table->string('province')->nullable(); // tỉnh
+            $table->string('district')->nullable(); // huyện
+            $table->string('ward')->nullable(); // xã
+            $table->string('specific_address')->nullable(); // địa chỉ cụ thể
+            $table->boolean('is_active')->nullable();
             $table->rememberToken();
             $table->timestamps();
-            $table->boolean('is_deleted')->nullable();
         });
     }
 

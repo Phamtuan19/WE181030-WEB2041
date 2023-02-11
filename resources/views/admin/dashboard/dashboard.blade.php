@@ -15,7 +15,7 @@
                                     Doanh số
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    {{ currency_format($orders['totalSales']) }} VND
+                                    {{ !empty(currency_format($orders['totalSales'])) ? currency_format($orders['totalSales']) : '0 VND'}}
                                     <br>
                                     <span style="font-size: 16px; font-weight: 400;">Doanh số cửa hàng.</span>
                                 </div>

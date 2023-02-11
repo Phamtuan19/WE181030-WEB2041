@@ -82,35 +82,63 @@
                         <label for="">Màu sản phẩm</label>
                         <div class="container-fluid">
                             <div class="row">
-                                @foreach ($colors as $value)
-                                    <div class="form-check col-lg-3 mb-3">
-                                        <input class="form-check-input" type="checkbox" name="color[]"
-                                            value="{{ $value }}" id="check_color_{{ $value }}"
-                                            {!! in_array($value, json_decode($product->attribute->color, true)) ? 'checked' : false !!} style="margin-top: -0.6rem !important">
-                                        <label class="form-check-label" for="check_color_{{ $value }}">
-                                            {{ $value }}
-                                        </label>
-                                    </div>
-                                @endforeach
+                                @if ($product->attribute->color == 'null')
+                                    @foreach ($colors as $value)
+                                        <div class="form-check col-lg-3 mb-3">
+                                            <input class="form-check-input" type="checkbox" name="color[]"
+                                                value="{{ $value }}" id="check_color_{{ $value }}"
+                                                style="margin-top: -0.6rem !important">
+                                            <label class="form-check-label" for="check_color_{{ $value }}">
+                                                {{ $value }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    @foreach ($colors as $value)
+                                        <div class="form-check col-lg-3 mb-3">
+                                            <input class="form-check-input" type="checkbox" name="color[]"
+                                                value="{{ $value }}" id="check_color_{{ $value }}"
+                                                {!! in_array($value, json_decode($product->attribute->color, true)) ? 'checked' : false !!} style="margin-top: -0.6rem !important">
+                                            <label class="form-check-label" for="check_color_{{ $value }}">
+                                                {{ $value }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
-
+                    {{-- @dd($memory) --}}
                     <div class="form-group">
                         <label for="">Bộ nhớ sản phẩm</label>
                         <div class="container-fluid">
                             <div class="row">
-                                @foreach ($memory as $value)
-                                    <div class="form-check col-lg-3 mb-3">
-                                        <input class="form-check-input" type="checkbox" name="memory[]"
-                                            value="{{ $value }}" id="check_memory_{{ $value }}"
-                                            {!! in_array($value, json_decode($product->attribute->memory, true)) ? 'checked' : false !!} style="margin-top: -0.6rem !important">
+                                @if (json_decode($product->attribute->memory, true) == null)
+                                    @foreach ($memory as $value)
+                                        <div class="form-check col-lg-3 mb-3">
+                                            <input class="form-check-input" type="checkbox" name="memory[]"
+                                                value="{{ $value }}" id="check_memory_{{ $value }}"
+                                                style="margin-top: -0.6rem !important">
 
-                                        <label class="form-check-label" for="check_memory_{{ $value }}">
-                                            {{ $value }}
-                                        </label>
-                                    </div>
-                                @endforeach
+                                            <label class="form-check-label" for="check_memory_{{ $value }}">
+                                                {{ $value }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                @else
+                                    @foreach ($memory as $value)
+                                        <div class="form-check col-lg-3 mb-3">
+                                            <input class="form-check-input" type="checkbox" name="memory[]"
+                                                value="{{ $value }}" id="check_memory_{{ $value }}"
+                                                {!! in_array($value, json_decode($product->attribute->memory, true)) ? 'checked' : false !!} style="margin-top: -0.6rem !important">
+
+                                            <label class="form-check-label" for="check_memory_{{ $value }}">
+                                                {{ $value }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -138,7 +166,8 @@
                                                 <p class="mb-1 Change_image" data-bs-toggle="modal"
                                                     data-bs-target="#exampleModal" data-id="{{ $item->id }}">Change</p>
                                                 <p class="mb-1 delete_image" data-bs-toggle="modal"
-                                                    data-bs-target="#exampleModal" data-id="{{ $item->id }}">Delete</p>
+                                                    data-bs-target="#exampleModal" data-id="{{ $item->id }}">Delete
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -246,7 +275,7 @@
         <div class="modal-dialog">
             <form id="form-modal" class="form_edit_img" action="" method="POST" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="_method" class="form-method" value="" >
+                <input type="hidden" name="_method" class="form-method" value="">
                 <div class="modal-content">
 
                 </div>

@@ -1,5 +1,3 @@
-`
-
 @extends('customer.layout.index')
 
 @section('css')
@@ -9,7 +7,6 @@
 @section('title', 'Trang sản phẩm')
 
 @section('content-product')
-    <div class="div-fake" style="height: 62px"></div>
 
     <div class="container mt-4" id="container-cart">
         <form action="" method="">
@@ -58,7 +55,8 @@
                                             </td>
                                             <td class="cart-total-right">
                                                 <input type="text" class="form-control total-money" value="0"
-                                                    readonly style="border: none; text-align: end; padding: 3px 0;">
+                                                    readonly style="border: none; text-align: end; padding: 3px 0;"
+                                                    disabled>
                                             </td>
                                         </tr>
                                         <tr class="order-subtotal-discount">
@@ -67,7 +65,7 @@
                                             </td>
                                             <td class="cart-total-right">
                                                 <input type="text" class="form-control" value="0" readonly
-                                                    style="border: none; text-align: end; padding: 3px 0;">
+                                                    style="border: none; text-align: end; padding: 3px 0;" disabled>
                                             </td>
                                         </tr>
                                         <tr class="order-total">
@@ -77,7 +75,7 @@
                                             <td class="cart-total-right">
                                                 <input type="text" class="form-control total-payment"
                                                     name="total_payment" value="0" readonly
-                                                    style="border: none; text-align: end; padding: 3px 0;">
+                                                    style="border: none; text-align: end; padding: 3px 0;" disabled>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -109,71 +107,84 @@
                 function renderTable() {
                     const data = cartArr.map(function(e) {
                         return `
-                    <tr style="vertical-align: middle;">
-                        <td>
-                            <img src="${e.image}" alt="" style="width: 100%;">
-                        </td>
-                        <td style="text-align: left !important;">
-                            <div class="form-group">
-                                <input type="text" class="form-control" value="${e.name}" disabled style="border: none; padding: 3px 0; background-color: #fff; font-size: 14px">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" value="Dung lượng: 128GB" disabled style="border: none; padding: 3px 0; background-color: #fff; color: #86868B; font-size: 14px">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" value="Màu sắc: RED" disabled style="border: none; padding: 3px 0; background-color: #fff;  color: #86868B;font-size: 14px">
-                            </div>
-                            <a href="" style="color: #0066cc !important; ">Sửa</a>
-                        </td>
+                            <tr style="vertical-align: middle;">
+                                <td>
+                                    <img src="${e.image}" alt="" style="width: 100%;">
+                                </td>
+                                <td style="text-align: left !important;">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="${e.name}" disabled style="border: none; padding: 3px 0; background-color: #fff; font-size: 14px">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="Dung lượng: 128GB" disabled style="border: none; padding: 3px 0; background-color: #fff; color: #86868B; font-size: 14px">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="Màu sắc: RED" disabled style="border: none; padding: 3px 0; background-color: #fff;  color: #86868B;font-size: 14px">
+                                    </div>
+                                    <a href="{{ url('store/detail-product/${e.code}') }}" style="color: #0066cc !important; ">Sửa</a>
+                                </td>
 
-                        <th style="font-size: 14px; text-align: left !important;">${formatNumber(e.price, ',', '.')}</th>
-                        <td>
-                            <div class="form-group">
-                                <input type="number" class="form-control" value="${e.quantity}" disabled style="width: 60px; padding: 6px 10px; background-color: #f5f5f7; font-size: 14px">
-                            </div>
-                        </td>
-                        <td>
-                            <i class="fa-solid fa-trash" style="color: #86868B"></i>
-                        </td>
-                    </tr>
-                    `
+                                <th style="font-size: 14px; text-align: left !important;">${e.price}</th>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control edit_quantity" value="${e.quantity}" data-code="${e.code}"  style="width: 60px; padding: 6px 10px; background-color: #f5f5f7; font-size: 14px">
+                                    </div>
+                                </td>
+                                <td>
+                                    <i class="fa-solid fa-trash remove_product" style="color: #86868B" data-code="${e.code}" ></i>
+                                </td>
+                            </tr>
+                        `
                     });
 
                     $('.cart-table_body').html(data);
                 }
 
                 renderTable()
-            }else {
-                $("#container-cart").html(" <h1 class=\"container-cart_h1\">Không có sản phẩm nào trong giỏ hàng</h1> ");
+            } else {
+                $("#container-cart").html(
+                    " <h1 class=\"container-cart_h1\">Không có sản phẩm nào trong giỏ hàng</h1> ");
             }
 
             // Hiển thị tổng số tiền
             $("input[name='total_payment']").val(renderTotalMoney());
 
+            $('.remove_product').click(function() {
+                const code = $(this).data('code');
 
+                const carArr = [];
 
-            window.onload = function() {
-
-                $('.edit_quantity').click(function() {
-
-                    let code = $(this).data('code')
-                    console.log(code);
-                    addToCart(code);
-                    renderTotalMoney(cartArr)
+                cart.forEach((e, index) => {
+                    if (e.code != code) {
+                        carArr.push(e);
+                    }
                 });
 
-                $('.remove_product').click(function() {
-                    let code = $(this).data('code');
+                console.log(carArr);
 
-                    let cartArrr = JSON.parse(localStorage.getItem('cartArrr'));
+                localStorage.setItem('cart', JSON.stringify(carArr));
 
-                    const newCartArr = cartArr.filter(item => item.product_code != code)
-
-                    localStorage.setItem('cart', JSON.stringify(newCartArr));
-
-                    location.reload();
-                });
-            }
+                location.reload();
+            });
         })
+
+
+
+        window.onload = function() {
+
+            $('.edit_quantity').click(function() {
+
+                const code = $(this).data('code')
+
+                cart.forEach((e, index) => {
+                    if (e.code == code) {
+                       e.quantity = $(this).val();
+                       console.log(e);
+                    }
+                });
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+            });
+        }
     </script>
 @endsection

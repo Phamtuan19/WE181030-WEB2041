@@ -35,13 +35,22 @@ class HomeController extends Controller
 
         $brands = new Brand();
 
-        $newProduct = $products->orderBy('created_at', 'DESC')->where('deleted_at', '=', null)->paginate(4);
+        $images = new Image();
 
-        $brands = $brands->get();
+        // $newProduct = $products->orderBy('created_at', 'DESC')->where('deleted_at', '=', null)->paginate(4);
+
+        // $brands = $brands->get();
+
+        $products = $products->select('id', 'code', 'name', 'price', 'promotion_price')->get()->toArray();
+
+        foreach ($products as $key => $product) {
+            $products[$key]['avatar'] = $images->select('path')
+                ->where('product_id', $product['id'])->where('is_avatar', 1)->get()->toArray();
+        }
 
         // dd($products);
 
-        return view('customer.pages.home', compact('newProduct', 'brands'));
+        return view('customer.pages.home', compact('products', 'brands'));
     }
 
     public function indexMobile(Request $request)
@@ -68,17 +77,31 @@ class HomeController extends Controller
         return view('customer.pages.products', compact('products', 'brands'));
     }
 
-    public function indexProduct($id)
+    public function detailProduct($code)
     {
         $products =  new Product();
 
-        $product = $products->find($id);
+        $comments = new Comment();
+
+        $query = $comments->get();
+
+        $comments = $comments->whereNotNull('product_id')->whereNull('parent_id')->get();
+
+        foreach ($comments as $key => $item){
+            $comments[$key]['parent'] = $query->where('parent_id', $item['id']);
+        }
+
+        // dd($comments);
+
+        $product = $products->where('code', $code)->first();
 
         $brands = new Brand();
 
         $brands = $brands->get();
 
-        return view('customer.pages.page_product', compact('product', 'brands'));
+        $commentType = "product";
+
+        return view('customer.pages.page_product', compact('product', 'brands', 'comments', 'commentType'));
     }
 
     public function indexCart(Request $request)
@@ -116,22 +139,14 @@ class HomeController extends Controller
 
         $query = $comments->get();
 
-        $comments = $comments->whereNull('parent_id')->get()->toArray();
+        $comments = $comments->whereNotNull('post_id')->whereNull('parent_id')->get();
 
         foreach ($comments as $key => $item){
-            $comments[$key]['parent'] = $query->where('parent_id', $item['id'])->toArray();
+            $comments[$key]['parent'] = $query->where('parent_id', $item['id']);
         }
 
-        // dd($comments);
-        $arrComment = [];
-        foreach ($comments as $item){
-            if($item['post_id'] == $post->id){
-                array_push($arrComment, $item);
-            }
-        }
+        $commentType = "posts";
 
-        dd($arrComment);
-
-        return view('customer.pages.show_post', compact('post'));
+        return view('customer.pages.show_post', compact('post', 'comments', 'commentType'));
     }
 }

@@ -50,21 +50,38 @@ class CommentController extends Controller
             ]
         );
 
-        $comments = new Comment();
 
-        $data = [
-            'post_id' => $request->post,
-            'customer_id' => Auth::guard('customers')->id(),
-            'content' => trim($request->comment),
-            'timestamps' => date('Y-m-d H:i:s'),
-        ];
+        if ($request->commentType == "posts") {
+            // dd(Auth::guard('customers')->id());
+            $comments = new Comment();
+            $data = [
+                'post_id' => $request->post,
+                'user_id' => Auth::guard('customers')->id(),
+                'content' => trim($request->comment),
+                'timestamps' => date('Y-m-d H:i:s'),
+            ];
 
-        // dd($data);
+            if ($comments->create($data)) {
+                return back()->with('msg', 'đăng bài viết thành công');
+            }
 
-        if ($comments->create($data)) {
-            return back()->with('msg', 'đăng bài viết thành công');
+            return back();
         }
-        return back()->with('msg', 'đăng bài viết thất bại');
+
+        if($request->commentType == "product") {
+
+            $comments = new Comment();
+
+            $data = [
+                'product_id' => $request->product,
+                'user_id' => Auth::guard('customers')->id(),
+                'content' => trim($request->comment),
+                'timestamps' => date('Y-m-d H:i:s'),
+            ];
+
+            $comments->create($data);
+            return back();
+        }
     }
 
     /**
@@ -113,31 +130,47 @@ class CommentController extends Controller
     }
 
 
-    public function reply(Request $request, $id)
+    public function reply(Request $request)
     {
 
         // dd($request->all());
         $request->validate(
             [
-                'comment_parent_id' => 'required',
+                'comment' => 'required',
             ],
             [
-                'comment_parent_id.required' => 'Bạn chưa viết bình luận',
+                'comment.required' => 'Bạn chưa viết bình luận',
             ]
         );
 
         $comments = new Comment();
 
-        $comment = $comments->find($id);
+        $comment = $comments->find($request->commentId);
 
-        $dataReply = [
-            'post_id' => $comment->post_id,
-            'customer_id' => Auth::guard('customers')->id(),
-            'parent_id' => $comment->id,
-            'content' => $request->comment_parent_id,
-        ];
+        if ($request->commentType == "posts") {
 
-        $comments->create($dataReply);
-        return back();
+            $dataReply = [
+                'post_id' => $comment->post_id,
+                'user_id' => Auth::guard('customers')->id(),
+                'parent_id' => $request->commentId,
+                'content' => $request->comment,
+            ];
+
+            $comments->create($dataReply);
+            return back();
+        }
+
+        if ($request->commentType == "product") {
+
+            $dataReply = [
+                'product_id' => $comment->product_id,
+                'user_id' => Auth::guard('customers')->id(),
+                'parent_id' => $request->commentId,
+                'content' => $request->comment,
+            ];
+
+            $comments->create($dataReply);
+            return back();
+        }
     }
 }

@@ -48,9 +48,9 @@
                                         <h1 class="h4 text-gray-900 mb-4">Đăng nhập trang quản trị</h1>
                                     </div>
 
-                                    @if (session('msg'))
-                                        <div class="alert alert-success text-center mt-3">
-                                            {{ session('msg') }}
+                                    @if (session('msgError'))
+                                        <div class="alert alert-danger text-center mt-3">
+                                            {{ session('msgError') }}
                                         </div>
                                     @endif
 
@@ -84,13 +84,13 @@
                                             @enderror
                                         </div>
 
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
                                                 <label class="custom-control-label" for="customCheck">Ghi nhớ tài
                                                     khoản</label>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <button type="submit" class="btn btn-primary btn-user btn-block">
                                             Đăng nhập
@@ -101,7 +101,8 @@
                                     <hr>
                                     <div class="text-center">
                                         @if (Route::has('password.request'))
-                                            <a class="small" href="{{ route('password.request') }}">Quên mật khẩu?</a>
+                                            <a class="small mr-2" href="{{ route('password.request') }}">Quên mật khẩu?</a>
+                                            <a class="small" href="{{ route('register') }}">Đăng ký tài khoản mới</a>
                                         @endif
                                     </div>
                                 </div>

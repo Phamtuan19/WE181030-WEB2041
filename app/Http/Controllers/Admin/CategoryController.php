@@ -23,8 +23,10 @@ class CategoryController extends Controller
     {
         $categories = new Categories();
 
-        $categories = $categories->subCategory($categories);
-        dd($categories);
+        $categories = $categories->get();
+
+        // $categories = $categories->subCategory($categories);
+        // dd($categories);
 
         return view('admin.category.index', compact('categories'));
     }
@@ -101,10 +103,10 @@ class CategoryController extends Controller
 
         $request->validate($rules, $message);
 
-        if (!empty($request->category_id)) {
+        if (!empty($request->parent_id)) {
             $category->name = $request->name;
             $category->slug = $request->slug;
-            $category->category_id = $request->category_id;
+            $category->parent_id = $request->parent_id;
 
             $category->save();
         } else {

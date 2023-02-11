@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Customers;
+use App\Models\User;
 
 // upload image
 function uploadFile($upload_path = null, $files = [])
@@ -46,10 +46,14 @@ if (!function_exists('currency_format')) {
 
 function isActiveCustomer($email)
 {
-    $count = Customers::where('email', $email)->where('is_active', 1)->count();
+    $user = User::where('email', $email)->whereNull('is_active')->get();
 
-    if ($count > 0) {
-        return true;
+    if ($user->count() > 0) {
+        if($user[0]->position_id != 3) {
+            return 'admin';
+        }else {
+            return 'member';
+        }
     }
     return false;
 }
@@ -75,3 +79,8 @@ function showCategories($categories, $parentId = null, $char = '')
 
 // ===================================
 
+function percentReduction ($value_1, $value_2) {
+    $relus = (($value_1 - $value_2)/$value_1) * 100;
+
+    return ceil($relus).'%';
+}

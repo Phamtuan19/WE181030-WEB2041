@@ -19,10 +19,10 @@ class CreateCustomersTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('phone');
-            $table->string('province'); // tỉnh
-            $table->string('district'); // huyện
-            $table->string('ward'); // xã
-            $table->string('specific_address'); // địa chỉ cụ thể
+            $table->string('province')->nullable(); // tỉnh
+            $table->string('district')->nullable(); // huyện
+            $table->string('ward')->nullable(); // xã
+            $table->string('specific_address')->nullable(); // địa chỉ cụ thể
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

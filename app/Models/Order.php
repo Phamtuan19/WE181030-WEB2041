@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\OrderDetail;
 
-use App\Models\Customers;
+use App\Models\User;
 
 use App\Models\OrderStatus;
 
@@ -155,9 +155,9 @@ class Order extends Model
         return $this->hasMany(OrderDetail::class);
     }
 
-    public function customer()
+    public function user()
     {
-        return $this->belongsTo(Customers::class, 'customer_id', 'id');
+        return $this->belongsTo(User::class, 'customer_id', 'id');
     }
 
     public function orderStatus()

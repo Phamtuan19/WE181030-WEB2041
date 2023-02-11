@@ -151,12 +151,12 @@
                 </div>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('admin.customers.index') }}">
                     <i class="fa-solid fa-users"></i>
                     <span>Người dùng</span>
                 </a>
-            </li>
+            </li> --}}
 
             {{-- <!-- Divider -->
             <hr class="sidebar-divider">

@@ -43,6 +43,7 @@ class PaymentRequest extends FormRequest
             "ward" => "required",
             "specific_address" => "required",
             "delivery_form" => "required",
+            "house_number" => "required",
         ];
     }
 
@@ -66,6 +67,7 @@ class PaymentRequest extends FormRequest
             "ward" => "Xã / phường",
             "specific_address" => "Địa chỉ cụ thể",
             "delivery_form" => "Hình thức giao hàng",
+            "house_number" => "Thôm xóm / số nhà",
         ];
     }
 }

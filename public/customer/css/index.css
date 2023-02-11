@@ -6,6 +6,8 @@
     --color-white: #ffffff;
     --color-nav-link: rgba(0, 0, 0, 0.55);
     --color-black: #333;
+    --color-background: #f4f5f7;
+    --box-shadow: 0 2px 0 rgb(90 97 105 / 11%), 0 4px 8px rgb(90 97 105 / 12%), 0 10px 10px rgb(90 97 105 / 6%), 0 7px 70px rgb(90 97 105 / 10%);
 }
 
 html {
@@ -13,7 +15,8 @@ html {
 }
 
 body {
-    background-color: var(--color-white);
+    background-color: var(--color-background);
+
 }
 
 main.main-wrapper {
@@ -37,6 +40,7 @@ a {
 .header {
     border: 1px solid #e4e4e4;
     box-shadow: 0 0 10px rgb(180 180 180);
+    background-color: var(--color-white);
 }
 
 .nav-logo {
@@ -78,8 +82,13 @@ a {
 .nav--icon {
     display: flex;
     justify-content: space-between;
-    width: 15%;
+    width: 18%;
     align-items: center;
+}
+
+.user--name {
+    font-size: 16px;
+    font-weight: 700
 }
 
 .box-nav_icon {
@@ -94,8 +103,8 @@ a {
 }
 
 .box-nav_icon:hover {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    border-radius: 5px;
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 5px; */
 }
 
 .box-nav_icon:hover .icon {
@@ -257,12 +266,16 @@ a {
     text-align: center;
     padding-left: 0;
     left: 0;
-    transform: translateX(-50px);
+    /* transform: translateX(-50px); */
 }
 
 .cart:hover .container-cart,
 .login:hover .container-login {
     display: block;
+}
+
+.container-cart {
+    width: 300px;
 }
 
 .cart-item {
@@ -271,7 +284,7 @@ a {
     display: flex;
     align-items: center;
     padding: 12px 6px;
-    border-bottom: 1px solid #ccc;
+    /* border-bottom: 1px solid #ccc; */
 }
 
 .cart-link_name:hover .cart-name {
@@ -325,7 +338,7 @@ a {
     position: relative;
     border-radius: 5px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgb(160 160 160);
+    box-shadow: var(--box-shadow);
     background-color: var(--color-white);
 }
 
@@ -350,7 +363,7 @@ a {
     position: absolute;
     top: 8px;
     right: 5px;
-    z-index: 99999;
+    z-index: 2;
     background: #be1e2d;
     color: #fff;
     border-radius: 5px !important;
@@ -366,8 +379,9 @@ a {
 .product-image {
     transform: scale(0.9);
     width: 100%;
-    min-height: 320px;
+    min-height: 334px;
     padding: 14px 0;
+    border-bottom:  1px solid #E4E6EB;
 }
 
 .product-name {
@@ -410,10 +424,10 @@ a {
     color: #0066cc;
 }
 
-.product:hover .product-image {
+/* .product:hover .product-image {
     transform: scale(1);
     transition: all 0.5s;
-}
+} */
 
 /* =============================================  End Product =============================================*/
 
@@ -550,7 +564,7 @@ a {
 .footer a {
     line-height: 1.6rem;
     font-size: 1rem;
-    color: rgb(189, 189, 189);
+    color: rgb(189, 189, 189) !important;
     text-transform: capitalize;
 }
 

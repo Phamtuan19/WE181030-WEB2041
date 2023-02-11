@@ -133,7 +133,7 @@ class ProductController extends Controller
 
         $table_Images = new Image();
 
-        dd($request->all());
+        // dd($request->all());
 
         $dataProduct = [
             'code' => rand(100000, 9000000),
@@ -145,7 +145,7 @@ class ProductController extends Controller
             'promotion_price' => $request->promotion_price,
             'input_quantity' => $request->input_quantity,
             'quantity_stock' => $request->input_quantity,
-            'information' => $request->information,
+            'information' => $request->title,
             'detail' => $request->detail,
         ];
 
@@ -153,7 +153,7 @@ class ProductController extends Controller
         $saveProduct = $products->create($dataProduct);
 
         if ($saveProduct) {
-
+            // dd($saveProduct->id);
             // Save Table Attribute
             $dataAttribute = [
                 'product_id' => $saveProduct->id,
@@ -229,7 +229,7 @@ class ProductController extends Controller
             '1T'
         ];
 
-        // dd($product->image);
+        // dd($categories);
 
         return view('admin.products.show', compact('product', 'categories', 'brands', 'colors', 'memory'));
     }
@@ -250,7 +250,7 @@ class ProductController extends Controller
         $product->import_price = $request->import_price;
         $product->price = $request->price;
         $product->input_quantity = $request->input_quantity;
-        $product->information = $request->information;
+        $product->information = $request->title;
         $product->detail = $request->detail;
 
         $saveProduct = $product->save();

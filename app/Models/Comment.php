@@ -20,7 +20,7 @@ class Comment extends Model
     protected $fillable = [
         'post_id',
         'product_id',
-        'customer_id',
+        'user_id',
         'parent_id',
         'content',
         'deleted_at',
@@ -28,16 +28,16 @@ class Comment extends Model
 
     public function comment ()
     {
-        return $this->belongsTo(self::class);
+        return $this->belongsTo(self::class, 'parent_id', 'id');
     }
 
-    public function user () {
-        return $this->belongsToMany(User::class);
+    public function userComment () {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function customer () {
-        return $this->belongsTo(Customers::class, 'customer_id', 'id');
-    }
+    // public function user () {
+    //     return $this->belongsTo(Customers::class, 'customer_id', 'id');
+    // }
 
     public function post () {
         return $this->belongsToMany(Post::class);

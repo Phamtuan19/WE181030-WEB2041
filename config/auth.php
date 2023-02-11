@@ -43,7 +43,7 @@ return [
 
         'customers' => [
             'driver' => 'session',
-            'provider' => 'customers',
+            'provider' => 'users',
         ],
 
         'api' => [
@@ -79,7 +79,7 @@ return [
 
         'customers' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Customers::class,
+            'model' => App\Models\User::class,
         ],
 
         // 'users' => [

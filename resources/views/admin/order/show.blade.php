@@ -135,7 +135,7 @@
                     @foreach ($order->consignees as $value)
                         <div class="customer_info mb-2">
                             <p class="customer_info-title">Họ & Tên người đặt hàng</p>
-                            <span>{{ $order->customer->name }}</span>
+                            <span>{{ $order->user->username }}</span>
                         </div>
 
                         <div class="customer_info mb-2">

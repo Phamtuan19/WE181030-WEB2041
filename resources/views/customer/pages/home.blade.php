@@ -10,6 +10,8 @@
 
 @section('content-product')
 
+    @include('customer.layout.slider')
+
     {{-- sản phẩm nổi bật --}}
     <div class="container">
         <div class="row">
@@ -20,32 +22,34 @@
                 </div>
             </div>
 
-            @foreach ($newProduct as $product)
+            @foreach ($products as $product)
                 <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                     <div class="product">
                         <span class="flag-installment">Trả góp 0%</span>
                         @if ($product['promotion_price'])
-                            <span class="percent-deal">Giảm {!! currency_format($product['price'] - $product['promotion_price']) !!}</span>
+                        {{-- @dd($product['promotion_price']) --}}
+                            <span class="percent-deal">Giảm {{ percentReduction($product['price'], $product['promotion_price']) }}</span>
                         @endif
 
                         <div class="product-img">
+
                             @if ($product['avatar'] != null)
-                                <a href="{{ route('store.product', $product['id']) }}">
+                                <a href="{{ route('store.product', $product['code']) }}">
                                     <img src="{{ $product['avatar'][0]['path'] }}" class="product-image" alt="">
                                 </a>
                             @else
-                                <a href="{{ route('store.product', $product->id) }}">
+                                <a href="{{ route('store.product', $product->code) }}">
                                     <img src="{{ $product->image[0]->path }}" class="product-image" alt="">
                                 </a>
                             @endif
                         </div>
 
+
                         <div class="product-name">
-                            <a href="{{ route('store.product', $product->id) }}" class="">
-                                <span>{{ $product->name }}</span>
+                            <a href="{{ route('store.product', $product['code']) }}">
+                                <span>{{ $product['name'] }}</span>
                             </a>
                         </div>
-
                         <div class="product-price mb-3">
                             @if ($product['promotion_price'] != null)
                                 <span class="old-price">{{ currency_format($product['price']) }}</span>
@@ -54,43 +58,6 @@
                                 <span class="actual-price">{{ currency_format($product['price']) }}</span>
                             @endif
                         </div>
-
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                    <div class="product">
-                        <span class="flag-installment">Trả góp 0%</span>
-                        @if ($product['promotion_price'])
-                            <span class="percent-deal">Giảm {!! currency_format($product['price'] - $product['promotion_price']) !!}</span>
-                        @endif
-
-                        <div class="product-img">
-                            @if ($product['avatar'] != null)
-                                <a href="{{ route('store.product', $product['id']) }}">
-                                    <img src="{{ $product['avatar'][0]['path'] }}" class="product-image" alt="">
-                                </a>
-                            @else
-                                <a href="{{ route('store.product', $product->id) }}">
-                                    <img src="{{ $product->image[0]->path }}" class="product-image" alt="">
-                                </a>
-                            @endif
-                        </div>
-
-                        <div class="product-name">
-                            <a href="{{ route('store.product', $product->id) }}" class="">
-                                <span>{{ $product->name }}</span>
-                            </a>
-                        </div>
-
-                        <div class="product-price mb-3">
-                            @if ($product['promotion_price'] != null)
-                                <span class="old-price">{{ currency_format($product['price']) }}</span>
-                                <span class="actual-price">{{ currency_format($product['promotion_price']) }}</span>
-                            @else
-                                <span class="actual-price">{{ currency_format($product['price']) }}</span>
-                            @endif
-                        </div>
-
                     </div>
                 </div>
             @endforeach
@@ -115,32 +82,33 @@
                 </div>
             </div>
 
-            @foreach ($newProduct as $product)
+            @foreach ($products as $product)
                 <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                     <div class="product">
                         <span class="flag-installment">Trả góp 0%</span>
                         @if ($product['promotion_price'])
-                            <span class="percent-deal">Giảm {!! currency_format($product['price'] - $product['promotion_price']) !!}</span>
+                        <span class="percent-deal">Giảm {{ percentReduction($product['price'], $product['promotion_price']) }}</span>
                         @endif
 
                         <div class="product-img">
+
                             @if ($product['avatar'] != null)
-                                <a href="{{ route('store.product', $product['id']) }}">
+                                <a href="{{ route('store.product', $product['code']) }}">
                                     <img src="{{ $product['avatar'][0]['path'] }}" class="product-image" alt="">
                                 </a>
                             @else
-                                <a href="{{ route('store.product', $product->id) }}">
+                                <a href="{{ route('store.product', $product->code) }}">
                                     <img src="{{ $product->image[0]->path }}" class="product-image" alt="">
                                 </a>
                             @endif
                         </div>
 
+
                         <div class="product-name">
-                            <a href="{{ route('store.product', $product->id) }}" class="">
-                                <span>{{ $product->name }}</span>
+                            <a href="{{ route('store.product', $product['code']) }}">
+                                <span>{{ $product['name'] }}</span>
                             </a>
                         </div>
-
                         <div class="product-price mb-3">
                             @if ($product['promotion_price'] != null)
                                 <span class="old-price">{{ currency_format($product['price']) }}</span>
@@ -149,7 +117,6 @@
                                 <span class="actual-price">{{ currency_format($product['price']) }}</span>
                             @endif
                         </div>
-
                     </div>
                 </div>
             @endforeach
@@ -173,17 +140,18 @@
                 </div>
             </div>
 
-            @foreach ($newProduct as $product)
+            @foreach ($products as $product)
                 <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                     <div class="product">
                         <span class="flag-installment">Trả góp 0%</span>
                         @if ($product['promotion_price'])
-                            <span class="percent-deal">Giảm {!! currency_format($product['price'] - $product['promotion_price']) !!}</span>
+                        <span class="percent-deal">Giảm {{ percentReduction($product['price'], $product['promotion_price']) }}</span>
                         @endif
 
                         <div class="product-img">
+
                             @if ($product['avatar'] != null)
-                                <a href="{{ route('store.product', $product['id']) }}">
+                                <a href="{{ route('store.product', $product['code']) }}">
                                     <img src="{{ $product['avatar'][0]['path'] }}" class="product-image" alt="">
                                 </a>
                             @else
@@ -193,12 +161,12 @@
                             @endif
                         </div>
 
+
                         <div class="product-name">
-                            <a href="{{ route('store.product', $product->id) }}" class="">
-                                <span>{{ $product->name }}</span>
+                            <a href="{{ route('store.product', $product['id']) }}">
+                                <span>{{ $product['name'] }}</span>
                             </a>
                         </div>
-
                         <div class="product-price mb-3">
                             @if ($product['promotion_price'] != null)
                                 <span class="old-price">{{ currency_format($product['price']) }}</span>
@@ -207,7 +175,6 @@
                                 <span class="actual-price">{{ currency_format($product['price']) }}</span>
                             @endif
                         </div>
-
                     </div>
                 </div>
             @endforeach

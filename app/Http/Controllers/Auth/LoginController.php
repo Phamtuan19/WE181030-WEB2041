@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 
 use Illuminate\Http\JsonResponse;
 
+use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -99,7 +101,31 @@ class LoginController extends Controller
     {
         $credentials = $request->only($this->username(), 'password');
         $credentials['is_active'] = 1;
+        $credentials['position_id'] != 3;
 
         return $credentials;
+    }
+
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        $dataLogin = $request->except(['_token']);
+
+        // dd(isActiveCustomer($dataLogin['email']));
+
+        if (isActiveCustomer($dataLogin['email']) == 'admin') {
+            $checkLogin = Auth::guard()->attempt($dataLogin);
+
+            if ($checkLogin) {
+
+                return redirect(RouteServiceProvider::HOME);
+            }
+
+            return back()->with('msg', 'Email hoặc Mật khẩu không hợp lệ');
+
+        }else {
+            return back()->with('msgError', 'Tài khoản của bạn hiện không khả dụng');
+        }
     }
 }

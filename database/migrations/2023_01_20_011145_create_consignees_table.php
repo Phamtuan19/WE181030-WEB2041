@@ -16,6 +16,7 @@ class CreateConsigneesTable extends Migration
         Schema::create('consignees', function (Blueprint $table) {
             $table->integerIncrements('id');
             $table->integer('order_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('name');
             $table->string('phone');
             $table->string('email')->nullable();

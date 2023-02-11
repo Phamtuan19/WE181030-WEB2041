@@ -1,0 +1,61 @@
+
+/* ======================================== Comment ======================================== */
+
+.comment {
+    display: flex;
+}
+
+.comment.comment-parent.mb-4 {
+    margin-left: 60px;
+}
+
+.image_user {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid ;
+    line-height: 24px;
+}
+
+.comment-meta {
+    flex: 1;
+    margin-left: 16px;
+    padding: 8px 12px;
+    border: 1px solid #e1e4e6;
+    border-radius: 6px;
+    background: #f8f9fa;
+}
+
+.comment-user_name{
+    margin-bottom: 4px;
+    font-size: 18px;
+    line-height: 24px;
+    color: #32373d;
+    font-weight: 500;
+}
+
+.content {
+    margin-bottom: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #444b52;
+    font-weight: 400;
+}
+
+.comment-time {
+    font-size: 14px;
+    line-height: 20px;
+    color: #444b52;
+    font-weight: 400;
+}
+
+.comment-time_reply {
+    color: #939ca3;
+}
+
+.comment-reply {
+    color: #0664f9;
+    margin-left: 12px;
+}
+
+/* ======================================== End Comment ======================================== */

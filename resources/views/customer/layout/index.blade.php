@@ -27,8 +27,6 @@
     </style>
 
     <link rel="stylesheet" href="{{ asset('customer/css/index.css') }}" />
-
-    {{-- <title>@yield('ttile')</title> --}}
     <title>Trang chủ</title>
 </head>
 
@@ -58,23 +56,28 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link nav-link_a {{ request()->path() === '/' ? 'nav-active' : '' }}" aria-current="page" href="{{ route('store.home') }}">Home</a>
+                                <a class="nav-link nav-link_a {{ request()->path() === '/' ? 'nav-active' : '' }}"
+                                    aria-current="page" href="{{ route('store.home') }}">Trang chủ</a>
                             </li>
                             {{-- @dd(request()->path()) --}}
                             <li class="nav-item">
-                                <a class="nav-link nav-link_a {{ request()->path() === 'dien-thoai' ? 'nav-active' : '' }}" aria-current="page" href="{{ route('store.mobile') }}">Điện thoại</a>
+                                <a class="nav-link nav-link_a {{ request()->path() === 'dien-thoai' ? 'nav-active' : '' }}"
+                                    aria-current="page" href="{{ route('store.mobile') }}">Điện thoại</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link nav-link_a {{ request()->path() ==='bai-viet' ? 'nav-active' : '' }}" aria-current="page" href="{{ route('store.list.posts') }}">Bài viết</a>
+                                <a class="nav-link nav-link_a {{ request()->path() === 'bai-viet' ? 'nav-active' : '' }}"
+                                    aria-current="page" href="{{ route('store.list.posts') }}">Bài viết</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link nav-link_a {{ request()->path() === 'Laptop' ? 'nav-active' : '' }}" aria-current="page" href="#">Laptop</a>
+                                <a class="nav-link nav-link_a {{ request()->path() === 'Laptop' ? 'nav-active' : '' }}"
+                                    aria-current="page" href="#">Laptop</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link nav-link_a {{ request()->path() === 'phu kien' ? 'nav-active' : '' }}" aria-current="page" href="#">Phụ kiện</a>
+                                <a class="nav-link nav-link_a {{ request()->path() === 'phu kien' ? 'nav-active' : '' }}"
+                                    aria-current="page" href="#">Phụ kiện</a>
                             </li>
                         </ul>
                     </div>
@@ -102,57 +105,56 @@
 
                         <section class="cart">
                             <div class="box-nav_icon">
-                                <a href="" class="nav-icon_link" style="color: #666">
+                                <a href="{{ route('store.cart') }}" class="nav-icon_link" style="color: #666">
                                     <i class="fa-solid fa-cart-shopping icon"></i>
                                 </a>
 
-                                <span class="cart_total">4</span>
+                                <span class="cart_total">0</span>
                             </div>
 
-                            <ul class="container-cart pb-2">
-                                <li class="cart-item justify-content-center">
-                                    <p class="mb-0 cart-title">Có <small class="cart-title_total">4</small> sản phẩm
+                            <div class="container-cart pb-2">
+
+                                <div class="cart-item justify-content-center" style="border-bottom: 1px solid #ccc;">
+                                    <p class="mb-0 cart-title">Có <small class="cart-title_total">0</small> sản phẩm
                                         trong giỏ hàng</p>
-                                </li>
-                                <li class="cart-item">
-                                    <img src="https://res.cloudinary.com/dizwixa7c/image/upload/v1675878779/duan_laravel/Products/piha6kcgfhz9uy51mjnm.jpg"
-                                        alt="" class="cart-link_image">
+                                </div>
 
-                                    <a href="" class="cart-link cart-link_name">
-                                        <span class="cart-name">Samsung Galaxy Tab S6 Lite 2022</span>
-                                    </a>
-
-                                    <span class="cart-link cart-link_quantity">1</span>
-
-                                </li>
-
-                                <li class="cart-item">
-                                    <img src="https://res.cloudinary.com/dizwixa7c/image/upload/v1675878779/duan_laravel/Products/piha6kcgfhz9uy51mjnm.jpg"
-                                        alt="" class="cart-link_image">
-
-                                    <a href="" class="cart-link cart-link_name">
-                                        <span class="cart-name">Samsung Galaxy Tab S6 Lite 2022</span>
-                                    </a>
-
-                                    <span class="cart-link cart-link_quantity">1</span>
-
-                                </li>
-                            </ul>
+                                <ul class="dropdown-items " style="padding-left: 0; z-index: 3 !important;">
+                                </ul>
+                            </div>
                         </section>
 
                         <section class="login">
                             <div class="box-nav_icon">
-                                <i class="fa-solid fa-user icon"></i>
+                                @if (Auth::guard('customers')->check())
+                                    <small class="user--name">{{ Auth::guard('customers')->user()->username }}</small>
+                                    <i class="fa-solid fa-caret-down"></i>
+                                @else
+                                    <i class="fa-solid fa-user icon"></i>
+                                @endif
                             </div>
 
-                            <ul class="container-login">
-                                <li class="login-item">
-                                    <a href="{{ route('store.login') }}" class="login-link">Login</a>
-                                </li>
+                            <ul class="container-login active">
+                                @if (Auth::guard('customers')->check())
+                                    <li class="login-item">
+                                        <a href="{{ route('store.logout') }}" class="login-link"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            Đăng xuất
+                                        </a>
+                                        <form id="logout-form" action="{{ route('store.logout') }}" method="POST"
+                                            class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>
+                                @else
+                                    <li class="login-item">
+                                        <a href="{{ route('store.login') }}" class="login-link">Login</a>
+                                    </li>
 
-                                <li class="login-item">
-                                    <a href="" class="login-link">Tạo tài khoản</a>
-                                </li>
+                                    <li class="login-item">
+                                        <a href="" class="login-link">Tạo tài khoản</a>
+                                    </li>
+                                @endif
                             </ul>
                         </section>
                     </div>
@@ -164,128 +166,19 @@
 
     <main class="main-wrapper">
 
-        <!-- Slider Show -->
-        @if (request()->path() == 'store')
-            <div class="container-fluid mt-1">
-                <div class="row" style="">
-                    <div class="col-lg-12 px-0">
-                        <div class="swiper mySwiper-slider">
-                            <div class="swiper-wrapper">
-                                <div class="swiper-slide">
-                                    <img src="https://shopdunk.com/images/thumbs/0011623_banner PC valentine (1).jpeg"
-                                        alt="" class="slider_image">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="https://shopdunk.com/images/thumbs/0011621_Banner PC (2) (1).png"
-                                        alt="" class="slider_image">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="https://shopdunk.com/images/thumbs/0011615_banner PC iphone 14 Pro Max (9).jpeg"
-                                        alt="" class="slider_image">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="https://shopdunk.com/images/thumbs/0011626_Banner PC (29).png"
-                                        alt="" class="slider_image">
-                                </div>
-                                <div class="swiper-slide">
-                                    <img src="https://shopdunk.com/images/thumbs/0011613_banner PC ipad gen 9 (2).jpeg"
-                                        alt="" class="slider_image">
-                                </div>
-                            </div>
-                            <div class="swiper-pagination"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
+
 
         <!-- Content -->
         @yield('content-product')
 
+
+
+
     </main>
 
+    @include('customer.layout.footer')
 
-        {{-- Footer --}}
-        <footer class="footer">
-            <div class="container">
-                <ul class="row footer-item">
-                    <li class="col-lg-4">
-                        <h5 class="footer-title">thông tin cửa hàng</h5>
-                        <p class="footer-link">Địa chỉ: 60 29th Street Sanfrancisco, CA 99110 507 UNICON TRADED CENTER
-                            UNITED States of Americal
-                        </p>
-                        <p class="footer-link">Điện thoại: (+00) 123 666 888 </p>
-                        <span class="footer-link">Email: Phamtuan19hd@gmail.com </span>
-                    </li>
-
-                    <li class="col-lg-2">
-                    </li>
-
-                    <li class="col-lg-3">
-                        <h5 class="footer-title">Hướng dẫn mua online</h5>
-                        <div class="p-info">
-                            <i class="fas fa-chevron-right icon-right"></i>
-                            <p><a class="footer-link" href="">liên hệ với chúng tôi</a></p>
-                        </div>
-                        <div class="p-info footer-link">
-                            <i class="fas fa-chevron-right icon-right"></i>
-                            <p><a href="">Tin khuyến mãi</a></p>
-                        </div>
-                        <div class="p-info footer-link">
-                            <i class="fas fa-chevron-right icon-right"></i>
-                            <p><a href="">Hướng dẫn mua trả góp</a></p>
-                        </div>
-                        <div class="p-info footer-link">
-                            <i class="fas fa-chevron-right icon-right"></i>
-                            <p><a href="">Chính sách trả góp</a></p>
-                        </div>
-                    </li>
-
-                    <li class="col-lg-3">
-                        <h5 class="footer-title">Hệ thống cửa hàng</h5>
-                        <div class="p-info footer-link">
-                            <i class="fas fa-chevron-right icon-right"></i>
-                            <p><a href="">Chính sách đổi trả</a></p>
-                        </div>
-                        <div class="p-info footer-link">
-                            <i class="fas fa-chevron-right icon-right"></i>
-                            <p><a href="">Hệ thống bảo hành</a></p>
-                        </div>
-                        <div class="p-info footer-link">
-                            <i class="fas fa-chevron-right icon-right"></i>
-                            <p><a href="">Giới thiệu máy đổi trả</a></p>
-                        </div>
-                        <div class="p-info footer-link">
-                            <i class="fas fa-chevron-right icon-right"></i>
-                            <p><a href="">Kiểm tra hàng Apple chính hãng</a></p>
-                        </div>
-                    </li>
-                    {{-- <li class="col-lg-4">
-                        <h5 class="footer-title">Latest News</h5>
-                        <div class="news-item">
-                            <img class="news-img"
-                                src="https://tmbidigitalassetsazure.blob.core.windows.net/rms3-prod/attachments/37/1200x1200/Chicken-Pizza_exps30800_FM143298B03_11_8bC_RMS.jpg"
-                                alt="">
-                            <div class="news-text">
-                                <h5 class="footer-date">January 18 12 2022</h5>
-                                <p>Anyways REPS is a NYC arency repres enting photographers</p>
-                            </div>
-                        </div>
-                        <div class="news-item">
-                            <img class="news-img"
-                                src="https://chianui.vn/wp-content/uploads/2019/06/B%C3%92-2-T%E1%BA%A6NG_resize_min-800x800.jpg"
-                                alt="">
-                            <div class="news-text">
-                                <h5 class="footer-date">December 13 2 2022</h5>
-                                <p>Unas risus suscript lorem issum dolor sit amet lore risus suscript </p>
-                            </div>
-                        </div>
-                    </li> --}}
-                    <p class="copyright">@Copyright Phạm Tuấn Developer</p>
-                </ul>
-            </div>
-        </footer>
-        <section id="loading" style="display: none;"></section>
+    <section id="loading" style="display: none;"></section>
 
 
     <!-- CDN Fontawesome -->
@@ -296,41 +189,12 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
     </script>
 
-    <script src="{{ asset('customer/js/index.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
+    <script src="{{ asset('customer/js/function.js') }}"></script>
+    <script src="{{ asset('customer/js/index.js') }}"></script>
+
     @yield('js')
-
-
-    <script>
-        var swiper = new Swiper(".mySwiper-slider", {
-            pagination: {
-                el: ".swiper-pagination",
-            },
-            autoplay: {
-                delay: 2500,
-                disableOnInteraction: false,
-            },
-        });
-
-        // Ajax loading
-        // $(document).ready(function() {
-
-        //     const cartArr = JSON.parse(localStorage.getItem('cart'));
-
-        //     renderCart_(cartArr);
-
-        //     $(".box-nav_icon").click(function() {
-        //         $(".search-box").addClass('search-active');
-        //     })
-
-        //     $(".close-icon").click(function() {
-        //         $(".search-box").removeClass('search-active');
-        //     })
-        // });
-
-
-    </script>
 
 </body>
 

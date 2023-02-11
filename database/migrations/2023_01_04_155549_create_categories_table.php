@@ -17,10 +17,10 @@ class CreateCategoriesTable extends Migration
             $table->integer('id')->autoIncrement();
             $table->string('name')->nullable();
             $table->string('slug')->nullable();
-            $table->integer('category_id')->nullable();
+            $table->integer('parent_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('category_id')
+            $table->foreign('parent_id')
                 ->references('id')
                 ->on('categories')
                 ->onDelete('cascade')

@@ -45,10 +45,14 @@ a {
 /*  */
 .sidebar-cart {
     position: sticky !important;
-    top: 72px;
+    /* top: 72px; */
     margin: 0 -12px !important;
-    background-color: #fff;
+    background-color: #fff !important;
     border-radius: 5px;
+}
+
+input {
+    background-color: #fff !important;
 }
 
 .cart-collaterals_detail {

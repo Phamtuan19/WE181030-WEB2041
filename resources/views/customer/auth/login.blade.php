@@ -62,7 +62,7 @@
                                         <div class="form-group">
                                             <input type="text"
                                                 class="form-control form-control-user @error('email') is-invalid @enderror"
-                                                id="exampleInputEmail" name="email" value="{{ old('email') ? old('email')  : 'phamtuan19hd@gmail.com'}}"
+                                                id="exampleInputEmail" name="email" value="{{ old('email') ? old('email')  : 'admin_3@gmail.com'}}"
                                                 placeholder="Nhập địa chỉ email..."
                                                 style="padding: 1.5rem 1rem; border-radius: 1rem;">
                                                 @error('email')
@@ -76,7 +76,7 @@
                                         <div class="form-group">
                                             <input type="password"
                                                 class="form-control form-control-user @error('password') is-invalid @enderror"
-                                                id="exampleInputPassword" name="password" value="12345678" placeholder="Nhập mật khẩu"
+                                                id="exampleInputPassword" name="password" value="admin1234" placeholder="Nhập mật khẩu"
                                                 style="padding: 1.5rem 1rem; border-radius: 1rem;">
 
                                             @error('password')

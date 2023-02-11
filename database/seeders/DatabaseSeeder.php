@@ -16,23 +16,23 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        // DB::table('positions')->insert([
-        //     'name' => 'Administration',
-        //     'created_at' => date('Y-m-d H:i:s'),
-        //     'updated_at' => date('Y-m-d H:i:s'),
-        // ]);
+        DB::table('positions')->insert([
+            'name' => 'Administration',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
 
-        // DB::table('positions')->insert([
-        //     'name' => 'Editor',
-        //     'created_at' => date('Y-m-d H:i:s'),
-        //     'updated_at' => date('Y-m-d H:i:s'),
-        // ]);
+        DB::table('positions')->insert([
+            'name' => 'Editor',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
 
-        // DB::table('positions')->insert([
-        //     'name' => 'Member',
-        //     'created_at' => date('Y-m-d H:i:s'),
-        //     'updated_at' => date('Y-m-d H:i:s'),
-        // ]);
+        DB::table('positions')->insert([
+            'name' => 'Member',
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
 
         DB::table('order_status')->insert([
             'name' => 'Chưa xác nhận',
@@ -69,5 +69,13 @@ class DatabaseSeeder extends Seeder
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
 
+        DB::table('users')->insert([
+            'username' => 'Phạm Tuấn',
+            'email' => "phamtuan19hd@gmail.com",
+            'phone' => "0346027346",
+            'position_id' => 1,
+            'is_active' => 1,
+            'password' => Hash::make('admin1234'),
+        ]);
     }
 }

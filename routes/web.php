@@ -54,7 +54,7 @@ Route::get('/', function () {
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware('custom.auth')->group(function () {
 
     Route::prefix('admin')->name('admin.')->group(function () {
 
@@ -108,9 +108,10 @@ Route::prefix('store')->name('store.')->group(function () {
 
     Route::get('products', [HomeController::class, 'indexMobile'])->name('mobile');
 
-    Route::get('detail-product/{id}', [HomeController::class, 'indexProduct'])->name('product');
+    Route::get('detail-product/{code}', [HomeController::class, 'detailProduct'])->name('product');
 
     Route::get('cart', [HomeController::class, 'indexCart'])->name('cart');
+
 
     Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
 
@@ -122,11 +123,10 @@ Route::prefix('store')->name('store.')->group(function () {
 
     Route::get('/danh-sach-bai-viet/{post}', [HomeController::class, 'showPosts'])->name('show.posts');
 
-    // Comments
-
     Route::resource('comments', CommentController::class);
 
-    Route::post('comments/reply/{comment}', [CommentController::class, 'reply'])->name('comments.reply');
+    Route::post('comments/reply', [CommentController::class, 'reply'])->name('comments.reply');
+
 
 
     // authentication guard Customers
@@ -146,17 +146,6 @@ Route::prefix('store')->name('store.')->group(function () {
 
     Route::post('/logout', function () {
         Auth::guard('customers')->logout();
-        return redirect()->route('store.home');
+        return redirect(route('store.login'));
     })->middleware('auth:customers')->name('logout');
 });
-
-// Route::prefix('customers')->name('customers.')->group(function () {
-//     Route::get('/login', [LoginController::class, 'login'])->middleware('guest:customers')->name('login');
-
-//     Route::post('/login', [LoginController::class, 'postLogin'])->middleware('guest:customers');
-
-//     Route::post('/logout', function () {
-//         Auth::guard('customers')->logout();
-//         return redirect()->route('store.home');
-//     })->middleware('auth:customers')->name('logout');
-// });
