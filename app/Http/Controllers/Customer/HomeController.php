@@ -26,8 +26,20 @@ use App\Models\Post;
 
 use App\Models\Comment;
 
+use App\Models\Categories;
+
 class HomeController extends Controller
 {
+
+    public function layoutIndex()
+    {
+
+        $categories = Categories::all();
+
+        view()->share('categories', $categories);
+
+        return view('customer.layout.header');
+    }
 
     public function indexHome()
     {
@@ -37,9 +49,16 @@ class HomeController extends Controller
 
         $images = new Image();
 
-        // $newProduct = $products->orderBy('created_at', 'DESC')->where('deleted_at', '=', null)->paginate(4);
+        $categories = new Categories();
 
-        // $brands = $brands->get();
+        $parent_category = $categories->whereNull('parent_id')->get()->toArray();
+
+        foreach ($parent_category as $key => $value) {
+            $parent_category[$key]['parent'] = $categories->where('parent_id', $value['id'])->get()->toArray();
+        }
+
+        // dd($parent_category);
+
 
         $products = $products->select('id', 'code', 'name', 'price', 'promotion_price')->get()->toArray();
 
@@ -53,7 +72,7 @@ class HomeController extends Controller
         return view('customer.pages.home', compact('products', 'brands'));
     }
 
-    public function indexMobile(Request $request)
+    public function indexProducts(Request $request)
     {
         $products = new Product();
 
@@ -61,20 +80,86 @@ class HomeController extends Controller
 
         $images = new Image();
 
-        $brands = $brands->get();
+        $categoryAll = new Categories();
 
-        // $productArr1 = $products->get();
+        $orderBy = "DESC";
 
-        $products = $products->select('id', 'code', 'name', 'price', 'promotion_price')->get()->toArray();
+        $orderType = 'created_at';
+
+        $category = '';
+
+        $brand = '';
+
+        $max_price = $products->select('price')->orderBy('price', 'desc')->first()->price; // giá lớn nhất
+
+        $min_price = $products->select('price')->orderBy('price', 'ASC')->first()->price; // giá nhỏ nhất
+
+        // lọc theo loại sản phẩm
+        if (!empty($request->category)) {
+
+            $category = $categoryAll->select('id')->where('slug', 'like', $request->category)->get();
+
+            $products = $products->select('id', 'code', 'name', 'price', 'promotion_price')
+                ->where('category_id', $category[0]->id);
+        }
+
+        // lọc theo hãng
+        if (!empty($request->brand)) {
+            $brand = $brands->select('id')->where('name', $request->brand)->get();
+
+            $products = $products->select('id', 'code', 'name', 'price', 'promotion_price')
+                ->where('brand_id', $brand[0]->id);
+        }
+
+        // lọc theo giá
+        if (!empty($request->price)) {
+            $price = $request->price;
+
+            if ($request->price == 'duoi-3-trieu') {
+                $max_price = 3000000;
+            }
+
+            if ($request->price == 'tu-3-8-trieu') {
+                $min_price = 3000000;
+                $max_price = 8000000;
+            }
+
+            if ($request->price == 'tu-8-15-trieu') {
+                $min_price = 8000000;
+                $max_price = 15000000;
+            }
+
+
+            if ($request->price == 'tren-15-trieu') {
+                $min_price = '15000000';
+            }
+
+            $products = $products->select('id', 'code', 'name', 'price', 'promotion_price')
+                ->whereBetween('price', [$min_price, $max_price]);
+        }
+
+
+        if (!empty($request->orderBy) && !empty($request->orderType)) {
+            $orderBy = $request->orderBy;
+            $orderType = $request->orderType;
+        }
+
+        $products = $products->select('id', 'code', 'name', 'price', 'promotion_price')
+            ->orderBy($orderType, $orderBy);
+
+
+        $products = $products->paginate(12);
 
         foreach ($products as $key => $product) {
             $products[$key]['avatar'] = $images->select('path')
-                ->where('product_id', $product['id'])->where('is_avatar', 1)->get()->toArray();
+                ->where('product_id', $product['id'])->where('is_avatar', 1)->get();
         }
 
-        // dd($products);
+        $brands = $brands->get();
 
-        return view('customer.pages.products', compact('products', 'brands'));
+        $categories = $categoryAll->where('parent_id', 1)->get();
+
+        return view('customer.pages.products', compact('products', 'brands', 'categories'));
     }
 
     public function detailProduct($code)
@@ -87,7 +172,7 @@ class HomeController extends Controller
 
         $comments = $comments->whereNotNull('product_id')->whereNull('parent_id')->get();
 
-        foreach ($comments as $key => $item){
+        foreach ($comments as $key => $item) {
             $comments[$key]['parent'] = $query->where('parent_id', $item['id']);
         }
 
@@ -137,13 +222,19 @@ class HomeController extends Controller
     {
         $comments = new Comment();
 
-        $query = $comments->get();
+        $connect = $comments->get();
 
         $comments = $comments->whereNotNull('post_id')->whereNull('parent_id')->get();
 
-        foreach ($comments as $key => $item){
-            $comments[$key]['parent'] = $query->where('parent_id', $item['id']);
+
+
+        // dd($comments->toArray());
+        foreach ($comments as $key => $item) {
+            // dd($item->toArray());
+            $comments[$key]['parent'] = $connect->where('parent_id', $item['id']);
         }
+
+        // dd($comments->toArray());
 
         $commentType = "posts";
 

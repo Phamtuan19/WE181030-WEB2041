@@ -13,12 +13,15 @@ use App\Models\OrderStatus;
 
 use App\Models\OrderDetail;
 
+use Illuminate\Support\Facades\Gate;
+
 class OrderController extends Controller
 {
     //
 
     public function index(Request $request)
     {
+        $this->authorize('viewAny', Order::class);
 
         $orders = new Order();
         $products = new Product();
@@ -31,10 +34,10 @@ class OrderController extends Controller
         $order_status = null;
         $keyword = null;
 
-        if(!empty($request->order_status)) {
+        if (!empty($request->order_status)) {
             $order_status = $request->order_status;
         }
-        if(!empty($request->keyword)) {
+        if (!empty($request->keyword)) {
             $keyword = $request->keyword;
         }
 
@@ -67,15 +70,27 @@ class OrderController extends Controller
 
     public function show(Order $order)
     {
-        $order_status = new OrderStatus();
 
-        $order_status = $order_status->get();
+        $this->authorize('view', $order);
 
-        $order_details = new OrderDetail();
 
-        $order_details = $order_details->where('order_id', $order->id)->get();
+        if (Gate::allows('orders.edit', $order)) {
+            $order_status = new OrderStatus();
 
-        return view('admin.order.show', compact('order', 'order_status', 'order_details'));
+            $order_status = $order_status->get();
+
+            $order_details = new OrderDetail();
+
+            $order_details = $order_details->where('order_id', $order->id)->get();
+
+            // dd($order_details);
+
+            return view('admin.order.show', compact('order', 'order_status', 'order_details'));
+        }
+
+        if (Gate::denies('orders.edit', $order)) {
+            abort(403);
+        }
     }
 
     public function update(Request $request, Order $order)

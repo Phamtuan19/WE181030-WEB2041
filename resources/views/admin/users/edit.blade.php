@@ -73,9 +73,9 @@
                     <div class="col-lg-6 form-group">
                         <label for="is_active">Trạng thái tài khoản</label>
                         <select class="form-control" id="is_active" name="is_active">
-                            <option value="">--- chọn ---</option>
-                            <option value="0" {!! $user->is_active == 0 ? 'selected' : false !!}>Vô hiệu hóa</option>
-                            <option value="1" {!! $user->is_active == 1 ? 'selected' : false !!}>Kích hoạt</option>
+                            <option value="0">--- chọn ---</option>
+                            <option value="1" {!! $user->is_active == 1 ? 'selected' : false !!}>Vô hiệu hóa</option>
+                            <option value="" {!! $user->is_active == null ? 'selected' : false !!}>Kích hoạt</option>
                         </select>
 
                         @error('is_active')

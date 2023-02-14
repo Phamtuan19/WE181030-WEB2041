@@ -127,7 +127,7 @@
                                 <th style="font-size: 14px; text-align: left !important;">${e.price}</th>
                                 <td>
                                     <div class="form-group">
-                                        <input type="number" class="form-control edit_quantity" value="${e.quantity}" data-code="${e.code}"  style="width: 60px; padding: 6px 10px; background-color: #f5f5f7; font-size: 14px">
+                                        <input type="number" class="form-control edit_quantity" value="${e.quantity}" data-code="${e.code}" min="1" max="99" style="width: 60px; padding: 6px 10px; background-color: #f5f5f7; font-size: 14px">
                                     </div>
                                 </td>
                                 <td>

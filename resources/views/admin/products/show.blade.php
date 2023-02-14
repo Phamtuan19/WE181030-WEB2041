@@ -243,7 +243,7 @@
                 <div class="col-lg-12 form-group mt-4">
                     <label for="title">Thông tin sản phẩm</label>
                     <textarea name="title" id="ck-title">
-                        {{ empty(old('title')) ? $product->title : old('title') }}
+                        {{ empty(old('title')) ? $product->information : old('title') }}
                     </textarea>
 
                     @error('title')

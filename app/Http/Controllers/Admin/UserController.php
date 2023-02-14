@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Validation\Rule;
 
+use Illuminate\Support\Facades\Gate;
+
 
 class UserController extends Controller
 {
@@ -32,14 +34,27 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+
+        $this->authorize('viewAny', User::class);
+
         $users = new User();
+
+        $positions = Position::all();
+
+        // dd($postions);
 
         $keywords = null;
 
         $is_active = null;
 
-        if(!empty($request->is_active)){
+        $position = null;
+
+        if (!empty($request->is_active)) {
             $is_active = $request->is_active;
+        }
+
+        if(!empty($request->position)){
+            $position = $request->position;
         }
 
         if (!empty($request->keywords)) {
@@ -67,14 +82,16 @@ class UserController extends Controller
             'sortType' => $sortType,
         ];
 
-        $users = $users->searchUser($is_active, $keywords, $sortArr);
+        $users = $users->searchUser($users, $is_active, $position, $keywords, $sortArr)->paginate(3);
 
 
-        return view('admin.users.list', compact('users', 'sortType'));
+        return view('admin.users.list', compact('users', 'sortType', 'positions'));
     }
 
     public function create()
     {
+        $this->authorize('create', User::class);
+
         $positions = new Position();
 
         $positions = $positions->get();
@@ -108,9 +125,18 @@ class UserController extends Controller
     // Hiển thị một dữ liệu theo tham số truyền vào.
     public function show(User $user)
     {
-        $positions = Position::all();
 
-        return view('admin.users.edit', compact('user', 'positions'));
+        $this->authorize('view', $user);
+
+        if (Gate::allows('users.edit', $user)) {
+            $positions = Position::all();
+
+            return view('admin.users.edit', compact('user', 'positions'));
+        }
+
+        if (Gate::denies('users.edit', $user)) {
+            abort(403);
+        }
     }
 
     // Cập nhật dữ liệu một danh mục theo tham số truyền vào.
@@ -133,9 +159,18 @@ class UserController extends Controller
     // Xóa một dữ liệu theo tham số truyền vào.
     public function destroy($user)
     {
+
+        $this->authorize('delete', $user);
+
+        if (Gate::allows('users.edit', $user)) {
         $this->users->destroy($user);
 
         return back()->with('msg', 'Xóa thành công');
+        }
+
+        if (Gate::denies('users.edit', $user)) {
+            abort(403);
+        }
     }
 
     public function edit()

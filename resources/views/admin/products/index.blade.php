@@ -90,7 +90,12 @@
                             <i class="fa-solid fa-right-left right-left"></i>
                         </a>
                     </th>
-                    <th scope="col" width="100px">Edit</th>
+                    @can('products.edit')
+                        <th scope="col" width="100px">Edit</th>
+                    @endcan
+                    @can('products.delete')
+                        <th scope="col" width="100px">Delete</th>
+                    @endcan
                 </tr>
             </thead>
             <tbody>
@@ -119,30 +124,32 @@
                                 ? $product->quantity_stock . '(Chiếc)'
                                 : '<p class="mb-0" style="background-color: red; text-align: center; border-radius: 5px; color: #333; padding="3px 4px">Hết hàng</p>' !!}</td>
                             <td>{{ date_format($product->created_at, 'H:i:s d-m-Y') }}</td>
-                            <td>
-                                <div class="d-flex justify-content-around">
-                                    <div class="">
-                                        <a href="{{ route('admin.products.show', $product->id) }}" class="btn"
-                                            style="color: black;">
-                                            <i class="fa-regular fa-pen-to-square"></i>
-                                        </a>
+                            @can('products.edit')
+                                <td>
+                                    <div class="d-flex justify-content-around">
+                                        <div class="">
+                                            <a href="{{ route('admin.products.show', $product->id) }}" class="btn"
+                                                style="color: black;">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="">
-                                        {{-- <form action="{{ route('admin.softErase', $product->id) }}" method="POST">
-                                            @method('PATCH')
-                                            @csrf --}}
+                                </td>
+                            @endcan
 
-                                            <button type="submit" class="btn btn-delete" id="btn"
-                                                style="border: none; " data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            @can('products.delete')
+                                <td>
+                                    <div class="d-flex justify-content-around">
+                                        <div class="">
+                                            <button type="submit" class="btn btn-delete" id="btn" style="border: none; "
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal"
                                                 data-id="{{ $product->id }}">
                                                 <i class="fa-solid fa-trash" style="color: red"></i>
                                             </button>
-
-                                        {{-- </form> --}}
-
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
+                                </td>
+                            @endcan
                         </tr>
                     @endforeach
                 @else
@@ -153,7 +160,9 @@
 
             </tbody>
         </table>
-
+        <div class="" style="float: right;">
+            {{ $products->appends(request()->all())->links() }}
+        </div>
         {{-- {!! $products->appends(['category' => request()->category, 'brand' => request()->brand, 'keyword' => request()->keyword])->links() !!} --}}
     </div>
 

@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Auth;
 
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
+use Illuminate\Support\Facades\Gate;
+
 class PostController extends Controller
 {
     /**
@@ -29,11 +31,13 @@ class PostController extends Controller
      */
     public function index()
     {
+        $this->authorize('viewAny', Post::class);
+
         $posts = new Post;
 
         $categories = new Categories();
 
-        $posts = $posts->where('deleted_at', null)->get();
+        $posts = $posts->where('deleted_at', null)->paginate(10);
 
         $categories = $categories->get();
 
@@ -47,6 +51,8 @@ class PostController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Post::class);
+
         $categories = new Categories();
 
         $products = new Product();
@@ -85,6 +91,7 @@ class PostController extends Controller
                 $posts->category_id = json_encode($request->category_id);
                 $posts->slug = $request->slug;
                 $posts->title = $request->title;
+                $posts->introduction = $request->introduction;
                 $posts->content = $request->content;
                 $posts->avatar_path = $url->getSecurePath();
                 $posts->avatar_public_id = $url->getPublicId();
@@ -108,15 +115,24 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $categories = new Categories();
+        $this->authorize('view', $post);
+        if (Gate::allows('posts.edit', $post)) {
+            // $this->authorize('create', Post::class);
 
-        $products = new Product();
+            $categories = new Categories();
 
-        $products = $products->select('code', 'name')->get();
+            $products = new Product();
 
-        $categories = $categories->get();
+            $products = $products->select('code', 'name')->get();
 
-        return view('admin.post.show', compact('categories', 'products', 'post'));
+            $categories = $categories->get();
+
+            return view('admin.post.show', compact('categories', 'products', 'post'));
+        }
+
+        if (Gate::denies('posts.edit', $post)) {
+            abort(403);
+        }
     }
 
     /**
@@ -144,6 +160,7 @@ class PostController extends Controller
         $post->product_code = json_encode($request->product_code);
         $post->category_id = json_encode($request->category_id);
         $post->slug = $request->slug;
+        $post->introduction = $request->introduction;
         $post->title = $request->title;
         $post->content = $request->content;
 

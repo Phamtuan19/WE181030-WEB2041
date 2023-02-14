@@ -26,6 +26,7 @@ class UpdateRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'content' => ['required'],
+            'introduction' => ['required', 'string'],
             'slug' => ['required', 'string'],
             'category_id' => ['required'],
         ];
@@ -47,6 +48,7 @@ class UpdateRequest extends FormRequest
             'content' => 'Nội dung bài viết',
             'slug' => 'slug',
             'category_id' => 'Danh mục bài viết',
+            'introduction' => 'Phần giới thiệu',
         ];
     }
 }

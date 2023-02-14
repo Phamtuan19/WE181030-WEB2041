@@ -1,7 +1,10 @@
-{{-- style="background-color: #F8F9FA" --}}
+{{--
 <div class="container mt-4">
+
+
+    <h1 style="text-align: center; margin-bottom:  1.5rem">Comments</h1>
+
     <div class="row">
-        <h1 style="text-align: center; margin-bottom:  1.5rem">Comments</h1>
 
         @if (Auth::guard('customers')->check())
             @if ($commentType == 'posts')
@@ -45,7 +48,8 @@
             @endif
         @endif
 
-        @if ($comments->count() > 0)
+        @if ($post->comments->count() > 0)
+
             <div class="col-lg-8 offset-md-2 mb-4 p-3">
 
                 @foreach ($comments as $comment)
@@ -64,7 +68,7 @@
                             </div>
                             <div class="comment-time_reply">
                                 <span class="comment-time">
-                                    {{ date_format($comment->created_at, 'd-m-Y') }}
+                                    {{ $comment->created_at }}
                                 </span>
                                 <a class="comment-reply" href="javascript::voi(0);" onclick="reply(this)"
                                     data-commentID="{{ $comment->id }}">Trả lời</a>
@@ -72,7 +76,6 @@
                         </div>
                     </div>
 
-                    {{-- @dd(!empty($comment->parent)) --}}
                     @if (!empty($comment->parent))
                         @foreach ($comment->parent as $parent)
                             <div class="comment comment-parent mb-4">
@@ -90,7 +93,7 @@
                                     </div>
                                     <div class="comment-time_reply">
                                         <span class="comment-time">
-                                            {{ date_format($parent->created_at, 'd-m-Y') }}
+                                            {{ $parent->created_at }}
                                         </span>
                                         <a class="comment-reply" href="javascript::void(0)" onclick="reply(this)"
                                             data-commentID="{{ $comment->id }}">Trả
@@ -119,7 +122,10 @@
                 </div>
 
             </div>
+        @else
+            <p style="text-align: center">Không có bình luận nào về sản phẩm</p>
         @endif
 
     </div>
-</div>
+
+</div> --}}

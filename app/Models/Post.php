@@ -21,6 +21,7 @@ class Post extends Model
         'category_id',
         'slug',
         'title',
+        'introduction',
         'content',
         'avatar_path',
         'avatar_public_id',

@@ -17,6 +17,7 @@ class CreateSliderTable extends Migration
             $table->tinyIncrements('id');
             $table->text('image_path')->nullable();
             $table->text('image_public_id')->nullable();
+            $table->boolean('is_active')->nullable();
             $table->timestamps();
         });
     }

@@ -104,7 +104,7 @@
                                     <div class="text-center">
                                         {{-- @dd(request()->path()) --}}
                                         @if (request()->path() == "store/login")
-                                            <a class="small mr-3" href="{{ route('store.resetPassword') }}">Quên mật khẩu?</a>
+                                            <a class="small mr-3" href="{{ route('store.forgot') }}">Quên mật khẩu?</a>
                                             <a class="small" href="{{ route('store.register') }}">Tạo tài khoản.</a>
                                         @endif
                                     </div>

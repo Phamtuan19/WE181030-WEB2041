@@ -19,6 +19,8 @@ use App\Models\Image;
 
 use App\Models\Brand;
 
+use Illuminate\Support\Facades\Gate;
+
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ProductController extends Controller
@@ -88,12 +90,13 @@ class ProductController extends Controller
 
         $products = $products->searchAdmin($categoryKey, $brandKey, $keyword, $sortArr);
 
-
+        // dd('ok');
         return view('admin.products.index', compact('category_parent', 'subcategory', 'products', 'brands', 'sortType'));
     }
 
     public function create()
     {
+
         $categories = new Categories();
 
         $category = $categories->where('id', 1)->get();
@@ -197,41 +200,52 @@ class ProductController extends Controller
                 }
             }
 
+            // dd('ok');
+
             return back()->with('msg', 'Thêm sản phẩm thành công');
         }
     }
 
     public function show($id)
     {
+
         $product = $this->table->find($id);
 
-        $categories = new Categories();
+        $this->authorize('update', $product);
+        if (Gate::allows('products.edit')) {
 
-        $brands = new Brand();
+            $categories = new Categories();
 
-        $categories = $categories->where('parent_id', 1)->get();
+            $brands = new Brand();
 
-        $brands = $brands->get();
+            $categories = $categories->where('parent_id', 1)->get();
 
-        $colors = [
-            'Yellow',
-            'red',
-            'black',
-            'white',
-        ];
+            $brands = $brands->get();
 
-        $memory = [
-            '32GB',
-            '64GB',
-            '128GB',
-            '256GB',
-            '512GB',
-            '1T'
-        ];
+            $colors = [
+                'Yellow',
+                'red',
+                'black',
+                'white',
+            ];
 
-        // dd($categories);
+            $memory = [
+                '32GB',
+                '64GB',
+                '128GB',
+                '256GB',
+                '512GB',
+                '1T'
+            ];
 
-        return view('admin.products.show', compact('product', 'categories', 'brands', 'colors', 'memory'));
+            // dd($categories);
+
+            return view('admin.products.show', compact('product', 'categories', 'brands', 'colors', 'memory'));
+        }
+
+        if(Gate::denies('products.edit')){
+            abort(403);
+        }
     }
 
     public function update(Request $request, Product $product)

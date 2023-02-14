@@ -12,17 +12,25 @@
 
 .product_img {
     width: 100%;
-    /* height: 600px; */
+    height: 636px;
+    border-radius: 5px;
     /* transform: scale(0.9); */
 }
 
 .product_img_mini {
     width: 100px;
+    height: 100px;
 }
 
 /* =============================================  End =============================================*/
 
 /* =============================================  Product info =============================================*/
+
+.info-name {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
 .info-name h3 {
     font-weight: 600;
@@ -96,36 +104,6 @@
 
 /* ============================================= End Product info =============================================*/
 
-.short-des {
-    margin: 0;
-    background-color: #ffffff;
-    border-radius: 8px;
-    border: 1px solid #EBEBEB;
-    margin-bottom: 15px;
-}
-
-.short-des_title {
-    padding: 12px 16px 12px 15px;
-    color: #1D1D1F;
-    font-weight: bold;
-    font-size: 16px;
-    line-height: 24px;
-    /* border-bottom: 1px solid #EFEFEF; */
-    text-align: left;
-}
-
-.short-description {
-    overflow: hidden;
-    background: #fff;
-    border-radius: 8px;
-    padding: 0 20px 35px 33px;
-    color: #515154;
-    font-size: 15px;
-}
-
-.short-description p span strong a {
-    color: #0066CC !important;
-}
 
 /* =============================================  Btn add to cart =============================================*/
 
@@ -229,4 +207,45 @@ table th {
 
 .product-post img {
     width: 100%;
+}
+
+.short-des {
+    border: #ddd 1px solid;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 5px;
+}
+
+.title-bg-r {
+    padding: 10px;
+    background: #ff0000;
+    text-align: center;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+}
+
+.view-more-detail-char {
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    height: 65px;
+    background: #fff;
+    width: 100%;
+    text-align: center;
+    line-height: 42px;
+    color: var(--main-color);
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.view-more-detail-char span {
+    display: inline-block;
+    border: 1px solid #ff0000;
+    padding: 0px 40px;
+    box-sizing: border-box;
+    height: 34px;
+    margin-top: 8px;
+    line-height: 34px;
+    transition: 0.3s;
 }

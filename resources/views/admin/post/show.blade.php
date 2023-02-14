@@ -35,21 +35,30 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="introduction" class="form-label">Giới thiệu</label>
+                        <textarea class="form-control" id="introduction" name="introduction" style="height: 150px !important;">{{ empty(old('introduction')) ? $post->introduction : old('introduction') }}</textarea>
+                        @error('introduction')
+                            <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label for="">Chọn sản phẩm</label>
                         <select class="select2 form-control" name="product_code[]" style="height: 42px !important;"
                             multiple="multiple">
                             <option value="">--- Chọn sản phẩm ---</option>
-                            @foreach (json_decode($post->product_code, true) as $value)
+                            @if (!empty(json_decode($post->product_code, true)))
                                 @foreach ($products as $product)
-                                    @if ($product->code == $value)
-                                        <option value="{{ $product->code }}" selected>{{ $product->name }}
-                                        </option>
-                                    @else
-                                        <option value="{{ $product->code }}">{{ $product->name }}
+                                    <option value="{{ $product->code }}" {!! in_array($product->code, json_decode($post->product_code, true)) ? 'selected' : false !!}>{{ $product->name }}
                                     </option>
-                                    @endif
                                 @endforeach
-                            @endforeach
+                            @else
+                                @foreach ($products as $product)
+                                    <option value="{{ $product->code }}">{{ $product->name }}
+                                    </option>
+                                @endforeach
+                            @endif
+
                         </select>
                         @error('product_code')
                             <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
@@ -84,15 +93,23 @@
                         <select id="" class="form-control select2_category" name="category_id[]"
                             multiple="multiple">
                             <option value="">--- Chọn danh mục ---</option>
-                            @foreach (json_decode($post->category_id, true) as $value)
-                                @foreach ($categories as $category)
-                                    @if ($category->id == $value)
-                                        <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
-                                    @else
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                    @endif
+
+                            @if (!empty(json_decode($post->category_id, true)))
+                                @foreach (json_decode($post->category_id, true) as $value)
+                                    @foreach ($categories as $category)
+                                        @if ($category->id == $value)
+                                            <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
+                                        @else
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endif
+                                    @endforeach
                                 @endforeach
-                            @endforeach
+                            @else
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            @endif
+
                         </select>
                         @error('category_id')
                             <span class="text-danger" style="font-size: 16px">{{ $message }}</span>

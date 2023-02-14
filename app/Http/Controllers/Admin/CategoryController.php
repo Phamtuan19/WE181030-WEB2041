@@ -9,6 +9,8 @@ use App\Models\Categories;
 
 use Illuminate\Validation\Rule;
 
+use Illuminate\Support\Facades\Gate;
+
 class CategoryController extends Controller
 {
 
@@ -21,6 +23,9 @@ class CategoryController extends Controller
 
     public function index()
     {
+
+        $this->authorize('viewAny', Categories::class);
+
         $categories = new Categories();
 
         $categories = $categories->get();
@@ -33,6 +38,8 @@ class CategoryController extends Controller
 
     public function create()
     {
+        $this->authorize('create', Categories::class);
+
         $categories = new Categories();
 
         $categories = $categories->get();
@@ -42,6 +49,7 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
+
 
         $categories = new Categories();
 
@@ -64,6 +72,8 @@ class CategoryController extends Controller
             'name' => $request->name,
             'slug' => $request->slug,
             'parent_id' => $request->parent_id,
+            'created_at' => date('Y-m-d H:i:s'),
+            'updated_at' => date('Y-m-d H:i:s'),
         ];
 
         // dd($data);
@@ -75,11 +85,19 @@ class CategoryController extends Controller
 
     public function show(Categories $category)
     {
-        $categories = new Categories();
+        $this->authorize('view', $category);
 
-        $categories = $categories->get();
+        if (Gate::allows('categories.edit', $category)) {
+            $categories = new Categories();
 
-        return view('admin.category.show', compact('categories', 'category'));
+            $categories = $categories->get();
+
+            return view('admin.category.show', compact('categories', 'category'));
+        }
+
+        if (Gate::denies('categories.edit', $category)) {
+            abort(403);
+        }
     }
 
     public function update(Request $request, $id)
@@ -107,11 +125,13 @@ class CategoryController extends Controller
             $category->name = $request->name;
             $category->slug = $request->slug;
             $category->parent_id = $request->parent_id;
+            $category->timestamps = date('Y-m-d H:i:s');
 
             $category->save();
         } else {
             $category->name = $request->name;
             $category->slug = $request->slug;
+            $category->timestamps = date('Y-m-d H:i:s');
 
             $category->save();
         }

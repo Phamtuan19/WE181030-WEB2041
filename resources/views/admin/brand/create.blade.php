@@ -4,6 +4,7 @@
 
 @section('link')
     <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('redirect')
@@ -41,6 +42,19 @@
             @enderror
 
         </div>
+        {{-- @dd($categories) --}}
+        <div class="form-group">
+            <label for="">Loại sản phẩm</label>
+            <select class="select2_category form-control" name="categories[]" style="height: 42px !important;" multiple="multiple">
+                <option value="">--- Chọn sản phẩm ---</option>
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" {!! old('categories') == $category->id ? 'selected' : false !!}>{{ $category->name }}</option>
+                @endforeach
+            </select>
+            @error('categories')
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+            @enderror
+        </div>
 
         <div class="form-group mb-4">
             <label for="image">Ảnh đại Thương hiệu</label>
@@ -56,4 +70,17 @@
             <input type="submit" class="btn btn-primary" value="Thêm mới">
         </div>
     </form>
+@endsection
+
+@section('js')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $(".select2_category").select2({
+                placeholder: "Lựa chọn sản phẩm",
+                // allowClear: true
+            })
+        });
+    </script>
 @endsection

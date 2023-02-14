@@ -37,6 +37,7 @@ class PaymentController extends Controller
     // Tạo đơn hàng mới
     public function checkPayment(PaymentRequest $request)
     {
+
         $quantity = 0;
 
         foreach ($request->quantity as $value) {
@@ -51,12 +52,13 @@ class PaymentController extends Controller
 
             if (!empty($saverOrder)) {
 
-                $this->saverOrderDetail($request, $saverOrder);
+        $this->saverOrderDetail($request, $saverOrder);
 
                 $this->saverInfoUserOrder($request, $saverOrder);
 
                 $this->sendEmail($request, $saverOrder);
 
+                // dd($request->all());
                 return back()->with('msg', 'ok');
             }
         }
@@ -89,6 +91,7 @@ class PaymentController extends Controller
     // lưu thông tin chi tiết của đơn hàng
     public function saverOrderDetail($request, $saveOrder)
     {
+        $products = new Product();
 
         $orderDetails = new OrderDetail();
 
@@ -99,79 +102,46 @@ class PaymentController extends Controller
         $memoryArr = $request->memory;
 
         $quantityArr = $request->quantity;
+        // dd($request->color);
 
         $color = null;
 
         $memory = null;
 
-        $quantity = null;
-
-        foreach ($products_code as $index => $code) {
-
-            $product = Product::where('code', $code)->first();
-
-            if (isset($product)) {
-
-                // giá sản phẩm
+        foreach ($products_code as $code) {
+            $product = $products->where('code', $code)->first();
+            // dd($product);
+            if ($product->count() > 0) {
                 if ($product->promotion_price != null) {
-
                     $price = $product->promotion_price;
                 } else {
-
                     $price = $product->price;
                 }
 
-                // Màu của từng sản phẩm
-                if (!empty($colorArr)) {
-                    foreach ($colorArr as $index => $value) {
-                        if ($index == $code) {
-                            $color = $value;
-                        }
-                    }
-                }
-
-                // bộ nhớ từng sản phẩm
-                if (!empty($memoryArr)) {
-                    foreach ($memoryArr as $index => $value) {
-                        if ($index == $code) {
-                            $memory = $value;
-                        }
-                    }
-                }
-
-                // số lượng từng sản phẩm
-                if (!empty($quantityArr)) {
-                    foreach ($quantityArr as $index => $value) {
-                        if ($index == $code) {
-                            $quantity = $value;
-
-                            $product->quantity_stock -= $value;
-                            $product->quantity_sold += $value;
-                            $product->save();
-                        }
-                        // dd()
+                // dd($price);
 
 
-                    }
-                }
+                $dataProductDetail = [
+                    'order_id' => $saveOrder->id,
+                    'product_code' => $product->code,
+                    'price' => $price,
+                    'memory' => $memoryArr[$product->code],
+                    'color' => $colorArr[$product->code],
+                    'quantity' => $quantityArr[$product->code],
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ];
 
+                $orderDetails->insert($dataProductDetail);
 
+                $product->quantity_stock -= $quantityArr[$product->code];
+                $product->quantity_sold += $quantityArr[$product->code];
 
-                $orderDetails->order_id = $saveOrder->id;
-                $orderDetails->product_code = $code;
-                $orderDetails->price = $price;
-                $orderDetails->color = $color;
-                $orderDetails->memory = $memory;
-                $orderDetails->quantity = $quantity;
-                $orderDetails->timestamps = date('Y-m-d H:i:s');
-
-                // dd($orderDetails);
-                $orderDetails->save();
-
-                // $product->update()
-
+                $product->save();
             }
         }
+
+        // dd('ok');
     }
 
     // Lưu thông tin của người mua hàng

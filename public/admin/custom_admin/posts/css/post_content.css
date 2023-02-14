@@ -1,0 +1,30 @@
+
+.content {
+    margin: 24px 0;
+}
+
+.content table {
+    width: 100%;
+    margin: 12px 0;
+}
+
+.content table tr, th, td {
+    padding: 0 1rem;
+}
+
+.content table > p {
+    margin: 0;
+}
+
+.content img {
+    height: 675px !important;
+    width: 776px !important;
+    margin: 2rem auto !important;;
+    display: block;
+    border-radius: 5px;
+}
+
+.content p , h1, h2, h3, h4, h5, h6{
+    text-align: justify;
+    margin: 1rem 0;
+}

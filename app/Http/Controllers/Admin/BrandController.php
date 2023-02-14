@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 
 use App\Models\Brand;
 
+use App\Models\Categories;
+
 use Illuminate\Validation\Rule;
+
+use Illuminate\Support\Facades\Gate;
 
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
@@ -23,25 +27,64 @@ class BrandController extends Controller
         $this->table = new Brand();
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $brands = $this->table->get();
+        $this->authorize('viewAny', Brand::class);
 
-        return view('admin.brand.index', compact('brands'));
+        $brands = new Brand();
+
+        // Tìm kiếm
+        $keywords = null;
+
+        if (!empty($request->keywords)) {
+            $keywords = $request->keywords;
+        }
+
+        // Xắp xếp
+        $sortBy = $request->input('sort-by');
+        $sortType = $request->input('sort-type');
+
+        $allowSort = ['asc', 'desc'];
+
+        if (!empty($sortType) && in_array($sortType, $allowSort)) {
+            if ($sortType == 'desc') {
+                $sortType = 'asc';
+            } else {
+                $sortType = 'desc';
+            }
+        } else {
+            $sortType = 'asc';
+        }
+
+        $sortArr = [
+            'sortBy' => $sortBy,
+            'sortType' => $sortType,
+        ];
+
+        $brands = $brands->searchBrand($keywords, $sortArr)->paginate(10);
+
+        $categories = Categories::where('parent_id', 1)->get();
+
+        return view('admin.brand.index', compact('brands', 'categories', 'sortType'));
     }
 
     public function create()
     {
-        return view('admin.brand.create');
+        $this->authorize('create', Brand::class);
+
+        $categories = Categories::where('parent_id', 1)->get();
+
+        return view('admin.brand.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
         $brands = new Brand();
-
+        // dd($request->all());
         $rules = [
             'name' => 'required|unique:brands',
-            'image' => 'required|mimes:jpeg,png,jpg',
+            // 'image' => 'required|mimes:jpeg,png,jpg',
+            'categories'  => 'required',
         ];
 
         $message = [
@@ -49,6 +92,7 @@ class BrandController extends Controller
             'name.unique' => 'Tên thương hiệu đã tồn tại',
             'image.required' => 'Hình ảnh thương hiệu không được để trống',
             'image.mimes' => 'Hình ảnh phải là loại jpeg, png, jpg',
+            'categories.required' => 'Tên thương hiệu không được để trống',
         ];
 
         $request->validate($rules, $message);
@@ -60,12 +104,18 @@ class BrandController extends Controller
 
             $url = Cloudinary::upload($request->file('image')->getRealPath(), [
                 'folder' => 'duan_laravel/Brand',
-            ])->getSecurePath();
+            ]);
 
             $data = [
                 'name' => $request->name,
-                'path_image' => $url,
+                'category_id' => json_encode($request->categories),
+                'path_image' => $url->getSecurePath(),
+                'image_publicId' => $url->getPublicId(),
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ];
+
+            // dd($data);
 
             $brands->insert($data);
 
@@ -77,7 +127,15 @@ class BrandController extends Controller
     {
         $brand = $this->table->find($id);
 
-        return view('admin.brand.show', compact('brand'));
+
+        if (Gate::allows('brands.edit', $brand)) {
+            $categories = Categories::where('parent_id', 1)->get();
+            return view('admin.brand.show', compact('brand', 'categories'));
+        }
+
+        if (Gate::denies('brands.edit', $brand)) {
+            abort(403);
+        }
     }
 
     public function update(Request $request, Brand $brand)
@@ -89,39 +147,38 @@ class BrandController extends Controller
                 'required',
                 // Rule::unique('users')->ignore($brand->id, 'id'),
             ],
+            'categories'  => 'required',
         ];
 
         $message = [
             'name.required' => 'Tên thương hiệu không được để trống',
+            'categories.required' => 'Danh mục sản phảm không được để trống',
             // 'name.unique' => 'Tên thương hiệu đã tồn tại',
         ];
 
         $request->validate($rules, $message);
 
-        $brand_img[] = $brand->brand_image;
+        if ($request->hasFile('avatar')) {
 
-        $public_path = 'uploads/brand/';
+            if (Cloudinary::destroy($brand->path_image)) {
 
-        $brand_image = [];
+                $url = Cloudinary::upload($request->file('avatar')->getRealPath(), [
+                    'folder' => 'duan_laravel/Brand',
+                ]);
 
-        if ($request->avatar) {
-            $avatar = $request->file('avatar');
-            deleteFilePublic($brand_img);
+                $path = $url->getSecurePath();
+                $publicId = $url->getPublicId();
+            }
 
-            $brand_image = uploadFile($public_path, $avatar);
+            $brand->path_image = $path;
+            $brand->image_publicId = $publicId;
         }
 
-        if (!empty($request->avatar)) {
+        $brand->name = $request->name;
+        $brand->category_id = json_encode($request->categories);
+        $brand->timestamps = date('Y-m-d H:i:s');
 
-            $brand->name = $request->name;
-            $brand->brand_image = $brand_image[0];
-
-            $brand->save();
-        } else {
-            $brand->name = $request->name;
-
-            $brand->save();
-        }
+        $brand->save();
 
         return back()->with('msg', 'Sửa danh mục thành công');
     }

@@ -49,22 +49,8 @@ class LoginController extends Controller
 
         $dataLogin = $request->except(['_token']);
 
-        // elseif (isActiveCustomer($dataLogin['email']) == 'member') {
-
-        //     $checkLogin = Auth::guard()->attempt($dataLogin);
-
-        //     if ($checkLogin) {
-
-        //         return redirect(RouteServiceProvider::CUSTOMERS);
-        //     }
-
-        //     return back()->with('msg', 'Email hoặc Mật khẩu không hợp lệ');
-
-        // }
-
         if (isActiveCustomer($dataLogin['email']) == 'member') {
             $checkLogin = Auth::guard('customers')->attempt($dataLogin);
-
             if ($checkLogin) {
 
                 return redirect(RouteServiceProvider::CUSTOMERS);

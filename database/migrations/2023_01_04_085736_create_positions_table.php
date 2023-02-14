@@ -16,7 +16,7 @@ class CreatePositionsTable extends Migration
         Schema::create('positions', function (Blueprint $table) {
             $table->tinyInteger('id')->autoIncrement();
             $table->string('name')->nullable();
-            $table->string('slug')->nullable();
+            $table->text('permissions')->nullable(); // chuỗi json phân quyền
             $table->timestamps();
         });
     }

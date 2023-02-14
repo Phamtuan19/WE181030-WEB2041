@@ -5,10 +5,12 @@
 @endsection
 
 @section('content-product')
-    <div class="container my-5">
-        <h1 class="text-center">Danh sách bài viết</h1>
+    <div class="container mt-2 mb-5">
         <div class="row">
-            @foreach ($posts as $post)
+            <div class="posts-container">
+                <h1 class="text-center">Danh sách bài viết</h1>
+                <div class="col-lg-6 offset-md-3 mb-4"><hr></div>
+                @foreach ($posts as $post)
                 <div class="col-md-8 offset-md-2">
                     <div class="news__item">
                         <a href="{{ route('store.show.posts', $post->id) }}" class="news__item__img">
@@ -22,7 +24,9 @@
                                     nhất 2023</h3>
                             </a>
                             <div class="news__item__text">
-
+                                <a href="{{ route('store.show.posts', $post->id) }}">
+                                    <p class="news__item__tit">{{ $post->introduction }}</p>
+                                </a>
                             </div>
                             <p class="news__item__user">
                                 {{-- <span>
@@ -41,6 +45,7 @@
                     </div>
                 </div>
             @endforeach
+            </div>
         </div>
     </div>
 @endsection

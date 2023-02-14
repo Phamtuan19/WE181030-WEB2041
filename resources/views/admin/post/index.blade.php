@@ -3,10 +3,12 @@
 @section('page_heading', 'Thêm sản phẩm')
 
 @section('redirect')
-    <a href="{{ route('admin.posts.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fa-solid fa-plus  text-white-50 pr-2" style="color: white !important"></i>
-        Thêm sản phẩm
-    </a>
+    @can('create', App\Models\Post::class)
+        <a href="{{ route('admin.posts.create') }}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fa-solid fa-plus  text-white-50 pr-2" style="color: white !important"></i>
+            Thêm sản phẩm
+        </a>
+    @endcan
 @endsection
 
 @section('content')
@@ -55,40 +57,41 @@
         <table class="table table-bordered" id="" width="100%" style="font-size: 14px;">
             <thead>
                 <tr style="background-color: ; color: #333;">
-                    <th scope="col">STT</th>
-                    <th scope="col" width="100px">Hình ảnh</th>
-                    <th scope="col">
+                    <th scope="col" width="5%">STT</th>
+                    <th scope="col" width="10%">Hình ảnh</th>
+                    <th scope="col" width="25%">
                         <a href="?sort-by=name&sort-type=" class="right-left_a">
                             Tiêu đề bài viết
                             <i class="fa-solid fa-right-left right-left"></i>
                         </a>
                     </th>
-                    <th scope="col">
+                    <th scope="col" width="15%">
                         <a href="?sort-by=import_price&sort-type=" class="right-left_a">
                             Slug
                             <i class="fa-solid fa-right-left right-left"></i>
                         </a>
                     </th>
-                    <th scope="col" width="200px">
+                    <th scope="col" width="20%">
                         <a href="?sort-by=import_price&sort-type=" class="right-left_a">
                             Danh mục
                             <i class="fa-solid fa-right-left right-left"></i>
                         </a>
                     </th>
-                    <th>Nội dung</th>
-                    <th scope="col">
+                    <th width="5%">Nội dung</th>
+                    <th scope="col" width="10%">
                         <a href="?sort-by=price&sort-type=" class="right-left_a">
                             Người tạo
                             <i class="fa-solid fa-right-left right-left"></i>
                         </a>
                     </th>
-                    <th scope="col">
+                    <th scope="col" width="10%">
                         <a href="?sort-by=created_at&sort-type=" class="right-left_a">
                             Ngày tạo
                             <i class="fa-solid fa-right-left right-left"></i>
                         </a>
                     </th>
-                    <th scope="col" width="100px">Edit</th>
+                    <th scope="col" width="5%">Edit</th>
+                    <th scope="col" width="5%">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -107,7 +110,9 @@
 
                             <td><span>{{ $post->title }}</span></td>
 
-                            <td>{{ $post->slug }}</td>
+                            <td>
+                                {{ $post->slug }}
+                            </td>
 
                             <td>
                                 @foreach (json_decode($post->category_id, true) as $value)
@@ -137,24 +142,26 @@
                             <td>
                                 <div class="d-flex justify-content-around">
                                     <div class="">
-                                        <a href="{{ route('admin.posts.show', $post->id) }}" class="btn"
-                                            style="color: black;">
-                                            <i class="fa-regular fa-pen-to-square"></i>
-                                        </a>
+                                        @can('posts.edit')
+                                            <a href="{{ route('admin.posts.show', $post->id) }}" class="btn"
+                                                style="color: black;">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </a>
+                                        @endcan
                                     </div>
+
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex justify-content-around">
                                     <div class="">
-                                        {{-- <form action="{{ route('admin.softErase', $post->id) }}" method="POST">
-                                            @method('PATCH')
-                                            @csrf --}}
-
-                                        <button type="submit" class="btn btn-delete" id="btn" style="border: none; "
-                                            data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                            data-id="{{ $post->id }}">
-                                            <i class="fa-solid fa-trash" style="color: red"></i>
-                                        </button>
-
-                                        {{-- </form> --}}
-
+                                        @can('posts.delete')
+                                            <button type="submit" class="btn btn-delete" id="btn" style="border: none; "
+                                                data-bs-toggle="modal" data-bs-target="#exampleModal"
+                                                data-id="{{ $post->id }}">
+                                                <i class="fa-solid fa-trash" style="color: red"></i>
+                                            </button>
+                                        @endcan
                                     </div>
                                 </div>
                             </td>
@@ -169,7 +176,10 @@
             </tbody>
         </table>
 
-        {{-- {!! $posts->appends(['category' => request()->category, 'post' => request()->post, 'keyword' => request()->keyword])->links() !!} --}}
+        <div class="" style="float: right;">
+            {{ $posts->appends(request()->all())->links() }}
+        </div>
+
     </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

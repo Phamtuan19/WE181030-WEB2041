@@ -32,6 +32,14 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="introduction" class="form-label">Giới thiệu</label>
+                        <textarea class="form-control" id="introduction" rows="3" name="introduction">{{ old('introduction') }}</textarea>
+                        @error('introduction')
+                            <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group">
                         <label for="">Chọn sản phẩm</label>
                         <select class="select2 form-control" name="product_code[]" style="height: 42px !important;"  multiple="multiple">
                             <option value="">--- Chọn sản phẩm ---</option>

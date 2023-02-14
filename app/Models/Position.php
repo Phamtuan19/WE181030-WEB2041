@@ -11,5 +11,8 @@ class Position extends Model
 
     protected $table = 'positions';
 
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'permissions'
+    ];
 }

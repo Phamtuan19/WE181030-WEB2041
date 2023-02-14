@@ -27,6 +27,7 @@ class CreateRequest extends FormRequest
             'title' => ['required', 'string'],
             'content' => ['required'],
             'slug' => ['required', 'string'],
+            'introduction' => ['required', 'string'],
             'category_id' => ['required'],
             'post_avatar' => ['required'],
         ];
@@ -49,6 +50,7 @@ class CreateRequest extends FormRequest
             'slug' => 'slug',
             'post_avatar' => 'Ảnh đại diện',
             'category_id' => 'Danh mục bài viết',
+            'introduction' => 'Phần giới thiệu',
         ];
     }
 }

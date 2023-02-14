@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Customer\Auth;
 
 use App\Http\Controllers\Controller;
 
-use App\Models\Customers;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -25,10 +25,10 @@ class RegisterController extends Controller
             $data,
             [
                 'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:Customers'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
                 'phone' => [
                     'required',
-                    'unique:Customers',
+                    'unique:users',
                     'regex:/^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/',
                 ],
                 'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -66,11 +66,12 @@ class RegisterController extends Controller
 
     protected function create(array $data)
     {
-        return Customers::create([
-            'name' => $data['name'],
+        return User::create([
+            'username' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
-            'is_active' => 1,
+            'is_active' => null,
+            'position_id' => 3,
             'password' => Hash::make($data['password']),
         ]);
     }

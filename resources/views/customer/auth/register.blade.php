@@ -112,7 +112,7 @@
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="{{ route('store.resetPassword') }}">Quên mật khẩu?</a>
+                                <a class="small" href="{{ route('store.forgot') }}">Quên mật khẩu?</a>
                             </div>
                             <div class="text-center">
                                 <a class="small" href="{{ route('store.login') }}">Đã có tài khoản ? Đăng nhập!</a>

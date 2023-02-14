@@ -30,11 +30,15 @@ use App\Http\Controllers\admin\PostController;
 
 use App\Http\Controllers\admin\SliderController;
 
+use App\Http\Controllers\admin\PositionController;
+
 use App\Http\Controllers\Customer\Auth\ForgotPasswordController;
 
 use App\Http\Controllers\Customer\Auth\ResetPasswordController;
 
 use App\Http\Controllers\Customer\Auth\RegisterController;
+
+use App\Http\Controllers\Customer\Auth\CustomerForgotPasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +57,10 @@ Route::get('/', function () {
     return redirect(route('store.home'));
 });
 
+Route::get('/admin', function () {
+    return redirect(route('/'));
+});
+
 
 Route::middleware('custom.auth')->group(function () {
 
@@ -60,19 +68,25 @@ Route::middleware('custom.auth')->group(function () {
 
         Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-        Route::resource("users", UserController::class)->except(['edit']);
+        Route::resource("users", UserController::class)->except(['edit'])->middleware('can:users');
 
-        Route::resource('products', ProductController::class);
+        Route::resource('products', ProductController::class)->middleware('can:products');
 
-        Route::resource('categories', CategoryController::class)->except(['edit']);
+        Route::resource('categories', CategoryController::class)->except(['edit'])->middleware('can:categories');
 
-        Route::resource('brand', BrandController::class)->except(['edit']);
+        Route::resource('brand', BrandController::class)->except(['edit'])->middleware('can:brands');
 
         Route::resource('orders', OrderController::class)->except('edit', 'store');
 
         Route::resource('customers', CutomerController::class);
 
-        Route::resource('posts', PostController::class);
+        Route::resource('posts', PostController::class)->middleware('can:posts');
+
+        Route::resource('positions', PositionController::class);
+
+        route::get('permissions/{position}', [PositionController::class, 'permission'])->name('permission');
+
+        route::post('permissions/{position}', [PositionController::class, 'postPermission'])->name('permission');
 
         // View Post Content
         Route::get('post/content/{post}', [PostController::class, 'postContent'])->name('postContent');
@@ -97,8 +111,18 @@ Route::middleware('custom.auth')->group(function () {
         // khôi phục sản phẩm đã xóa
         Route::get('product/erase', [ProductController::class, 'listSoftErase'])->name('erase');
 
-        // Danh sách pages store
+        // Image slider
         Route::get('slider', [SliderController::class, 'index'])->name('slider');
+
+        Route::get('slider/create', [SliderController::class, 'createSlider'])->name('slider.create');
+
+        Route::post('slider/store', [SliderController::class, 'store'])->name('slider.post');
+
+        Route::post('slider/delete/{slider}', [SliderController::class, 'delete'])->name('slider.delete');
+
+        Route::get('slider/{slider}', [SliderController::class, 'show'])->name('slider.show');
+
+        Route::PATCH('slider/update/{slider}', [SliderController::class, 'update'])->name('slider.update');
     });
 });
 
@@ -106,7 +130,7 @@ Route::prefix('store')->name('store.')->group(function () {
 
     Route::get('/', [HomeController::class, 'indexHome'])->name('home');
 
-    Route::get('products', [HomeController::class, 'indexMobile'])->name('mobile');
+    Route::get('products', [HomeController::class, 'indexProducts'])->name('mobile');
 
     Route::get('detail-product/{code}', [HomeController::class, 'detailProduct'])->name('product');
 
@@ -134,18 +158,23 @@ Route::prefix('store')->name('store.')->group(function () {
 
     Route::post('/login', [LoginController::class, 'postLogin'])->middleware('guest:customers');
 
-    // Reset password
-    Route::get('password/reset', [ForgotPasswordController::class, 'index'])->name('resetPassword');
+    // // Reset password
+    // Route::get('password/reset', [ForgotPasswordController::class, 'index'])->name('resetPassword');
 
-    Route::post('password/reset', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('guest:customers')->name('postResetPassword');
+    // Route::post('password/reset', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('guest:customers')->name('postResetPassword');
 
     // Đăng ký
     Route::get('/register', [RegisterController::class, 'index'])->name('register');
 
     Route::post('register', [RegisterController::class, 'postRegister'])->name('postRegister');
 
+    // logout
     Route::post('/logout', function () {
         Auth::guard('customers')->logout();
         return redirect(route('store.login'));
     })->middleware('auth:customers')->name('logout');
+
+    // Xử lý quên mật khẩu
+    Route::get('password/forgot', [CustomerForgotPasswordController::class, 'showForgotPasswordForm'])->name('forgot');
+    Route::post('password/email', [CustomerForgotPasswordController::class, 'sendResetLinkEmail'])->name('sendEmail.forgot');
 });

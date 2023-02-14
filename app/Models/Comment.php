@@ -31,7 +31,7 @@ class Comment extends Model
         return $this->belongsTo(self::class, 'parent_id', 'id');
     }
 
-    public function userComment () {
+    public function usercomment () {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 

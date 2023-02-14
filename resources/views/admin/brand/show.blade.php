@@ -4,6 +4,7 @@
 
 @section('link')
     <script src="https://cdn.ckeditor.com/4.20.1/standard/ckeditor.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('redirect')
@@ -29,7 +30,8 @@
 
                 <div class="form-group">
                     <label for="name">Tên danh mục</label>
-                    <input type="text" name="name" class="form-control" id="name" value="{{ empty(old('name')) ? $brand->name : old('name') }}">
+                    <input type="text" name="name" class="form-control" id="name"
+                        value="{{ empty(old('name')) ? $brand->name : old('name') }}">
 
                     @error('name')
                         <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
@@ -38,8 +40,26 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="">Loại sản phẩm</label>
+                    {{-- @dd(json_decode($brand->category_id, true)); --}}
+                    <select class="select2_category form-control" name="categories[]" style="height: 42px !important;"
+                        multiple="multiple">
+                        <option value="">--- Chọn sản phẩm ---</option>
+                        @if (!empty(json_decode($brand->category_id, true)))
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" {{ in_array($category->id, json_decode($brand->category_id, true)) ? 'selected' : false }}>{{ $category->name }}
+                                </option>
+                            @endforeach
+                        @endif
+                    </select>
+                    @error('categories')
+                        <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="form-group">
                     <label for="avatar">Ảnh đại Thương hiệu</label>
-                    <input type="file" name="avatar[]" class="form-control" id="avatar" style="padding: 3px 12px">
+                    <input type="file" name="avatar" class="form-control" id="avatar" style="padding: 3px 12px">
 
                     @error('avatar')
                         <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
@@ -57,4 +77,17 @@
         Danh mục không tồn tại
     @endif
 
+@endsection
+
+@section('js')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $(".select2_category").select2({
+                placeholder: "Lựa chọn sản phẩm",
+                // allowClear: true
+            })
+        });
+    </script>
 @endsection

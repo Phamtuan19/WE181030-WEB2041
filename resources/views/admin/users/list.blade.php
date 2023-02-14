@@ -23,8 +23,17 @@
                 <div class="col-lg-3 form-group">
                     <select name="is_active" id="" class="form-control">
                         <option value="">--- Tất cả trạng thái ---</option>
-                        <option value="active">Kích hoạt</option>
-                        <option value="disable">Vô hiệu hóa</option>
+                        <option value="active" {!! request()->is_active == 'active' ? 'selected' : false !!}>Kích hoạt</option>
+                        <option value="disable" {!! request()->is_active == 'disable' ? 'selected' : false !!}>Vô hiệu hóa</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-3 form-group">
+                    <select name="position" id="" class="form-control">
+                        <option value="">--- Tất cả trạng thái ---</option>
+                        @foreach ($positions as $position)
+                            <option value="{{ $position->id }}" {!! request()->position == $position->id ? 'selected' : false !!}>{{ $position->name }}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -89,12 +98,23 @@
                                     <td>{{ $user->username }}</td>
                                     <td>{{ $user->phone }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>{!! $user->position_id == 1 ? '<p class="text-danger">Administrator</p>' : '<p class="text-primary">Member</p>' !!}</td>
-                                    <td>{!! $user->is_active == 1
+                                    {{-- <td>{!! $user->position_id == 1 ?
+                                    '<p class="text-danger">Senior Administrator</p>' :
+                                    '<p class="text-primary">Member</p>' !!}</td> --}}
+
+                                    <td>
+                                        <p class="text-primary">{{ $user->position->name }}</p>
+                                    </td>
+
+                                    <td>{!! $user->is_active == null
                                         ? '<div class="btn btn-success">Kích hoạt</div>'
                                         : '<div class="btn btn-danger">Vô hiệu hóa</div>' !!}
                                     </td>
-                                    <td>{{ date_format($user->created_at, 'H:i:s d-m-Y ') }}</td>
+                                    <td>
+                                        @if ($user->created_at)
+                                            {{ date_format($user->created_at, 'H:i:s d-m-Y ') }}
+                                        @endif
+                                    </td>
                                     <td class="">
                                         <div class="d-flex justify-content-around">
                                             <div class="">
@@ -132,8 +152,9 @@
 
                     </tbody>
                 </table>
-
-                {{-- {{ $users->links() }} --}}
+                <div class="" style="float: right;">
+                    {{ $users->appends(request()->all())->links() }}
+                </div>
             </div>
         </div>
 

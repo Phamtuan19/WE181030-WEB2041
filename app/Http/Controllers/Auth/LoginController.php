@@ -122,7 +122,7 @@ class LoginController extends Controller
                 return redirect(RouteServiceProvider::HOME);
             }
 
-            return back()->with('msg', 'Email hoặc Mật khẩu không hợp lệ');
+            return back()->with('msgError', 'Email hoặc Mật khẩu không hợp lệ');
 
         }else {
             return back()->with('msgError', 'Tài khoản của bạn hiện không khả dụng');

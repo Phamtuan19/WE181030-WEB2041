@@ -39,7 +39,7 @@ if (!function_exists('currency_format')) {
     function currency_format($number, $suffix = 'đ')
     {
         if (!empty($number)) {
-            return number_format($number, 0, ',', '.') . ' ' ."{$suffix}";
+            return number_format($number, 0, ',', '.') . ' ' . "{$suffix}";
         }
     }
 }
@@ -49,9 +49,9 @@ function isActiveCustomer($email)
     $user = User::where('email', $email)->whereNull('is_active')->get();
 
     if ($user->count() > 0) {
-        if($user[0]->position_id != 3) {
+        if ($user[0]->position_id != 3) {
             return 'admin';
-        }else {
+        } else {
             return 'member';
         }
     }
@@ -65,13 +65,13 @@ function showCategories($categories, $parentId = null, $char = '')
         foreach ($categories as $key => $category) {
             if ($category->parent_id == $parentId) {
 
-                echo '<option value="'. $category->id .'">'. $char. $category->name. '</option>';
+                echo '<option value="' . $category->id . '">' . $char . $category->name . '</option>';
 
                 // Xóa chuyên mục đã lặp
                 unset($categories[$key]);
 
                 // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
-                showCategories($categories, $category->id, $char.'---- ');
+                showCategories($categories, $category->id, $char . '---- ');
             }
         }
     }
@@ -79,8 +79,25 @@ function showCategories($categories, $parentId = null, $char = '')
 
 // ===================================
 
-function percentReduction ($value_1, $value_2) {
-    $relus = (($value_1 - $value_2)/$value_1) * 100;
+function percentReduction($value_1, $value_2)
+{
+    $relus = (($value_1 - $value_2) / $value_1) * 100;
 
-    return ceil($relus).'%';
+    return ceil($relus) . '%';
+}
+
+
+// ======================================
+
+function isRole($dataArr, $moduleName, $role = 'view')
+{
+    if(!empty($dataArr[$moduleName])){
+        $roleArr = $dataArr[$moduleName];
+        // dd(Auth::user());
+        if (!empty($roleArr) && in_array($role, $roleArr)){
+            return true;
+        }
+    }
+
+    return false;
 }

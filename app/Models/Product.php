@@ -90,16 +90,17 @@ class Product extends Model
         }
         // logic xắp xếp
         $orderBy = 'created_at';
-        $orderType = 'ASC';
+        $orderType = 'DESC';
 
         if (!empty($sortArr) && is_array($sortArr)) {
+
             if (!empty($sortArr['sortBy']) && !empty($sortArr['sortType'])) {
                 $orderBy = trim($sortArr['sortBy']);
                 $orderType = trim($sortArr['sortType']);
             }
         }
 
-        $query = $query->orderBy($orderBy, $orderType)->where('deleted_at', null)->get();
+        $query = $query->orderBy($orderBy, $orderType)->where('deleted_at', null)->paginate(10);
 
         return $query;
     }

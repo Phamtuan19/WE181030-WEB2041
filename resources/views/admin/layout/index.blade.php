@@ -55,153 +55,136 @@
                     <span>Dashboard</span></a>
             </li>
 
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            {{-- <div class="sidebar-heading">
-                Quản lý người dùng
-            </div> --}}
+            <!-- Nav Item - Pages Collapse Menu -->
+            @can('orders')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ route('admin.orders.index') }}">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>Đơn hàng</span>
+                    </a>
+                </li>
+            @endcan
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('admin.orders.index') }}">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span>Đơn hàng</span>
-                </a>
-            </li>
+            @can('posts')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fa-solid fa-pen"></i>
+                        <span>Quản lý bài viết</span>
+                    </a>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @can('posts.add')
+                                <a class="collapse-item" href="{{ route('admin.posts.create') }}">Thêm bài viết</a>
+                            @endcan
+                            <a class="collapse-item" href="{{ route('admin.posts.index') }}">Danh sách bài viết</a>
+                            <a class="collapse-item" href="{{ route('admin.listSoftErase') }}">Bài viết đã xóa</a>
+                        </div>
+                    </div>
+                </li>
+            @endcan
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fa-solid fa-pen"></i>
-                    <span>Quản lý bài viết</span>
-                </a>
-                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.posts.create') }}">Thêm bài viết</a>
-                        <a class="collapse-item" href="{{ route('admin.posts.index') }}">Danh sách bài viết</a>
-                        <a class="collapse-item" href="{{ route('admin.listSoftErase') }}">Bài viết đã xóa</a>
+            @can('products')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
+                        aria-expanded="true" aria-controls="collapseProduct">
+                        <i class="fa-brands fa-product-hunt"></i>
+                        <span>Quản lý sản phẩm</span>
+                    </a>
+                    <div id="collapseProduct" class="collapse" aria-labelledby="headingProduct"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @can('products.add')
+                                <a class="collapse-item" href="{{ route('admin.products.create') }}">Thêm sản phẩm</a>
+                            @endcan
+                            <a class="collapse-item" href="{{ route('admin.products.index') }}">Danh sách sản phẩm</a>
+                            <a class="collapse-item" href="{{ route('admin.erase') }}">Sản phẩm đã xóa</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            @endcan
 
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct"
-                    aria-expanded="true" aria-controls="collapseProduct">
-                    <i class="fa-brands fa-product-hunt"></i>
-                    <span>Quản lý sản phẩm</span>
-                </a>
-                <div id="collapseProduct" class="collapse" aria-labelledby="headingProduct"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.products.create') }}">Thêm sản phẩm</a>
-                        <a class="collapse-item" href="{{ route('admin.products.index') }}">Danh sách sản phẩm</a>
-                        <a class="collapse-item" href="{{ route('admin.erase') }}">Sản phẩm đã xóa</a>
+            @can('categories')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories"
+                        aria-expanded="true" aria-controls="collapseCategories">
+                        <i class="fa-solid fa-list"></i>
+                        <span>Danh mục</span>
+                    </a>
+                    <div id="collapseCategories" class="collapse" aria-labelledby="headingCB"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @can('categories.add')
+                                <a class="collapse-item" href="{{ route('admin.categories.create') }}">Thêm danh mục </a>
+                            @endcan
+                            <a class="collapse-item" href="{{ route('admin.categories.index') }}">Danh sách danh mục</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCategories"
-                    aria-expanded="true" aria-controls="collapseCategories">
-                    <i class="fa-solid fa-list"></i>
-                    <span>Danh mục</span>
-                </a>
-                <div id="collapseCategories" class="collapse" aria-labelledby="headingCB"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.categories.create') }}">Thêm danh mục </a>
-                        <a class="collapse-item" href="{{ route('admin.categories.index') }}">Danh sách danh mục</a>
-                    </div>
-                </div>
-            </li>
+                </li>
+            @endcan
 
             {{-- Thương hiệu sản phảm --}}
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBrand"
-                    aria-expanded="true" aria-controls="collapseBrand">
-                    <i class="fa-solid fa-bars-staggered"></i>
-                    <span>Thương hiệu</span>
-                </a>
-                <div id="collapseBrand" class="collapse" aria-labelledby="headingCB" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.brand.create') }}">Thêm thương hiệu </a>
-                        <a class="collapse-item" href="{{ route('admin.brand.index') }}">Danh sách thương hiệu</a>
+            @can('brands')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBrand"
+                        aria-expanded="true" aria-controls="collapseBrand">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                        <span>Thương hiệu</span>
+                    </a>
+                    <div id="collapseBrand" class="collapse" aria-labelledby="headingCB" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @can('brands.add')
+                                <a class="collapse-item" href="{{ route('admin.brand.create') }}">Thêm thương hiệu </a>
+                            @endcan
+                            <a class="collapse-item" href="{{ route('admin.brand.index') }}">Danh sách thương hiệu</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            @endcan
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-                    aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fa-solid fa-user"></i>
-                    <span>Quản trị viên</span>
-                </a>
-                <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="{{ route('admin.users.create') }}">Thêm người quản trị
-                            viên</a>
-                        <a class="collapse-item" href="{{ route('admin.users.index') }}">Danh sách quản trị viên</a>
+            @can('users')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePositions"
+                        aria-expanded="true" aria-controls="collapsePositions">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Quản lý người dùng</span>
+                    </a>
+                    <div id="collapsePositions" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @can('users.add')
+                                <a class="collapse-item" href="{{ route('admin.users.create') }}">Thêm người quản trị
+                                    viên</a>
+                            @endcan
+                            <a class="collapse-item" href="{{ route('admin.users.index') }}">Danh sách quản trị viên</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            @endcan
 
-            {{-- <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('admin.customers.index') }}">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Người dùng</span>
-                </a>
-            </li> --}}
-
-            {{-- <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Addons
-            </div> --}}
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Pages</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages"
-                    data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="register.html">Register</a>
-                        <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Other Pages:</h6>
-                        <a class="collapse-item" href="404.html">404 Page</a>
-                        <a class="collapse-item" href="blank.html">Blank Page</a>
+            @can('positions')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Quyền truy cập</span>
+                    </a>
+                    <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            @can('positions.add')
+                                <a class="collapse-item" href="{{ route('admin.positions.create') }}">Thêm quyền</a>
+                            @endcan
+                            <a class="collapse-item" href="{{ route('admin.positions.index') }}">Danh sách quyền truy cập</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>
+            @endcan
 
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('admin.slider') }}">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Banner</span>
-                </a>
-            </li>
 
-            <!-- Nav Item - Tables -->
-            <li class="nav-item">
-                <a class="nav-link" href="tables.html">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Menu</span></a>
-            </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -272,7 +255,8 @@
                         <!-- Nav Item - Alerts -->
                         <li class="nav-item dropdown no-arrow mx-1">
                             <div class="admin_name">
-                                <span style="text-transform: capitalize">{{ Auth::user()->username }}</span>
+                                <span style="text-transform: capitalize">{{ Auth::user()->username }}
+                                    {{ Auth::user()->email }}</span>
                                 <i class="fa-solid fa-caret-down"></i>
                             </div>
 

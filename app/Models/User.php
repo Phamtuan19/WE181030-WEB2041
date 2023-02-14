@@ -52,17 +52,20 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function scopeSearchUser($query, $is_active = null, $keywords = null, $sortArr)
+    public function SearchUser($query, $is_active = null, $position = null, $keywords = null, $sortArr)
     {
         if (!empty($is_active)) {
             if ($is_active == "active") {
-                $active = 1;
+                $active = null;
             } else {
-                $active = 0;
+                $active = 1;
             }
             $query = $query->where('is_active', $active);
         }
-        // dd($keywords);
+
+        if (!empty($position)) {
+            $query = $query->where('position_id', $position);
+        }
 
         if (!empty($keywords)) {
 
@@ -83,7 +86,7 @@ class User extends Authenticatable
             }
         }
 
-        $query = $query->orderBy($orderBy, $orderType)->get();
+        $query = $query->orderBy($orderBy, $orderType);
         // $users->get();
         return $query;
     }

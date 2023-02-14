@@ -38,3 +38,130 @@ td, th {
     text-align: center!important;
     border: 1px solid #e3e6f0;
 }
+
+
+.view_post {
+    /* padding: 24px;
+    background: var(--color-white);
+    border-radius: 5px;
+    box-shadow: var(--box-shadow); */
+}
+
+.view_post table {
+    width: 100%;
+    margin: 12px 0;
+}
+
+.view_post table tr, th, td {
+    padding: 0 1rem;
+}
+
+.view_post table > p {
+    margin: 0;
+}
+
+.view_post img {
+    height: 675px !important;
+    width: 776px !important;
+    margin: 2rem auto !important;;
+    display: block;
+    border-radius: 5px;
+}
+
+.view_post p , h1, h2, h3, h4, h5, h6{
+    text-align: justify;
+    margin: 1rem 0;
+}
+
+
+
+.post__user {
+    padding-bottom: 24px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.post__user .author-avatar {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    position: relative;
+    margin-right: 8px;
+}
+
+.post__user .author-avatar img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    border-radius: 50%;
+}
+
+.post__user .author-name {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 16px;
+    margin-right: 4px;
+    display: block;
+}
+
+.post__user .author-info {
+    margin-top: 4px;
+    max-height: 20px;
+}
+
+.post__user .post-time {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #6a737a;
+    padding-right: 12px;
+    position: relative;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+/* .post__user .post-time {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    color: #6a737a;
+    padding-right: 12px;
+    position: relative;
+    display: inline-block;
+    margin-right: 8px;
+}
+ */
+
+ .post__user .post-cmt {
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    gap: 4px;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.post__user .post-cmt i {
+    font-size: 16px;
+    color: #0664f9;
+}
+
+.post__user .post-cmt span {
+    font-size: 14px;
+    line-height: 20px;
+    display: inline-block;
+    color: #0664f9;
+}
+
+.post__user .post-cmt span {
+    font-size: 14px;
+    line-height: 20px;
+    display: inline-block;
+    color: #0664f9;
+}
