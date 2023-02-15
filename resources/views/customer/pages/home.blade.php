@@ -27,7 +27,7 @@
                     </div>
                 </div>
 
-                @foreach ($products as $product)
+                @foreach ($selling_products as $product)
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                         <div class="product">
                             <span class="flag-installment">Trả góp 0%</span>
@@ -68,8 +68,10 @@
                     </div>
                 @endforeach
 
-                <div class="col-lg-12 mb-3" style="text-align: center;">
-                    <a class="btn btn-primary"> Xem thêm <i class="fa-solid fa-right-long" style="margin-left: 12px"></i>
+                <div class="show-all">
+                    <a href="{{ route('store.mobile') }}?orderType=quantity_sold&orderBy=DESC">
+                        Xem tất cả
+                        <i class="fa-solid fa-right-long"></i>
                     </a>
                 </div>
             </div>
@@ -93,7 +95,7 @@
 
                 {{-- @dd($products[0]) --}}
 
-                @foreach ($products as $product)
+                @foreach ($new_products as $product)
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                         <div class="product">
                             <span class="flag-installment">Trả góp 0%</span>
@@ -135,7 +137,7 @@
                 @endforeach
 
                 <div class="show-all">
-                    <a href="">
+                    <a href="{{ route('store.mobile') }}?orderType=created_at&orderBy=DESC">
                         Xem tất cả
                         <i class="fa-solid fa-right-long"></i>
                     </a>
@@ -155,51 +157,11 @@
                     </div>
                 </div>
 
-                @foreach ($products as $product)
+                @foreach ($other_products as $product)
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
                         <div class="product">
                             <span class="flag-installment">Trả góp 0%</span>
                             @if ($product['promotion_price'])
-                                {{-- @dd($product['promotion_price']) --}}
-                                <span class="percent-deal">Giảm
-                                    {{ percentReduction($product['price'], $product['promotion_price']) }}</span>
-                            @endif
-
-                            <div class="product-img">
-
-                                @if ($product['avatar'] != null)
-                                    <a href="{{ route('store.product', $product['code']) }}">
-                                        <img src="{{ $product['avatar'][0]['path'] }}" class="product-image"
-                                            alt="">
-                                    </a>
-                                @else
-                                    <a href="{{ route('store.product', $product->code) }}">
-                                        <img src="{{ $product->image[0]->path }}" class="product-image" alt="">
-                                    </a>
-                                @endif
-                            </div>
-
-
-                            <div class="product-name">
-                                <a href="{{ route('store.product', $product['code']) }}">
-                                    <span>{{ $product['name'] }}</span>
-                                </a>
-                            </div>
-                            <div class="product-price mb-3">
-                                @if ($product['promotion_price'] != null)
-                                    <span class="old-price">{{ currency_format($product['price']) }}</span>
-                                    <span class="actual-price">{{ currency_format($product['promotion_price']) }}</span>
-                                @else
-                                    <span class="actual-price">{{ currency_format($product['price']) }}</span>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mb-4">
-                        <div class="product">
-                            <span class="flag-installment">Trả góp 0%</span>
-                            @if ($product['promotion_price'])
-                                {{-- @dd($product['promotion_price']) --}}
                                 <span class="percent-deal">Giảm
                                     {{ percentReduction($product['price'], $product['promotion_price']) }}</span>
                             @endif
@@ -235,6 +197,13 @@
                         </div>
                     </div>
                 @endforeach
+
+                <div class="show-all">
+                    <a href="{{ route('store.mobile') }}">
+                        Xem tất cả
+                        <i class="fa-solid fa-right-long"></i>
+                    </a>
+                </div>
             </div>
 
             <div class="row mt-4">
@@ -250,90 +219,32 @@
                     </div>
                 </div>
 
+                @foreach ($new_posts as $post)
                 <div class="col-lg-4 col-md-6">
                     <div class="single-blog">
                         <div class="thumb">
-                            <img class="img-fluid" src="https://preview.colorlib.com/theme/eiser/img/b1.jpg"
-                                alt="">
+                            <img class="img-fluid" src="{{ $post->avatar_path }}"
+                                alt="{{ $post->slug }}">
                         </div>
                         <div class="short_details">
                             <div class="meta-top d-flex">
-                                <a href="#">By Admin</a>
-                                <a href="#"><i class="ti-comments-smiley"></i>2 Comments</a>
+                                <a href="{{ route('store.show.posts', $post->slug) }}">{{ $post->user->username }}</a>
+                                <a href="#"><i class="ti-comments-smiley"></i>{{ $post->comments->count() }} Comments</a>
                             </div>
-                            <a class="d-block" href="single-blog.html">
-                                <h4>Ford clever bed stops your sleeping
-                                    partner hogging the whole</h4>
+                            <a class="d-block" href="{{ route('store.show.posts', $post->id) }}">
+                                <h4>{{ $post->title }}</h4>
                             </a>
                             <div class="text-wrap">
                                 <p>
-                                    Let one fifth i bring fly to divided face for bearing the divide unto seed winged
-                                    divided
-                                    light
-                                    Forth.
+                                    {{ $post->introduction }}
                                 </p>
                             </div>
-                            <a href="#" class="blog_btn">Learn More <span class="ml-2 ti-arrow-right"></span></a>
+                            <a href="{{ route('store.show.posts', $post->id) }}" class="blog_btn">Learn More <span class="ml-2 ti-arrow-right"></span></a>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-blog">
-                        <div class="thumb">
-                            <img class="img-fluid" src="https://preview.colorlib.com/theme/eiser/img/b1.jpg"
-                                alt="">
-                        </div>
-                        <div class="short_details">
-                            <div class="meta-top d-flex">
-                                <a href="#">By Admin</a>
-                                <a href="#"><i class="ti-comments-smiley"></i>2 Comments</a>
-                            </div>
-                            <a class="d-block" href="single-blog.html">
-                                <h4>Ford clever bed stops your sleeping
-                                    partner hogging the whole</h4>
-                            </a>
-                            <div class="text-wrap">
-                                <p>
-                                    Let one fifth i bring fly to divided face for bearing the divide unto seed winged
-                                    divided
-                                    light
-                                    Forth.
-                                </p>
-                            </div>
-                            <a href="#" class="blog_btn">Learn More <span class="ml-2 ti-arrow-right"></span></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-blog">
-                        <div class="thumb">
-                            <img class="img-fluid" src="https://preview.colorlib.com/theme/eiser/img/b1.jpg"
-                                alt="">
-                        </div>
-                        <div class="short_details">
-                            <div class="meta-top d-flex">
-                                <a href="#">By Admin</a>
-                                <a href="#"><i class="ti-comments-smiley"></i>2 Comments</a>
-                            </div>
-                            <a class="d-block" href="single-blog.html">
-                                <h4>Ford clever bed stops your sleeping
-                                    partner hogging the whole</h4>
-                            </a>
-                            <div class="text-wrap">
-                                <p>
-                                    Let one fifth i bring fly to divided face for bearing the divide unto seed winged
-                                    divided
-                                    light
-                                    Forth.
-                                </p>
-                            </div>
-                            <a href="#" class="blog_btn">Learn More <span class="ml-2 ti-arrow-right"></span></a>
-                        </div>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
             {{-- </div> --}}
         </div>

@@ -37,7 +37,28 @@
         @include('customer.layout.header')
         {{-- End NavBar --}}
 
-        @include('customer.layout.slider')
+        <!-- Slider Show -->
+        @if (request()->path() == 'store')
+            <div class="container mt-4">
+                <div class="row" style="">
+                    <div class="col-lg-12">
+                        <div class="swiper mySwiper-slider">
+                            <div class="swiper-wrapper" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
+
+                                <div class="swiper-slide">
+                                    <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/2/1/638108673553993107_F-C1_1200x300@2x.png"
+                                        alt="" class="slider_image"
+                                        style="width: 100%; height: 450px; cursor: pointer; border-radius: 5px">
+                                </div>
+
+                            </div>
+                            <div class="swiper-pagination"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
 
         @include('customer.layout.support_information')
 
@@ -66,6 +87,68 @@
     <script src="{{ asset('customer/js/index.js') }}"></script>
 
     @yield('js')
+
+    <script>
+        $('.icon').click(function() {
+            $(".search-box").attr("style", "display:block");
+            $(".search-box__input").val('')
+        })
+
+        $(".close__input").click(function() {
+            $(".search-box").attr("style", "display:none !important");
+            $(".search-box__input").val('')
+        })
+
+        let url = window.location.origin
+        console.log(url);
+        function renderSearch(data, url) {
+            let value = data.map(function(e) {
+                return `
+                    <li class="ais-Hits-item">
+                        <a href="${url}${e.code}" class="item-js"
+                            queryid="434a666f18d7aa46f3ee04f87b1b5772" objid="42725" position="1">
+                            <div class="pr-item">
+                                <div class="pr-item__img m-r-8"> <img
+                                        src="${e.avatar}"
+                                        alt="iPhone 14 Pro Max 128GB"> </div>
+                                <div class="pr-item__info">
+
+                                    <h3 class="pr-item__name m-b-4">${e.name}</h3>
+                                    <div class="pr-item__price">
+                                        ${formatCurrency(e.promotion_price)}
+                                        <del class="original deal">
+                                            ${formatCurrency(e.price)}
+                                        </del>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                `;
+            })
+            $(".search-box__ul").html(value);
+        }
+
+        console.log(window.location.origin + "/api/store/search?storeSearch=");
+        $(document).ready(function() {
+
+            $(".search-box__input").keyup(function() {
+
+                console.log($(this).val());
+
+                $.ajax({
+                    url: window.location.origin + "/api/store/search?storeSearch=" + $(this).val(),
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        renderSearch(data)
+                    },
+                });
+
+            });
+        })
+    </script>
+
 </body>
 
 </html>

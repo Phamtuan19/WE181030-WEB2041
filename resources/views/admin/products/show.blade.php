@@ -224,6 +224,17 @@
 
                     </div>
 
+                    <div class="form-group">
+                        <label for="promotion_price">Giá khuyến mãi</label>
+                        <input type="text" name="promotion_price" class="form-control" id="promotion_price"
+                            value="{{ empty(old('promotion_price')) ? $product->promotion_price : old('promotion_price') }}">
+
+                        @error('promotion_price')
+                            <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                        @enderror
+
+                    </div>
+
                     <div class="form-group ">
                         <div class="my-2 box-reset_images">
                             <label for="images">Ảnh sản phẩm</label>

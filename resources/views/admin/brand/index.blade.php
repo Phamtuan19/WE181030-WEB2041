@@ -53,9 +53,6 @@
                             <i class="fa-solid fa-right-left right-left"></i>
                         </a>
                     </th>
-                    <th class="align-middle text-center" scope="col" width="30%">
-                        Loại sản phẩm
-                    </th>
                     <th class="align-middle text-center" scope="col" width="10%">
                         <a href="?sort-by=created_at&sort-type={{ $sortType }}" class="right-left_a">
                             Ngày tạo
@@ -81,28 +78,12 @@
                                     {{-- @dd($brand['path_image']) --}}
                                     @if (!empty($brand['path_image']))
                                         <img src="{{ $brand['path_image'] }}" alt=""
-                                            style="width: 50px; height: 50px;">
+                                            style="width: 100px; height: 50px;">
                                     @endif
                                 </div>
                             </td>
 
                             <td><span>{{ $brand['name'] }}</span></td>
-
-                            {{-- @dd(!empty($brand->category_id)); --}}
-                            <td>
-                                @if (!empty($brand->category_id) && !empty($categories->count() > 0))
-                                    <div class="row">
-                                        @foreach ($categories as $item)
-                                            {{-- @dd($item) --}}
-                                            @if (in_array($item->id, json_decode($brand->category_id, true)))
-                                                <div class="col-lg-6 mb-1">
-                                                    <span class="btn btn-primary">{{ $item->name }}</span>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                @endif
-                            </td>
 
                             <td>
                                 @if (!empty($brand->created_at))

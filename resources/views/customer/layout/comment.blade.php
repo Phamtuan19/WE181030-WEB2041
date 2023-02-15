@@ -1,4 +1,4 @@
-{{--
+
 <div class="container mt-4">
 
 
@@ -7,7 +7,7 @@
     <div class="row">
 
         @if (Auth::guard('customers')->check())
-            @if ($commentType == 'posts')
+            @if ($commentType == 'post')
                 <div class="col-lg-8 offset-md-2 mb-4">
                     <form action="{{ route('store.comments.store') }}" method="POST">
                         @csrf
@@ -48,7 +48,7 @@
             @endif
         @endif
 
-        @if ($post->comments->count() > 0)
+
 
             <div class="col-lg-8 offset-md-2 mb-4 p-3">
 
@@ -122,10 +122,10 @@
                 </div>
 
             </div>
-        @else
+        {{-- @else
             <p style="text-align: center">Không có bình luận nào về sản phẩm</p>
-        @endif
+        @endif --}}
 
     </div>
 
-</div> --}}
+</div>

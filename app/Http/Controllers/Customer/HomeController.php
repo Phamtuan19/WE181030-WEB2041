@@ -28,48 +28,41 @@ use App\Models\Comment;
 
 use App\Models\Categories;
 
+use Illuminate\Support\Facades\View;
+
 class HomeController extends Controller
 {
-
-    public function layoutIndex()
-    {
-
-        $categories = Categories::all();
-
-        view()->share('categories', $categories);
-
-        return view('customer.layout.header');
-    }
 
     public function indexHome()
     {
         $products = new Product();
 
-        $brands = new Brand();
-
         $images = new Image();
 
-        $categories = new Categories();
+        $new_posts = Post::orderBy('created_at', 'DESC')->take(3)->get();
 
-        $parent_category = $categories->whereNull('parent_id')->get()->toArray();
+        $selling_products = $products->select('id', 'code', 'name', 'price', 'promotion_price')->orderBy('quantity_sold', 'DESC')->take(8)->get()->toArray();
 
-        foreach ($parent_category as $key => $value) {
-            $parent_category[$key]['parent'] = $categories->where('parent_id', $value['id'])->get()->toArray();
-        }
+        $new_products = $products->select('id', 'code', 'name', 'price', 'promotion_price')->orderBy('created_at', 'DESC')->take(8)->get()->toArray();
 
-        // dd($parent_category);
+        $other_products = $products->select('id', 'code', 'name', 'price', 'promotion_price')->orderBy('created_at', 'ASC')->take(8)->get()->toArray();
 
-
-        $products = $products->select('id', 'code', 'name', 'price', 'promotion_price')->get()->toArray();
-
-        foreach ($products as $key => $product) {
-            $products[$key]['avatar'] = $images->select('path')
+        foreach ($selling_products as $key => $product) {
+            $selling_products[$key]['avatar'] = $images->select('path')
                 ->where('product_id', $product['id'])->where('is_avatar', 1)->get()->toArray();
         }
 
-        // dd($products);
+        foreach ($new_products as $key => $product) {
+            $new_products[$key]['avatar'] = $images->select('path')
+                ->where('product_id', $product['id'])->where('is_avatar', 1)->get()->toArray();
+        }
 
-        return view('customer.pages.home', compact('products', 'brands'));
+        foreach ($other_products as $key => $product) {
+            $other_products[$key]['avatar'] = $images->select('path')
+                ->where('product_id', $product['id'])->where('is_avatar', 1)->get()->toArray();
+        }
+
+        return view('customer.pages.home', compact('selling_products', 'new_products', 'other_products', 'new_posts'));
     }
 
     public function indexProducts(Request $request)
@@ -176,8 +169,6 @@ class HomeController extends Controller
             $comments[$key]['parent'] = $query->where('parent_id', $item['id']);
         }
 
-        // dd($comments);
-
         $product = $products->where('code', $code)->first();
 
         $brands = new Brand();
@@ -210,11 +201,6 @@ class HomeController extends Controller
 
         $posts = $posts->get();
 
-        $date1 = "2023-02-08";
-        $date2 = date('Y-m-d');
-
-        // dd(_date_diff(strtotime($date1), time()));
-
         return view('customer.pages.post', compact('posts'));
     }
 
@@ -227,16 +213,12 @@ class HomeController extends Controller
         $comments = $comments->whereNotNull('post_id')->whereNull('parent_id')->get();
 
 
-
-        // dd($comments->toArray());
         foreach ($comments as $key => $item) {
-            // dd($item->toArray());
+
             $comments[$key]['parent'] = $connect->where('parent_id', $item['id']);
         }
 
-        // dd($comments->toArray());
-
-        $commentType = "posts";
+        $commentType = "post";
 
         return view('customer.pages.show_post', compact('post', 'comments', 'commentType'));
     }

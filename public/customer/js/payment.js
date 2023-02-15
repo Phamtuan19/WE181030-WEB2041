@@ -25,7 +25,7 @@ if (Array.isArray(cartArr)) {
 
             <td>
                 <div class="form-group">
-                    <input type="text" class="product_price" name="" value="${e.price}" readonly style="padding: 6px 10px; background-color: #f5f5f7; font-size: 14px;">
+                    <input type="text" class="product_price" name="" value="${formatCurrency(e.price)}" readonly style="padding: 6px 10px; background-color: #f5f5f7; font-size: 14px;">
                 </div>
             </td>
 
@@ -56,12 +56,14 @@ $('.sucess-btn').click(function () {
     localStorage.removeItem('cart');
 })
 
+// Kiểm tra và chuyển hướng
 if (cartArr == null) {
     window.history.back()
 }
 
 
 
+// API các tỉnh thành việt nam
 $(document).ready(function () {
     $.ajax({
         url: 'https://provinces.open-api.vn/api/p/',
@@ -80,12 +82,7 @@ $(document).ready(function () {
 
     $("#province").change(function () {
 
-        // console.log([$(this)]);
-        // $("#province")[0].dataset.provice = "1"
-
         const province = $(this).val().split("-");
-
-        // console.log(province[1]);
 
         $("#specific_address").val(province[1])
 

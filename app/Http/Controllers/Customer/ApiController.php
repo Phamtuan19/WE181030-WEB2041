@@ -3,61 +3,30 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+
 use Illuminate\Http\Request;
 
 use App\Models\Product;
 
-use App\Models\Customers;
-
-use Illuminate\Support\Facades\Auth;
-
-use App\Models\Order;
-
-use App\Models\OrderDetail;
-
-use Illuminate\Support\Facades\Hash;
-
-use Illuminate\Support\Facades\DB;
+use App\Models\Image;
 
 class ApiController extends Controller
 {
-    //
-    public function indexProduct()
-    {
-        $data = Product::select('id', 'name', 'price', 'avatar')->search()->get();
-        return $data;
-    }
+    
+    public function storeSearch (Request $request) {
+        $products = new Product();
 
-    public function indexCart(Request $request)
-    {
-        $data = Product::select('code', 'name', 'price', 'avatar')->Carts()->get();
-        // $data = auth()->guard('customers')->id();
-        return $data;
-    }
+        $images = new Image();
 
-    public function indexCustomer (Request $request) {
-
-        $customers = new Customers();
-
-        $data = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password),
-            'is_active' => $request->is_active,
-            'province' => $request->province,
-            'district' => $request->district,
-            'ward' => $request->ward,
-            'specific_address' => $request->specific_address,
-        ];
-
-        if($customers->insert($data)){
-            $response = [
-                'status' => 'success',
-                'data' => $data
-            ];
+        if(!empty($request->storeSearch)) {
+            $products = $products->select('id', 'code', 'name', 'price', 'promotion_price')->where('name', 'like', '%' . $request->storeSearch . '%')->take(6)->get()->toArray();
         }
 
-        return $response;
+        foreach ($products as $key => $product) {
+
+            $products[$key]['avatar'] = $images->select('path')->where('product_id', $product['id'])->where('is_avatar', 1)->get()->toArray()[0]['path'];
+        }
+
+        return $products;
     }
 }

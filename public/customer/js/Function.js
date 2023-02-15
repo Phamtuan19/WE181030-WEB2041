@@ -8,6 +8,7 @@ if (localCart) {
 }
 
 /* ================== Add to carts =================== */
+// thêm sản phẩm vào giỏ hàng
 function addToCart(dataCode, image, price, name, color, memory) {
 
     const item = cart.find(item => item.code === dataCode)
@@ -36,6 +37,8 @@ function addToCart(dataCode, image, price, name, color, memory) {
 
 
 // /* ================== Update the quantity of products in the cart =================== */
+
+// hiển thị số lượng sản phẩm trong giỏ hàng
 function renderCart_(cartArr) {
     if (Array.isArray(cartArr)) {
         const amount = cartArr.length;
@@ -45,6 +48,7 @@ function renderCart_(cartArr) {
     }
 }
 
+// Navbar hiển thị sản phẩm
 function render_Cart_product(cartArr) {
     const renderCart = cartArr.map(function (value) {
         return `
@@ -66,6 +70,9 @@ function render_Cart_product(cartArr) {
 }
 
 // /* ================== Total Money =================== */
+
+
+// Hiển thị tổng tiền trong giỏ hàng
 function renderTotalMoney() {
     const cartArr = JSON.parse(localStorage.getItem('cart'));
     let total = 0;
@@ -76,40 +83,12 @@ function renderTotalMoney() {
         })
     }
 
-    return total
+    return formatCurrency(total);
 }
 // /* ================== Total Money =================== */
 
-// /* ================== Update the number of products in the cart =================== */
-// function updateItemCart(productCode, quantity, cartName = '') {
-//     local_Cart.forEach((e) => {
-//         if (e.code === productCode) {
-//             e.quantity = quantity
-//         }
-//     })
-// }
-
-// /* ================== Remove product item in cart =================== */
-// function removeItemCart(product_code, cartname = '') {
-//     let carts = [];
-//     if (local_Cart.length > 1) {
-//         local_Cart.forEach((e) => {
-//             if (e.code != product_code) {
-//                 carts.push(e);
-//             }
-//         })
-//         localStorage.setItem(cartname, JSON.stringify(carts));
-//     } else {
-//         localStorage.clear();
-//     }
-
-//     location.reload(true);
-// }
-
-
-
-// /* ================== Customer =================== */
-// $(".customer_name").click(function () {
-//     $(".admin_name-dropdown").toggleClass('d-none');
-// })
-
+// định dạng tiền trong js
+function formatCurrency(money){
+    let formattedMoney = money.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'});
+    return formattedMoney;
+}

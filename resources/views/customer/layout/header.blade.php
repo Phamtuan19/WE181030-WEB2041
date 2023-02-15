@@ -1,11 +1,9 @@
-{{-- @dd(in_array($mobileCategories, json_decode($mobile->category_id, true)))
-
 <header class="header" style="display: block">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
             <div class="container-fluid">
                 <div class="nav-logo">
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="{{ route('store.home') }}">
                         <img class="nav-logo "
                             src="https://scontent.fhan2-5.fna.fbcdn.net/v/t1.15752-9/329959193_1211155973158597_5307414547449285977_n.png?_nc_cat=107&ccb=1-7&_nc_sid=ae9488&_nc_ohc=M09cjkosAYwAX8TPFhX&_nc_ht=scontent.fhan2-5.fna&oh=03_AdRhUjA_nellvbDNKY1EjGLYndIusvnquFPj2vgNZicazw&oe=640BC6AA"
                             alt="">
@@ -24,7 +22,7 @@
                 <div class="collapse navbar-collapse navbar-blog" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link nav-link_a {{ request()->path() === '/' ? 'nav-active' : '' }}"
+                            <a class="nav-link nav-link_a {{ request()->path() === 'store/' ? 'nav-active' : '' }}"
                                 aria-current="page" href="{{ route('store.home') }}">Home</a>
                         </li>
 
@@ -39,35 +37,55 @@
                                             <p class="nav--dropdown__items-title">Hãng sản xuât</p>
                                             <ul class="items__brand">
                                                 <div class="row">
-                                                    @if (count($headers[0]) > 0)
-                                                        @foreach ($headers[0]['brands'] as $mobile)
-                                                            @if (!empty($mobile['category_id']) && in_array($headers[0]['categories_id'], json_decode($mobile['category_id'], true)))
-                                                                <li class="col-lg-4 items__brand--li">
-                                                                    @if ($mobile['name'] == 'Apple')
-                                                                        <a href="{{ route('store.mobile') }}?brand={{ $mobile['name'] }}&category={{ $headers[0]['categories_slug'] }}"
-                                                                            target="_self" title="Apple (MacBook)">
-                                                                            {{ $mobile['name'] . ' ' }} (iPhone)
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=apple&category=dien-thoai"
+                                                            target="_self" title="Apple (MacBook)">
+                                                            Apple (iPhone)
+                                                        </a>
+                                                    </li>
 
-                                                                        </a>
-                                                                    @else
-                                                                        <a href="{{ route('store.mobile') }}?brand={{ $mobile['name'] }}&category={{ $headers[0]['categories_slug'] }}"
-                                                                            target="_self" title="Apple (MacBook)">
-                                                                            {{ $mobile['name'] }}
-                                                                        </a>
-                                                                    @endif
-                                                                </li>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=vivo&category=dien-thoai"
+                                                            target="_self" title="Vivo">
+                                                            Vivo
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=oppo&category=dien-thoai"
+                                                            target="_self" title="Oppo">
+                                                            Oppo
+                                                        </a>
+                                                    </li>
+
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=samsung&category=dien-thoai"
+                                                            target="_self" title="Samsung">
+                                                            Samsung
+                                                        </a>
+                                                    </li>
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=realme&category=dien-thoai"
+                                                            target="_self" title="Realme">
+                                                            Realme
+                                                        </a>
+                                                    </li>
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=xiaomi&category=dien-thoai"
+                                                            target="_self" title="Xiaomi">
+                                                            Xiaomi
+                                                        </a>
+                                                    </li>
                                                 </div>
                                             </ul>
                                         </div>
 
                                         <div class="col-lg-4 nav--dropdown__items__image">
                                             <p class="nav--dropdown__items-title">Sản phẩm bán chạy nhất</p>
-                                            <a href="{{ route('store.product', $headers[0]['code']) }}">
+                                            <a href="{{ route('store.product', 8894319) }}">
                                                 <div class="" style="width: 100%">
-                                                    <img style="width: 100%;" src="{{ $headers[0]['image_path'] }}"
+                                                    <img style="width: 100%;"
+                                                        src="https://res.cloudinary.com/dizwixa7c/image/upload/v1676391632/duan_laravel/Products/uum8lnco5vugrlodoiry.png"
                                                         alt="">
                                                 </div>
                                             </a>
@@ -89,36 +107,52 @@
                                             <p class="nav--dropdown__items-title">Hãng sản xuât</p>
                                             <ul class="items__brand">
                                                 <div class="row">
-                                                    @if (count($headers[1]) > 0)
-                                                        @foreach ($headers[1]['brands'] as $mobile)
-                                                            @if (!empty($mobile['category_id']) && in_array($headers[1]['categories_id'], json_decode($mobile['category_id'], true)))
-                                                                <li class="col-lg-4 items__brand--li">
-                                                                    @if ($mobile['name'] == 'Apple')
-                                                                        <a href="{{ route('store.mobile') }}?brand={{ $mobile['name'] }}&category={{ $headers[1]['categories_slug'] }}"
-                                                                            target="_self" title="Apple (MacBook)">
-                                                                            {{ $mobile['name'] . ' ' }} (MacBook)
-
-                                                                        </a>
-                                                                    @else
-                                                                        <a href="{{ route('store.mobile') }}?brand={{ $mobile['name'] }}&category={{ $headers[1]['categories_slug'] }}"
-                                                                            target="_self" title="Apple (MacBook)">
-                                                                            {{ $mobile['name'] }}
-                                                                        </a>
-                                                                    @endif
-                                                                </li>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=apple&category=laptop"
+                                                            target="_self" title="Apple (MacBook)">
+                                                            Apple (MacBook)
+                                                        </a>
+                                                    </li>
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=microsoft&category=laptop"
+                                                            target="_self" title="Microsoft">
+                                                            Microsoft
+                                                        </a>
+                                                    </li>
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=dell&category=laptop"
+                                                            target="_self" title="dell">
+                                                            Dell
+                                                        </a>
+                                                    </li>
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=acer&category=laptop"
+                                                            target="_self" title="acer">
+                                                            Acer
+                                                        </a>
+                                                    </li>
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=hp&category=laptop"
+                                                            target="_self" title="HP">
+                                                            HP
+                                                        </a>
+                                                    </li>
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=MIS&category=laptop"
+                                                            target="_self" title="MIS">
+                                                            MIS
+                                                        </a>
+                                                    </li>
                                                 </div>
                                             </ul>
                                         </div>
 
                                         <div class="col-lg-4 nav--dropdown__items__image">
                                             <p class="nav--dropdown__items-title">Sản phẩm bán chạy nhất</p>
-                                            <a href="{{ route('store.product', $headers[1]['code']) }}">
+                                            <a href="{{ route('store.product', 2374764) }}">
                                                 <div class="" style="width: 100%">
-                                                    <img style="width: 100%;" src="{{ $headers[1]['image_path'] }}"
+                                                    <img style="width: 100%;"
+                                                        src="https://res.cloudinary.com/dizwixa7c/image/upload/v1676395804/duan_laravel/Products/r19jt3qx0oa8t6cgdg7g.webp"
                                                         alt="">
                                                 </div>
                                             </a>
@@ -140,42 +174,65 @@
                                             <p class="nav--dropdown__items-title">Hãng sản xuât</p>
                                             <ul class="items__brand">
                                                 <div class="row">
-                                                    @if (count($headers[2]) > 0)
-                                                        @foreach ($headers[2]['brands'] as $mobile)
-                                                            @if (!empty($mobile['category_id']) && in_array($headers[2]['categories_id'], json_decode($mobile['category_id'], true)))
-                                                                <li class="col-lg-4 items__brand--li">
-                                                                    @if ($mobile['name'] == 'Apple')
-                                                                        <a href="{{ route('store.mobile') }}?brand={{ $mobile['name'] }}&category={{ $headers[2]['categories_slug'] }}"
-                                                                            target="_self" title="Apple (MacBook)">
-                                                                            {{ $mobile['name'] . ' ' }} (iPad)
-
-                                                                        </a>
-                                                                    @else
-                                                                        <a href="{{ route('store.mobile') }}?brand={{ $mobile['name'] }}&category={{ $headers[2]['categories_slug'] }}"
-                                                                            target="_self" title="Apple (MacBook)">
-                                                                            {{ $mobile['name'] }}
-                                                                        </a>
-                                                                    @endif
-                                                                </li>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=Apple&category=tablet"
+                                                            target="_self" title="Apple (MacBook)">
+                                                            Apple (iPad)
+                                                        </a>
+                                                    </li>
                                                 </div>
                                             </ul>
                                         </div>
 
-                                        @if (!empty($headers[2]['image_path']))
-                                        <div class="col-lg-4 nav--dropdown__items__image">
-                                            <p class="nav--dropdown__items-title">Sản phẩm bán chạy nhất</p>
-                                            <a href="{{ route('store.product', $headers[2]['code']) }}">
-                                                <div class="" style="width: 100%">
-                                                    <img style="width: 100%;" src="{{ $headers[2]['image_path'] }}"
-                                                        alt="">
+                                        {{-- @if (!empty($headers[2]['image_path']))
+                                            <div class="col-lg-4 nav--dropdown__items__image">
+                                                <p class="nav--dropdown__items-title">Sản phẩm bán chạy nhất</p>
+                                                <a href="{{ route('store.product', $headers[2]['code']) }}">
+                                                    <div class="" style="width: 100%">
+                                                        <img style="width: 100%;" src="{{ $headers[2]['image_path'] }}"
+                                                            alt="">
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        @endif --}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </li>
+
+                        <li class="nav-item nav--item__tablet">
+                            <a class="nav-link nav-link_a nav-shop {{ request()->path() === 'dien-thoai' ? 'nav-active' : '' }}"
+                                aria-current="page" href="{{ route('store.mobile') }}">PC - Màn hình</a>
+
+                            <div class="nav--dropdown__items">
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-lg-8 nav--dropdown__items__brand">
+                                            <p class="nav--dropdown__items-title">Hãng sản xuât</p>
+                                            <ul class="items__brand">
+                                                <div class="row">
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.mobile') }}?brand=Apple&category=tablet"
+                                                            target="_self" title="Apple (MacBook)">
+                                                            Apple (iPad)
+                                                        </a>
+                                                    </li>
                                                 </div>
-                                            </a>
+                                            </ul>
                                         </div>
-                                        @endif
+
+                                        {{-- @if (!empty($headers[2]['image_path']))
+                                            <div class="col-lg-4 nav--dropdown__items__image">
+                                                <p class="nav--dropdown__items-title">Sản phẩm bán chạy nhất</p>
+                                                <a href="{{ route('store.product', $headers[2]['code']) }}">
+                                                    <div class="" style="width: 100%">
+                                                        <img style="width: 100%;" src="{{ $headers[2]['image_path'] }}"
+                                                            alt="">
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        @endif --}}
                                     </div>
                                 </div>
                             </div>
@@ -193,26 +250,19 @@
                                             <p class="nav--dropdown__items-title">Hãng sản xuât</p>
                                             <ul class="items__brand">
                                                 <div class="row">
-                                                    @foreach ($posts as $post)
-                                                        <li class="col-lg-4 items__brand--li">
-                                                            <a href="{{ route('store.list.posts') }}?post={{ $post->slug }}"
-                                                                target="_self" title="{{ $post->name }}">
-                                                                {{ $post->name }}
+                                                    <li class="col-lg-4 items__brand--li">
+                                                        <a href="{{ route('store.list.posts') }}?post=bai-viet-moi"
+                                                            target="_self" title="">
+                                                            Bài viết mới
 
-                                                            </a>
-                                                        </li>
-                                                    @endforeach
+                                                        </a>
+                                                    </li>
                                                 </div>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link nav-link_a {{ request()->path() === 'Laptop' ? 'nav-active' : '' }}"
-                                aria-current="page" href="#">Concact</a>
                         </li>
                     </ul>
                 </div>
@@ -223,7 +273,7 @@
                             <i class="fa-solid fa-magnifying-glass icon"></i>
                         </div>
 
-                        <div class="search-box">
+                        <div class="search-box" style="display: none">
                             <div class="container ">
                                 <form action="">
                                     <div class="d-flex container-search ">
@@ -235,7 +285,13 @@
                                     </div>
                                 </form>
                             </div>
+                            <div class="fs-result-box fs-suggest-product">
+                                <ul class="search-box__ul">
+
+                                </ul>
+                            </div>
                         </div>
+
                     </section>
 
                     <section class="cart">
@@ -296,4 +352,4 @@
             </div>
         </nav>
     </div>
-</header> --}}
+</header>

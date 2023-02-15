@@ -124,7 +124,7 @@
                                     <a href="{{ url('store/detail-product/${e.code}') }}" style="color: #0066cc !important; ">Sửa</a>
                                 </td>
 
-                                <th style="font-size: 14px; text-align: left !important;">${e.price}</th>
+                                <th style="font-size: 14px; text-align: left !important;">${formatCurrency(e.price)}</th>
                                 <td>
                                     <div class="form-group">
                                         <input type="number" class="form-control edit_quantity" value="${e.quantity}" data-code="${e.code}" min="1" max="99" style="width: 60px; padding: 6px 10px; background-color: #f5f5f7; font-size: 14px">
@@ -179,11 +179,11 @@
                 cart.forEach((e, index) => {
                     if (e.code == code) {
                        e.quantity = $(this).val();
-                       console.log(e);
                     }
                 });
 
                 localStorage.setItem('cart', JSON.stringify(cart));
+                $('.total-payment').val(renderTotalMoney());
             });
         }
     </script>

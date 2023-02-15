@@ -63,18 +63,14 @@ class BrandController extends Controller
 
         $brands = $brands->searchBrand($keywords, $sortArr)->paginate(10);
 
-        $categories = Categories::where('parent_id', 1)->get();
-
-        return view('admin.brand.index', compact('brands', 'categories', 'sortType'));
+        return view('admin.brand.index', compact('brands', 'sortType'));
     }
 
     public function create()
     {
         $this->authorize('create', Brand::class);
 
-        $categories = Categories::where('parent_id', 1)->get();
-
-        return view('admin.brand.create', compact('categories'));
+        return view('admin.brand.create');
     }
 
     public function store(Request $request)
@@ -84,7 +80,6 @@ class BrandController extends Controller
         $rules = [
             'name' => 'required|unique:brands',
             // 'image' => 'required|mimes:jpeg,png,jpg',
-            'categories'  => 'required',
         ];
 
         $message = [
@@ -92,7 +87,6 @@ class BrandController extends Controller
             'name.unique' => 'Tên thương hiệu đã tồn tại',
             'image.required' => 'Hình ảnh thương hiệu không được để trống',
             'image.mimes' => 'Hình ảnh phải là loại jpeg, png, jpg',
-            'categories.required' => 'Tên thương hiệu không được để trống',
         ];
 
         $request->validate($rules, $message);
@@ -108,7 +102,6 @@ class BrandController extends Controller
 
             $data = [
                 'name' => $request->name,
-                'category_id' => json_encode($request->categories),
                 'path_image' => $url->getSecurePath(),
                 'image_publicId' => $url->getPublicId(),
                 'created_at' => date('Y-m-d H:i:s'),
@@ -129,8 +122,8 @@ class BrandController extends Controller
 
 
         if (Gate::allows('brands.edit', $brand)) {
-            $categories = Categories::where('parent_id', 1)->get();
-            return view('admin.brand.show', compact('brand', 'categories'));
+
+            return view('admin.brand.show', compact('brand'));
         }
 
         if (Gate::denies('brands.edit', $brand)) {
@@ -147,12 +140,10 @@ class BrandController extends Controller
                 'required',
                 // Rule::unique('users')->ignore($brand->id, 'id'),
             ],
-            'categories'  => 'required',
         ];
 
         $message = [
             'name.required' => 'Tên thương hiệu không được để trống',
-            'categories.required' => 'Danh mục sản phảm không được để trống',
             // 'name.unique' => 'Tên thương hiệu đã tồn tại',
         ];
 
