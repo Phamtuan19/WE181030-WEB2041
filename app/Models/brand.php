@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Categories;
 
+use App\Models\Product;
+
 class Brand extends Model
 {
     use HasFactory;
@@ -50,5 +52,11 @@ class Brand extends Model
     public function cartegory()
     {
         return $this->belongsTo(Categories::class, 'category_id', 'id');
+    }
+
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }

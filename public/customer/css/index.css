@@ -501,10 +501,6 @@ ul {
     background-color: var(--color-white);
 }
 
-.product:hover {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-}
-
 .flag-installment {
     position: absolute;
     top: 24px;
@@ -545,6 +541,7 @@ ul {
     min-height: 334px;
     padding: 14px 0;
     border-bottom: 1px solid #e4e6eb;
+    overflow: hidden;
 }
 
 .product-name {
@@ -589,10 +586,10 @@ ul {
     color: #0066cc;
 }
 
-/* .product:hover .product-image {
+.product:hover .product-image {
     transform: scale(1);
     transition: all 0.5s;
-} */
+}
 
 /* =============================================  End Product =============================================*/
 

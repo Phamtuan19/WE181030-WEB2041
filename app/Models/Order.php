@@ -133,7 +133,7 @@ class Order extends Model
 
         // Total New Order
 
-        $totalOrders = $query->orderBy('created_at', 'DESC')->offset(0)->limit(10)->get();
+        $totalOrders = $query->orderBy('created_at', 'DESC')->take(10)->get();
         // dd($totalOrders);
         $queryArr = [
             'totalSales' => $totalSales,

@@ -69,7 +69,7 @@
                 @endforeach
 
                 <div class="show-all">
-                    <a href="{{ route('store.mobile') }}?orderType=quantity_sold&orderBy=DESC">
+                    <a href="{{ route('store.list.products') }}?orderType=quantity_sold&orderBy=DESC">
                         Xem tất cả
                         <i class="fa-solid fa-right-long"></i>
                     </a>
@@ -137,7 +137,7 @@
                 @endforeach
 
                 <div class="show-all">
-                    <a href="{{ route('store.mobile') }}?orderType=created_at&orderBy=DESC">
+                    <a href="{{ route('store.list.products') }}?orderType=created_at&orderBy=DESC">
                         Xem tất cả
                         <i class="fa-solid fa-right-long"></i>
                     </a>
@@ -199,7 +199,7 @@
                 @endforeach
 
                 <div class="show-all">
-                    <a href="{{ route('store.mobile') }}">
+                    <a href="{{ route('store.list.products') }}">
                         Xem tất cả
                         <i class="fa-solid fa-right-long"></i>
                     </a>

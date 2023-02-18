@@ -13,93 +13,8 @@
             <div class="col-lg-3">
                 <div class="row">
 
-                    <div class="col-lg-12 filter-product">
-                        <div class="mt-2">
-                            <p class="filter-title mb-2">Loại sản phẩm</p>
+                    @include('customer.layout.filter_products')
 
-                            <div class="px-3">
-
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                    <li class="nav-item">
-                                        <a href="?category=&brand={{ request()->brand }}&price={{ request()->price }}&orderType={{ request()->orderType }}&orderBy={{ request()->orderBy }}"
-                                            class="nav-link_a {!! request()->category == '' ? 'filter-active' : '' !!}">Tất cả</a>
-                                    </li>
-
-
-                                    @foreach ($categories as $category)
-                                        <li class="nav-item">
-                                            <a class="nav-link nav-link_a {!! request()->category == $category->slug ? 'filter-active' : '' !!}" aria-current="page"
-                                                href="?category={{ $category->slug }}&brand={{ request()->brand }}&price={{ request()->price }}&orderType={{ request()->orderType }}&orderBy={{ request()->orderBy }}">
-                                                {{ $category->name }}
-                                            </a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="mt-2">
-                            <p class="filter-title mb-2">Hãng sản xuất</p>
-
-                            <div class="px-3">
-
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                    <li class="nav-item">
-                                        <a href="?brand=&price={{ request()->price }}&orderType={{ request()->orderType }}&orderBy={{ request()->orderBy }}"
-                                            class="nav-link_a {!! request()->brand == '' ? 'filter-active' : '' !!}">Tất cả</a>
-                                    </li>
-
-
-                                    @foreach ($brands as $key => $brand)
-                                        {{-- @dd(request()->brand == $brand->name) --}}
-                                        <li class="nav-item">
-                                            <a class="nav-link nav-link_a {!! request()->brand == $brand->name ? 'filter-active' : '' !!}" aria-current="page"
-                                                href="?brand={{ $brand->name }}&price={{ request()->price }}&orderType={{ request()->orderType }}&orderBy={{ request()->orderBy }}">{{ $brand->name }}</a>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                        {{-- </form> --}}
-
-                        <div class="mt-4">
-                            <p class="filter-title mb-2">Mức Giá</p>
-
-                            <div class="px-3">
-
-                                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                                    {{-- @dd(request()->path()) --}}
-                                    <li class="nav-item ">
-                                        <a href="?brand={{ request()->brand }}&price=&orderType={{ request()->orderType }}&orderBy={{ request()->orderBy }}"
-                                            class="nav-link nav-link_a {!! request()->price == '' ? 'filter-active' : false !!}">Tất
-                                            cả</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="?brand={{ request()->brand }}&price=duoi-3-trieu&orderType={{ request()->orderType }}&orderBy={{ request()->orderBy }}"
-                                            class="nav-link nav-link_a {!! request()->price == 'duoi-3-trieu' ? 'filter-active' : '' !!}">Dưới 3 triệu</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="?brand={{ request()->brand }}&price=tu-3-8-trieu&orderType={{ request()->orderType }}&orderBy={{ request()->orderBy }}"
-                                            class="nav-link nav-link_a {!! request()->price == 'tu-3-8-trieu' ? 'filter-active' : '' !!}">Từ 3 - 8 triệu</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="?brand={{ request()->brand }}&price=tu-8-15-trieu&orderType={{ request()->orderType }}&orderBy={{ request()->orderBy }}"
-                                            class="nav-link nav-link_a {!! request()->price == 'tu-8-15-trieu' ? 'filter-active' : '' !!}">Từ 8 -15 triệu</a>
-                                    </li>
-
-                                    <li class="nav-item">
-                                        <a href="?brand={{ request()->brand }}&price=tren-15-trieu&orderType={{ request()->orderType }}&orderBy={{ request()->orderBy }}"
-                                            class="nav-link nav-link_a {!! request()->price == 'tren-15-trieu' ? 'filter-active' : '' !!}">Trên 15 triệu</a>
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
             </div>
 
@@ -110,36 +25,36 @@
                             <div class="container-fluid">
                                 <div class="row product-filter__orderBy__row" style=" ">
                                     <div class="col-lg-2">
-                                        <a href="?brand={{ request()->brand }}&price={{ request()->price }}&orderType=price&orderBy=DESC"
+                                        <a href="?category={{ request()->category }}&brand={{ request()->brand }}&price={{ request()->price }}&orderBy=price&orderType=DESC"
                                             style="font-size: 16px; font-weight: 500"
-                                            class="order__by__a {!! request()->orderType == 'price' && request()->orderBy == 'DESC' ? 'order_by__active' : '' !!}">
+                                            class="order__by__a {!! request()->orderBy == 'price' && request()->orderType == 'DESC' ? 'order_by__active' : '' !!}">
                                             Giá lớn nhất
                                             <i class="fa-solid fa-right-left right-left"></i>
                                         </a>
                                     </div>
 
                                     <div class="col-lg-2">
-                                        <a href="?brand={{ request()->brand }}&price={{ request()->price }}&orderType=price&orderBy=ASC"
+                                        <a href="?category={{ request()->category }}&brand={{ request()->brand }}&price={{ request()->price }}&orderBy=price&orderType=ASC"
                                             style="font-size: 16px; font-weight: 500"
-                                            class="order__by__a {!! request()->orderType == 'price' && request()->orderBy == 'ASC' ? 'order_by__active' : '' !!}">
+                                            class="order__by__a {!! request()->orderBy == 'price' && request()->orderType == 'ASC' ? 'order_by__active' : '' !!}">
                                             Giá nhỏ nhất
                                             <i class="fa-solid fa-right-left right-left"></i>
                                         </a>
                                     </div>
 
                                     <div class="col-lg-3">
-                                        <a href="?brand={{ request()->brand }}&price={{ request()->price }}&orderType=created_at&orderBy=DESC"
+                                        <a href="?category={{ request()->category }}&brand={{ request()->brand }}&price={{ request()->price }}&orderBy=created_at&orderType=DESC"
                                             style="font-size: 16px; font-weight: 500"
-                                            class="order__by__a {!! request()->orderType == 'created_at' && request()->orderBy == 'DESC' ? 'order_by__active' : '' !!}">
+                                            class="order__by__a {!! request()->orderBy == 'created_at' && request()->orderType == 'DESC' ? 'order_by__active' : '' !!}">
                                             Sản phẩm mới nhất
                                             <i class="fa-solid fa-right-left right-left"></i>
                                         </a>
                                     </div>
 
                                     <div class="col-lg-3">
-                                        <a href="?brand={{ request()->brand }}&price={{ request()->price }}&orderType=created_at&orderBy=ASC"
+                                        <a href="?category={{ request()->category }}&brand={{ request()->brand }}&price={{ request()->price }}&orderBy=created_at&orderType=ASC"
                                             style="font-size: 16px; font-weight: 500"
-                                            class="order__by__a {!! request()->orderType == 'created_at' && request()->orderBy == 'ASC' ? 'order_by__active' : '' !!}">
+                                            class="order__by__a {!! request()->orderBy == 'created_at' && request()->orderType == 'ASC' ? 'order_by__active' : '' !!}">
                                             Sản phẩm cũ nhất
                                             <i class="fa-solid fa-right-left right-left"></i>
                                         </a>
@@ -152,7 +67,7 @@
 
                         @if (!empty($products->count() > 0))
                             @foreach ($products as $product)
-                                {{-- @dd($product['avatar'][0]['path']) --}}
+                                {{-- @dd($product['image']['0']->path) --}}
                                 <div class="col-lg-4 col-md-4 col-sm-6 col-12 mb-4">
                                     <div class="product">
                                         <span class="flag-installment">Trả góp 0%</span>
@@ -163,18 +78,12 @@
                                         @endif
 
                                         <div class="product-img">
-
-                                            @if ($product['avatar'] != null)
-                                                <a href="{{ route('store.product', $product['code']) }}">
-                                                    <img src="{{ $product['avatar'][0]['path'] }}" class="product-image"
-                                                        alt="">
-                                                </a>
-                                            @else
-                                                <a href="{{ route('store.product', $product->id) }}">
-                                                    <img src="{{ $product->image[0]->path }}" class="product-image"
-                                                        alt="">
-                                                </a>
-                                            @endif
+                                            @foreach ($product->image as $image)
+                                                @if ($image->is_avatar != null)
+                                                    <img src="{{ $image->path }}" alt="" class="product-image"
+                                                        style="width: 100%;">
+                                                @endif
+                                            @endforeach
                                         </div>
 
 

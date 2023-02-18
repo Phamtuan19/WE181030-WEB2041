@@ -15,7 +15,7 @@
                                     Doanh số
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    {{ !empty(currency_format($orders['totalSales'])) ? currency_format($orders['totalSales']) : '0 VND'}}
+                                    {{ !empty(currency_format($orders['totalSales'])) ? currency_format($orders['totalSales']) : '0 VND' }}
                                     <br>
                                     <span style="font-size: 16px; font-weight: 400;">Doanh số cửa hàng.</span>
                                 </div>
@@ -28,7 +28,8 @@
 
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
-                <a href="{{ route('admin.orders.index') }}?order_status=chua-xac-nhan" class="nav-link" style="padding: 0 !important">
+                <a href="{{ route('admin.orders.index') }}?order_status=chua-xac-nhan" class="nav-link"
+                    style="padding: 0 !important">
                     <div class="card border-left-success shadow h-100 py-2"
                         style="border-left: 0.5rem solid #858796 !important">
                         <div class="card-body">
@@ -51,7 +52,8 @@
             </div>
 
             <div class="col-xl-3 col-md-6 mb-4">
-                <a href="{{ route('admin.orders.index') }}?order_status=da-xac-nhan" class="nav-link" style="padding: 0 !important">
+                <a href="{{ route('admin.orders.index') }}?order_status=da-xac-nhan" class="nav-link"
+                    style="padding: 0 !important">
                     <div class="card border-left-success shadow h-100 py-2"
                         style="border-left: 0.5rem solid #4e73df !important">
                         <div class="card-body">
@@ -75,7 +77,8 @@
             </div>
 
             <div class="col-xl-3 col-md-6 mb-4">
-                <a href="{{ route('admin.orders.index') }}?order_status=dang-giao-hang" class="nav-link" style="padding: 0 !important">
+                <a href="{{ route('admin.orders.index') }}?order_status=dang-giao-hang" class="nav-link"
+                    style="padding: 0 !important">
                     <div class="card border-left-info shadow h-100 py-2"
                         style="border-left: 0.5rem solid #f6c23e !important">
                         <div class="card-body">
@@ -105,7 +108,8 @@
 
             <!-- Earnings (Monthly) Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
-                <a href="{{ route('admin.orders.index') }}?order_status=giao-hang-thanh-cong" class="nav-link" style="padding: 0 !important">
+                <a href="{{ route('admin.orders.index') }}?order_status=giao-hang-thanh-cong" class="nav-link"
+                    style="padding: 0 !important">
                     <div class="card border-left-info shadow h-100 py-2"
                         style="border-left: 0.5rem solid #1cc88a !important">
                         <div class="card-body">
@@ -135,7 +139,8 @@
             </div>
 
             <div class="col-xl-3 col-md-6 mb-4">
-                <a href="{{ route('admin.orders.index') }}?order_status=huy-hang" class="nav-link" style="padding: 0 !important">
+                <a href="{{ route('admin.orders.index') }}?order_status=huy-hang" class="nav-link"
+                    style="padding: 0 !important">
                     <div class="card border-left-info shadow h-100 py-2" style="border-left: 0.5rem solid red !important">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
@@ -242,13 +247,25 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- @dd($orders['totalOrders']) --}}
                     @foreach ($orders['totalOrders'] as $index => $order)
                         <tr style="vertical-align: middle !important;">
                             <td>{{ $index + 1 }}</td>
                             <td># {{ $order->code_order }}</td>
-                            {{-- @dd($order->consignees) --}}
-                            <td>{{ $order->consignees[0]->name }}</td>
-                            <td>{{ $order->consignees[0]->phone }}</td>
+
+
+                            @if (isset($order->consignees))
+                                @foreach ($order->consignees as $consignees)
+                                    @if (!empty($consignees->name))
+                                        <td>{{ $consignees->name }}</td>
+                                    @endif
+
+                                    @if (!empty($consignees->phone))
+                                        <td>{{ $consignees->phone }}</td>
+                                    @endif
+                                @endforeach
+                            @endif
+
                             <td>{{ $order->quantity }} (Sp)</td>
                             <td>{{ $order->total_money }}</td>
                             <td>
@@ -269,7 +286,8 @@
                             <td class="" style="height: 100;">
                                 <div class="d-flex justify-content-around">
                                     <div class="">
-                                        <a href="{{ route('admin.orders.show', $order->id) }}" class="btn" style="color: black;">
+                                        <a href="{{ route('admin.orders.show', $order->id) }}" class="btn"
+                                            style="color: black;">
                                             <i class="fa-regular fa-pen-to-square"></i>
                                         </a>
                                     </div>

@@ -20,6 +20,8 @@ class DashboardController extends Controller
 
         $orders = $orders->dashboard();
 
+
+        // dd($orders);
         return view('admin.dashboard.dashboard', compact('orders'));
     }
 }

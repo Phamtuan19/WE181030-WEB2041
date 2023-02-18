@@ -132,8 +132,62 @@ class Product extends Model
             }
         }
 
-        $query = $query->orderBy($orderBy, $orderType)->where('deleted_at', '!=' ,null)->get();
+        $query = $query->orderBy($orderBy, $orderType)->where('deleted_at', '!=', null)->get();
         // dd($query);
+        return $query;
+    }
+
+
+    public function scopeFilterPrice($query, $category, $brand = null, $priceArr = null, $sortArr = null)
+    {
+        // filter price
+        $min_price = 0;
+
+        $max_price = Product::select('price')->orderBy('price', 'DESC')->first()->price;
+
+        if (!empty($priceArr) && is_array($priceArr)) {
+
+            if (!empty($priceArr['min'])) {
+                $min_price = $priceArr['min'];
+            }
+
+            if (!empty($priceArr['max'])) {
+                $max_price = $priceArr['max'];
+
+            }
+            $query = $query->where('price', '>=', $min_price)
+                ->where('price', '<=', $max_price);
+        }
+
+
+        // filter brand
+
+        if (!empty($brand)) {
+            $brand = Brand::select('id')->where('name', $brand)->get();
+
+            $query = $query->where('brand_id', $brand[0]->id);
+        }
+
+
+        if (!empty($category)) {
+            $category = Categories::select('id')->where('slug', $category)->get();
+
+            $query = $query->where('category_id', $category[0]->id);
+        }
+
+        // logic xắp xếp
+        $orderBy = 'created_at';
+        $orderType = 'ASC';
+
+        if (!empty($sortArr) && is_array($sortArr)) {
+
+            if (!empty($sortArr['sortBy']) && !empty($sortArr['sortType'])) {
+                $orderBy = trim($sortArr['sortBy']);
+                $orderType = trim($sortArr['sortType']);
+            }
+        }
+        $query = $query->orderBy($orderBy, $orderType);
+
         return $query;
     }
 
@@ -142,7 +196,7 @@ class Product extends Model
         return $this->belongsTo(Brand::class, 'brand_id', 'id');
     }
 
-    public function cartegory()
+    public function category()
     {
         return $this->belongsTo(Categories::class, 'category_id', 'id');
     }

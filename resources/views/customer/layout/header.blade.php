@@ -22,13 +22,13 @@
                 <div class="collapse navbar-collapse navbar-blog" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link nav-link_a {{ request()->path() === 'store/' ? 'nav-active' : '' }}"
+                            <a class="nav-link nav-link_a {{ request()->path() === 'store' ? 'nav-active' : '' }}"
                                 aria-current="page" href="{{ route('store.home') }}">Home</a>
                         </li>
-
+                        {{-- @dd(request()->fullUrl()) --}}
                         <li class="nav-item nav--item__shop">
-                            <a class="nav-link nav-link_a nav-shop {{ request()->path() === 'dien-thoai' ? 'nav-active' : '' }}"
-                                aria-current="page" href="{{ route('store.mobile') }}">Điện thoại</a>
+                            <a class="nav-link nav-link_a nav-shop {{ request()->category === 'dien-thoai' ? 'nav-active' : '' }}"
+                                aria-current="page" href="{{ route('store.list.products') }}?category=dien-thoai">Điện thoại</a>
 
                             <div class="nav--dropdown__items">
                                 <div class="container-fluid">
@@ -38,40 +38,40 @@
                                             <ul class="items__brand">
                                                 <div class="row">
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=apple&category=dien-thoai"
+                                                        <a href="{{ route('store.list.products') }}?brand=apple&category=dien-thoai"
                                                             target="_self" title="Apple (MacBook)">
                                                             Apple (iPhone)
                                                         </a>
                                                     </li>
 
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=vivo&category=dien-thoai"
+                                                        <a href="{{ route('store.list.products') }}?brand=vivo&category=dien-thoai"
                                                             target="_self" title="Vivo">
                                                             Vivo
                                                         </a>
                                                     </li>
 
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=oppo&category=dien-thoai"
+                                                        <a href="{{ route('store.list.products') }}?brand=oppo&category=dien-thoai"
                                                             target="_self" title="Oppo">
                                                             Oppo
                                                         </a>
                                                     </li>
 
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=samsung&category=dien-thoai"
+                                                        <a href="{{ route('store.list.products') }}?brand=samsung&category=dien-thoai"
                                                             target="_self" title="Samsung">
                                                             Samsung
                                                         </a>
                                                     </li>
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=realme&category=dien-thoai"
+                                                        <a href="{{ route('store.list.products') }}?brand=realme&category=dien-thoai"
                                                             target="_self" title="Realme">
                                                             Realme
                                                         </a>
                                                     </li>
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=xiaomi&category=dien-thoai"
+                                                        <a href="{{ route('store.list.products') }}?brand=xiaomi&category=dien-thoai"
                                                             target="_self" title="Xiaomi">
                                                             Xiaomi
                                                         </a>
@@ -97,8 +97,8 @@
                         </li>
 
                         <li class="nav-item nav--item__shop">
-                            <a class="nav-link nav-link_a nav-shop {{ request()->path() === 'dien-thoai' ? 'nav-active' : '' }}"
-                                aria-current="page" href="{{ route('store.mobile') }}">Laptop</a>
+                            <a class="nav-link nav-link_a nav-shop {{ request()->category === 'laptop' ? 'nav-active' : '' }}"
+                                aria-current="page" href="{{ route('store.list.products') }}?category=laptop">Laptop</a>
 
                             <div class="nav--dropdown__items">
                                 <div class="container-fluid">
@@ -108,37 +108,37 @@
                                             <ul class="items__brand">
                                                 <div class="row">
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=apple&category=laptop"
+                                                        <a href="{{ route('store.list.products') }}?brand=apple&category=laptop"
                                                             target="_self" title="Apple (MacBook)">
                                                             Apple (MacBook)
                                                         </a>
                                                     </li>
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=microsoft&category=laptop"
+                                                        <a href="{{ route('store.list.products') }}?brand=microsoft&category=laptop"
                                                             target="_self" title="Microsoft">
                                                             Microsoft
                                                         </a>
                                                     </li>
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=dell&category=laptop"
+                                                        <a href="{{ route('store.list.products') }}?brand=dell&category=laptop"
                                                             target="_self" title="dell">
                                                             Dell
                                                         </a>
                                                     </li>
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=acer&category=laptop"
+                                                        <a href="{{ route('store.list.products') }}?brand=acer&category=laptop"
                                                             target="_self" title="acer">
                                                             Acer
                                                         </a>
                                                     </li>
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=hp&category=laptop"
+                                                        <a href="{{ route('store.list.products') }}?brand=hp&category=laptop"
                                                             target="_self" title="HP">
                                                             HP
                                                         </a>
                                                     </li>
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=MIS&category=laptop"
+                                                        <a href="{{ route('store.list.products') }}?brand=MIS&category=laptop"
                                                             target="_self" title="MIS">
                                                             MIS
                                                         </a>
@@ -164,8 +164,8 @@
                         </li>
 
                         <li class="nav-item nav--item__tablet">
-                            <a class="nav-link nav-link_a nav-shop {{ request()->path() === 'dien-thoai' ? 'nav-active' : '' }}"
-                                aria-current="page" href="{{ route('store.mobile') }}">Tablet</a>
+                            <a class="nav-link nav-link_a nav-shop {{ request()->category === 'tablet' ? 'nav-active' : '' }}"
+                                aria-current="page" href="{{ route('store.list.products') }}?category=tablet">Tablet</a>
 
                             <div class="nav--dropdown__items">
                                 <div class="container-fluid">
@@ -175,7 +175,7 @@
                                             <ul class="items__brand">
                                                 <div class="row">
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=Apple&category=tablet"
+                                                        <a href="{{ route('store.list.products') }}?brand=Apple&category=tablet"
                                                             target="_self" title="Apple (MacBook)">
                                                             Apple (iPad)
                                                         </a>
@@ -202,8 +202,8 @@
                         </li>
 
                         <li class="nav-item nav--item__tablet">
-                            <a class="nav-link nav-link_a nav-shop {{ request()->path() === 'dien-thoai' ? 'nav-active' : '' }}"
-                                aria-current="page" href="{{ route('store.mobile') }}">PC - Màn hình</a>
+                            <a class="nav-link nav-link_a nav-shop {{ request()->category === 'phu-kien' ? 'nav-active' : '' }}"
+                                aria-current="page" href="{{ route('store.list.products') }}?category=phu-kien">Phụ kiện</a>
 
                             <div class="nav--dropdown__items">
                                 <div class="container-fluid">
@@ -213,7 +213,7 @@
                                             <ul class="items__brand">
                                                 <div class="row">
                                                     <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.mobile') }}?brand=Apple&category=tablet"
+                                                        <a href="{{ route('store.list.products') }}?brand=Apple&category=phu-kien"
                                                             target="_self" title="Apple (MacBook)">
                                                             Apple (iPad)
                                                         </a>
@@ -221,18 +221,6 @@
                                                 </div>
                                             </ul>
                                         </div>
-
-                                        {{-- @if (!empty($headers[2]['image_path']))
-                                            <div class="col-lg-4 nav--dropdown__items__image">
-                                                <p class="nav--dropdown__items-title">Sản phẩm bán chạy nhất</p>
-                                                <a href="{{ route('store.product', $headers[2]['code']) }}">
-                                                    <div class="" style="width: 100%">
-                                                        <img style="width: 100%;" src="{{ $headers[2]['image_path'] }}"
-                                                            alt="">
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        @endif --}}
                                     </div>
                                 </div>
                             </div>
@@ -240,7 +228,7 @@
                         </li>
 
                         <li class="nav-item nav--item__blog">
-                            <a class="nav-link nav-link_a {{ request()->path() === 'bai-viet' ? 'nav-active' : '' }}"
+                            <a class="nav-link nav-link_a {{ request()->path() === 'store/posts' ? 'nav-active' : '' }}"
                                 aria-current="page" href="{{ route('store.list.posts') }}">Blog</a>
 
                             <div class="nav--dropdown__items">
@@ -270,7 +258,7 @@
                 <div class="nav--icon">
                     <section class="search">
                         <div class="box-nav_icon">
-                            <i class="fa-solid fa-magnifying-glass icon"></i>
+                            <i class="fa-solid fa-magnifying-glass icon icon-search"></i>
                         </div>
 
                         <div class="search-box" style="display: none">
@@ -285,7 +273,7 @@
                                     </div>
                                 </form>
                             </div>
-                            <div class="fs-result-box fs-suggest-product">
+                            <div class="fs-result-box fs-suggest-product" style="display: none;">
                                 <ul class="search-box__ul">
 
                                 </ul>

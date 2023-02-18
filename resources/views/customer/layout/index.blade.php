@@ -89,7 +89,7 @@
     @yield('js')
 
     <script>
-        $('.icon').click(function() {
+        $('.icon-search').click(function() {
             $(".search-box").attr("style", "display:block");
             $(".search-box__input").val('')
         })
@@ -134,14 +134,18 @@
 
             $(".search-box__input").keyup(function() {
 
-                console.log($(this).val());
+                $(".fs-suggest-product").css("display","block");
 
                 $.ajax({
                     url: window.location.origin + "/api/store/search?storeSearch=" + $(this).val(),
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        renderSearch(data)
+                        if(data.length > 0) {
+                            renderSearch(data)
+                        }else {
+                            $(".search-box__ul").html('<h5 style="text-align:center">Sản phẩm không tồn tại</h5>');
+                        }
                     },
                 });
 

@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\ProductController;
 // Customer controllers
 use App\Http\Controllers\Customer\HomeController;
 
+use App\Http\Controllers\Customer\PageProductsController;
+
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Route;
@@ -31,10 +33,6 @@ use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\admin\SliderController;
 
 use App\Http\Controllers\admin\PositionController;
-
-use App\Http\Controllers\Customer\Auth\ForgotPasswordController;
-
-use App\Http\Controllers\Customer\Auth\ResetPasswordController;
 
 use App\Http\Controllers\Customer\Auth\RegisterController;
 
@@ -130,22 +128,22 @@ Route::prefix('store')->name('store.')->group(function () {
 
     Route::get('/', [HomeController::class, 'indexHome'])->name('home');
 
-    Route::get('products', [HomeController::class, 'indexProducts'])->name('mobile');
+    Route::get('products', [PageProductsController::class, 'indexProducts'])->name('list.products');
 
-    Route::get('detail-product/{code}', [HomeController::class, 'detailProduct'])->name('product');
+    Route::get('products/{code}', [PageProductsController::class, 'showProducts'])->name('product');
 
-    Route::get('cart', [HomeController::class, 'indexCart'])->name('cart');
+    Route::get('gio-hang', [HomeController::class, 'indexCart'])->name('cart');
 
 
     Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
 
-    Route::post('check-order', [PaymentController::class, 'checkPayment'])->name('checkOrder');
+    Route::post('check-order', [PaymentController::class, 'checkPayment'])->name('ckeck.order');
 
-    Route::get('order-success', [HomeController::class, 'orderSuccess'])->name('orderSuccess');
+    Route::get('order-success', [HomeController::class, 'orderSuccess'])->name('order.success');
 
-    Route::get('/danh-sach-bai-viet', [HomeController::class, 'indexPosts'])->name('list.posts');
+    Route::get('/posts', [HomeController::class, 'indexPosts'])->name('list.posts');
 
-    Route::get('/danh-sach-bai-viet/{post}', [HomeController::class, 'showPosts'])->name('show.posts');
+    Route::get('/posts/{post}', [HomeController::class, 'showPosts'])->name('show.posts');
 
     Route::resource('comments', CommentController::class);
 
@@ -157,11 +155,6 @@ Route::prefix('store')->name('store.')->group(function () {
     Route::get('/login', [LoginController::class, 'login'])->middleware('guest:customers')->name('login');
 
     Route::post('/login', [LoginController::class, 'postLogin'])->middleware('guest:customers');
-
-    // // Reset password
-    // Route::get('password/reset', [ForgotPasswordController::class, 'index'])->name('resetPassword');
-
-    // Route::post('password/reset', [ForgotPasswordController::class, 'sendResetLinkEmail'])->middleware('guest:customers')->name('postResetPassword');
 
     // Đăng ký
     Route::get('/register', [RegisterController::class, 'index'])->name('register');

@@ -41,9 +41,11 @@ class ProductController extends Controller
 
         $brands = new Brand();
 
-        $category_parent = $categories->where('id', 1)->get();
+        // $category_parent = $categories->where('id', 1)
+        // ->orWhere('pa')->get();
 
-        $subcategory = $categories->where('parent_id', $category_parent[0]->id)->get();
+        $subcategory = $categories->where('parent_id', 1)
+            ->orWhere('parent_id', 13)->get();
 
         $brands = $brands->get();
 
@@ -91,7 +93,7 @@ class ProductController extends Controller
         $products = $products->searchAdmin($categoryKey, $brandKey, $keyword, $sortArr);
 
         // dd('ok');
-        return view('admin.products.index', compact('category_parent', 'subcategory', 'products', 'brands', 'sortType'));
+        return view('admin.products.index', compact('subcategory', 'products', 'brands', 'sortType'));
     }
 
     public function create()
@@ -99,9 +101,10 @@ class ProductController extends Controller
 
         $categories = new Categories();
 
-        $category = $categories->where('id', 1)->get();
+        // $category = $categories->where('id', 1)->where('')->get();
 
-        $categories = $categories->where('parent_id', $category[0]->id)->get();
+        $categories = $categories->where('parent_id', 1)
+            ->orWhere('parent_id', 13)->get();
 
         // dd($categories);
 
@@ -243,7 +246,7 @@ class ProductController extends Controller
             return view('admin.products.show', compact('product', 'categories', 'brands', 'colors', 'memory'));
         }
 
-        if(Gate::denies('products.edit')){
+        if (Gate::denies('products.edit')) {
             abort(403);
         }
     }

@@ -19,6 +19,8 @@ class CreateOrderDetailsTable extends Migration
             $table->string('product_code');
             $table->integer('price'); // giá bán
             $table->integer('quantity'); // số lượng
+            $table->string('memory', 255)->nullable(); //
+            $table->string('color', 255)->nullable(); //
             $table->timestamps();
         });
     }

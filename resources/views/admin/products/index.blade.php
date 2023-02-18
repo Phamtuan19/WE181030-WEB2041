@@ -118,7 +118,7 @@
 
                             <td>{{ $product->price }}đ</td>
                             <td>{!! empty($product->sale) ? $product->price : $product->sale !!}đ</td>
-                            <td>{{ $product->cartegory->name }}</td>
+                            <td>{{ $product->category->name }}</td>
                             <td>{{ $product->brand->name }}</td>
                             <td>{!! $product->quantity_stock > 0
                                 ? $product->quantity_stock . '(Chiếc)'

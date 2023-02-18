@@ -31,7 +31,7 @@
 
             <div class="col-12 pb-3">
 
-                <form action="{{ route('store.checkOrder') }}" method="POST">
+                <form action="{{ route('store.ckeck.order') }}" method="POST">
 
                     @csrf
 
