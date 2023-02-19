@@ -118,7 +118,7 @@
                                 </td>
                                 <th>{{ $detail->product->name }}</th>
                                 <td>{{ $detail->quantity }}</td>
-                                <td>{!! $detail->quantity * $detail->product->price !!}</td>
+                                <td>{!! currency_format($detail->quantity * $detail->product->price) !!}</td>
                             </tr>
                         @endforeach
                     </tbody>

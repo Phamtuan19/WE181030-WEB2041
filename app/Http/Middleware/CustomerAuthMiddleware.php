@@ -19,10 +19,10 @@ class CustomerAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::check() && Auth::user()->position_id == 3){
+        if(Auth::guard('customers')->check()){
             return $next($request);
         }
 
-        return redirect('/');
+        return abort(405);
     }
 }

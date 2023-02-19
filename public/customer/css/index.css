@@ -226,9 +226,11 @@ ul {
         transform: translateZ(-86px) translateY(-86px);
         opacity: 0;
     }
+
     40% {
         opacity: 0.6;
     }
+
     100% {
         -webkit-transform: translateZ(0) translateY(0);
         transform: translateZ(0) translateY(0);

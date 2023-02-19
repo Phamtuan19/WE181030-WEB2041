@@ -18,13 +18,16 @@
                     <select name="order_status" id="" class="form-control">
                         <option value="">--Tất cả trạng thái--</option>
                         @foreach ($orderStatus as $status)
-                            <option value="{{ $status->slug }}" {{ request()->order_status == $status->slug ? 'selected' : false }}>{{ $status->name }}</option>
+                            <option value="{{ $status->slug }}"
+                                {{ request()->order_status == $status->slug ? 'selected' : false }}>{{ $status->name }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="col-lg-3 form-group">
-                    <input type="text" name="keyword" class="form-control" placeholder="Nhập từ khóa tìm kiếm" value="{{ request()->keyword }}">
+                    <input type="text" name="keyword" class="form-control" placeholder="Nhập từ khóa tìm kiếm"
+                        value="{{ request()->keyword }}">
                 </div>
 
                 <div class="form-group">
@@ -39,30 +42,30 @@
                 <thead>
                     <tr>
                         <th scope="col">
-                            <a href="?sort-by=code_order&sort-type={{$sortType}}">Mã đơn hàng
-                            <i class="fa-solid fa-right-left right-left"></i>
+                            <a href="?sort-by=code_order&sort-type={{ $sortType }}">Mã đơn hàng
+                                <i class="fa-solid fa-right-left right-left"></i>
                             </a>
                         </th>
                         <th scope="col">khách hàng</th>
                         <th scope="col">Số điện thoại</th>
                         <th scope="col">
-                            <a href="?sort-by=quantity&sort-type={{$sortType}}">Số lượng
-                            <i class="fa-solid fa-right-left right-left"></i>
+                            <a href="?sort-by=quantity&sort-type={{ $sortType }}">Số lượng
+                                <i class="fa-solid fa-right-left right-left"></i>
                             </a>
                         </th>
                         <th scope="col">
-                            <a href="?sort-by=total_money&sort-type={{$sortType}}">Tổng tiền
-                            <i class="fa-solid fa-right-left right-left"></i>
+                            <a href="?sort-by=total_money&sort-type={{ $sortType }}">Tổng tiền
+                                <i class="fa-solid fa-right-left right-left"></i>
                             </a>
                         </th>
                         <th scope="col">
-                            <a href="?sort-by=order_statusID&sort-type={{$sortType}}">Trạng thái
-                            <i class="fa-solid fa-right-left right-left"></i>
+                            <a href="?sort-by=order_statusID&sort-type={{ $sortType }}">Trạng thái
+                                <i class="fa-solid fa-right-left right-left"></i>
                             </a>
                         </th>
                         <th scope="col">
-                            <a href="?sort-by=date_order&sort-type={{$sortType}}">Ngày đặt
-                            <i class="fa-solid fa-right-left right-left"></i>
+                            <a href="?sort-by=date_order&sort-type={{ $sortType }}">Ngày đặt
+                                <i class="fa-solid fa-right-left right-left"></i>
                             </a>
                         </th>
                         <th scope="col" width="100px">Tác vụ</th>
@@ -76,7 +79,7 @@
                             <td>{{ $order->consignees[0]->name }}</td>
                             <td>{{ $order->consignees[0]->phone }}</td>
                             <td>{{ $order->quantity }} (Sp)</td>
-                            <td>{{ $order->total_money }}</td>
+                            <td>{{ currency_format($order->total_money) }}</td>
                             <td>
                                 @if ($order->order_statusID == 1)
                                     <div class="btn btn-secondary">{{ $order->orderStatus->name }}</div>

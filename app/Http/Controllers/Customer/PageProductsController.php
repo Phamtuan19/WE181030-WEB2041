@@ -15,7 +15,11 @@ use App\Models\Image;
 use App\Models\Categories;
 
 use App\Models\Comment;
+
 use App\Models\Order;
+
+
+
 use Illuminate\Support\Facades\DB;
 
 class PageProductsController extends Controller
@@ -27,8 +31,6 @@ class PageProductsController extends Controller
         $query = Product::query();
 
         $orderBy = "DESC";
-
-        $orderType = 'created_at';
 
         $getBrand = null;
 
@@ -58,15 +60,26 @@ class PageProductsController extends Controller
             $query->where('price', '>=', $min_price);
         }
 
-
-        if ($request->brand) {
+        if (!empty($request->brand)) {
             $brand = Brand::select('id')->where('name', 'like', '%' . $request->brand . '%')->get();
             $query->where('brand_id', $brand[0]->id);
         }
 
         if ($request->category) {
             $category = Categories::select('id')->where('slug', 'like', '%' . $request->category . '%')->get();
-            $query->where('category_id', $category[0]->id);
+            if ($request->productType != null) {
+                if ($request->productType == "tat-ca") {
+                    $categoryParent = Categories::select('id')->where('parent_id', $category[0]->id)->get()->toArray();
+                    $query->whereIn('category_id', array_column($categoryParent, 'id'));
+                } else {
+                    $category = Categories::select('id')->where('slug', 'like', '%' . $request->productType . '%')->get();
+                    $query->where('category_id', $category[0]->id);
+                }
+            } else {
+                $query->where('category_id', $category[0]->id);
+
+            }
+
         }
 
         if ($request->orderType) {
@@ -78,12 +91,12 @@ class PageProductsController extends Controller
 
         $brands = Brand::all();
 
-        $accessoryBrand = Categories::where('parent_id', '=', 13)->get();
+        $accessoryCtegory = Categories::where('parent_id', '=', 13)->get();
 
-        return view('customer.pages.products', compact('products', 'brands', 'accessoryBrand'));
+        return view('customer.pages.products', compact('products', 'brands', 'accessoryCtegory', 'orderBy'));
     }
 
-    public function showProducts($code)
+    public function showProducts(Request $request, $code)
     {
         $products =  new Product();
 

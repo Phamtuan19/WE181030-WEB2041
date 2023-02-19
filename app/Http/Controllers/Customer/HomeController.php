@@ -26,7 +26,9 @@ use App\Models\Post;
 
 use App\Models\Comment;
 
-use App\Models\Categories;
+use App\Models\OrderStatus;
+
+use App\Models\User;
 
 use Illuminate\Support\Facades\View;
 
@@ -82,11 +84,11 @@ class HomeController extends Controller
 
     public function indexPosts()
     {
-        $posts = new Post();
+        $posts = Post::all();
 
-        $posts = $posts->get();
+        $brands = Brand::all();
 
-        return view('customer.pages.post', compact('posts'));
+        return view('customer.pages.post', compact('posts', 'brands'));
     }
 
     public function showPosts(Post $post)
@@ -106,5 +108,35 @@ class HomeController extends Controller
         $commentType = "post";
 
         return view('customer.pages.show_post', compact('post', 'comments', 'commentType'));
+    }
+
+    public function listOrder (Request $request, User $user) {
+
+        $orders = Order::query();
+
+        $orders->where('customer_id', $user->id);
+
+        $orderStatus = OrderStatus::query();
+
+        $status = $request->status;
+
+        if(!empty($status)) {
+            $statusRequest = OrderStatus::select('id')->where('slug', $status)->get();
+            $orders->where('order_statusID', $statusRequest[0]->id);
+        }
+
+        $orders = $orders->orderBy('created_at', 'DESC')->get();
+
+        $orderStatus = $orderStatus->get();
+
+        return view("customer.pages.list_order", compact('user','orders', 'orderStatus'));
+    }
+
+    public function cancelOrder (Order $order) {
+        $order->order_statusID = 5;
+
+        $order->update();
+
+        return back()->with('msg', 'Hủy đơn hàng thành công');
     }
 }

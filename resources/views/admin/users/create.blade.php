@@ -71,7 +71,7 @@
             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
                 placeholder="Nhập lại mật khẩu ...">
             @error('password_confirmation')
-                <span class="text-danger" style="font-size: 16px">{{ $message }}</>
+                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
                 @enderror
         </div>
 

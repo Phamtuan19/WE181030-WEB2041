@@ -204,13 +204,15 @@
                                     </div>
                                     {!! $product['information'] !!}
                                 </div>
-                                <div class="col-lg-6" style="max-height: 609px; overflow: hidden; padding-top: 12px; padding-bottom: 12px; position: relative;">
+                                <div class="col-lg-6"
+                                    style="max-height: 609px; overflow: hidden; padding-top: 12px; padding-bottom: 12px; position: relative;">
                                     <div class="title-bg-r">
                                         Thông số kĩ thuật
                                     </div>
                                     {!! $product['detail'] !!}
 
-                                    <div class="view-more-detail-char" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="position: absolute">
+                                    <div class="view-more-detail-char" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop" style="position: absolute">
                                         <span>Xem chi tiết</span>
                                     </div>
 
@@ -253,4 +255,10 @@
     <!-- Swiper JS -->
     <script src="{{ asset('customer/js/product_detail.js') }}"></script>
     <script src="{{ asset('customer/js/comment.js') }}"></script>
+
+    <script>
+        $.getJSON('https://api.db-ip.com/v2/free/self', function(data) {
+            console.log(JSON.stringify(data, null, 2));
+        });
+    </script>
 @endsection

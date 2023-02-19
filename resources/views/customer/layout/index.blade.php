@@ -97,6 +97,7 @@
         $(".close__input").click(function() {
             $(".search-box").attr("style", "display:none !important");
             $(".search-box__input").val('')
+            $(".search-box__ul").html('');
         })
 
         let url = window.location.origin

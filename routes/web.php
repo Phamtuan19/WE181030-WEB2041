@@ -10,6 +10,8 @@ use App\Http\Controllers\Customer\HomeController;
 
 use App\Http\Controllers\Customer\PageProductsController;
 
+use App\Http\Controllers\Customer\ProfileController;
+
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Route;
@@ -134,22 +136,39 @@ Route::prefix('store')->name('store.')->group(function () {
 
     Route::get('gio-hang', [HomeController::class, 'indexCart'])->name('cart');
 
-
-    Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
-
-    Route::post('check-order', [PaymentController::class, 'checkPayment'])->name('ckeck.order');
-
-    Route::get('order-success', [HomeController::class, 'orderSuccess'])->name('order.success');
-
     Route::get('/posts', [HomeController::class, 'indexPosts'])->name('list.posts');
 
     Route::get('/posts/{post}', [HomeController::class, 'showPosts'])->name('show.posts');
 
     Route::resource('comments', CommentController::class);
 
-    Route::post('comments/reply', [CommentController::class, 'reply'])->name('comments.reply');
+    Route::middleware('customer.auth')->group(function () {
+        Route::get('customer/info/{user}', [ProfileController::class, 'customerInfo'])->name('customer.info');
 
+        // page order information
+        Route::get('payment', [PaymentController::class, 'payment'])->name('payment');
 
+        // page check order information
+        Route::post('check-order', [PaymentController::class, 'checkPayment'])->name('ckeck.order');
+
+        // page order successfully
+        Route::get('order-success', [HomeController::class, 'orderSuccess'])->name('order.success');
+
+        // post comments
+        Route::post('comments/reply', [CommentController::class, 'reply'])->name('comments.reply');
+
+        // Edit profile
+        Route::post('customer/edit/{user}', [ProfileController::class, 'editInfo'])->name('customer.editInfo');
+
+        // Edit Password
+        Route::post('customer/password/{user}', [ProfileController::class, 'editPassword'])->name('customer.editPassword');
+
+        // list Order
+        Route::get('listOrder/{user}', [HomeController::class, 'listOrder'])->name('listOrder');
+
+        Route::post('order/cancel/{order}', [HomeController::class, 'cancelOrder'])->name('order.cancelOrder');
+
+    });
 
     // authentication guard Customers
     Route::get('/login', [LoginController::class, 'login'])->middleware('guest:customers')->name('login');

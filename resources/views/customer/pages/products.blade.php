@@ -24,41 +24,43 @@
                         <div class="col-lg-12 product-filter__orderBy">
                             <div class="container-fluid">
                                 <div class="row product-filter__orderBy__row" style=" ">
-                                    <div class="col-lg-2">
-                                        <a href="?category={{ request()->category }}&brand={{ request()->brand }}&price={{ request()->price }}&orderBy=price&orderType=DESC"
-                                            style="font-size: 16px; font-weight: 500"
-                                            class="order__by__a {!! request()->orderBy == 'price' && request()->orderType == 'DESC' ? 'order_by__active' : '' !!}">
-                                            Giá lớn nhất
-                                            <i class="fa-solid fa-right-left right-left"></i>
-                                        </a>
-                                    </div>
+                                    @if (isset(request()->productType))
+                                        <div class="col-lg-3">
+                                            <a href="?category={{ request()->category }}&productType={{ request()->productType }}&price={{ request()->price }}&orderBy=price&orderType={{ request()->orderType == 'ASC' ? 'DESC' : 'ASC' }}"
+                                                style="font-size: 16px; font-weight: 500"
+                                                class="order__by__a {!! request()->orderBy == 'price' && request()->orderType == 'DESC' ? 'order_by__active' : '' !!}">
+                                                Xắp xếp theo giá
+                                                <i class="fa-solid fa-right-left right-left"></i>
+                                            </a>
+                                        </div>
 
-                                    <div class="col-lg-2">
-                                        <a href="?category={{ request()->category }}&brand={{ request()->brand }}&price={{ request()->price }}&orderBy=price&orderType=ASC"
-                                            style="font-size: 16px; font-weight: 500"
-                                            class="order__by__a {!! request()->orderBy == 'price' && request()->orderType == 'ASC' ? 'order_by__active' : '' !!}">
-                                            Giá nhỏ nhất
-                                            <i class="fa-solid fa-right-left right-left"></i>
-                                        </a>
-                                    </div>
+                                        <div class="col-lg-3">
+                                            <a href="?category={{ request()->category }}&productType={{ request()->productType }}&price={{ request()->price }}&orderBy=created_at&orderType={{ request()->orderType == 'ASC' ? 'DESC' : 'ASC' }}"
+                                                style="font-size: 16px; font-weight: 500"
+                                                class="order__by__a {!! request()->orderBy == 'created_at' && request()->orderType == 'DESC' ? 'order_by__active' : '' !!}">
+                                                Sản phẩm mới nhất
+                                                <i class="fa-solid fa-right-left right-left"></i>
+                                            </a>
+                                        </div>
+                                    @else
+                                        <div class="col-lg-3">
+                                            <a href="?category={{ request()->category }}&brand={{ request()->brand }}&price={{ request()->price }}&orderBy=price&orderType=DESC"
+                                                style="font-size: 16px; font-weight: 500"
+                                                class="order__by__a {!! request()->orderBy == 'price' && request()->orderType == 'DESC' ? 'order_by__active' : '' !!}">
+                                                Xắp xếp theo giá
+                                                <i class="fa-solid fa-right-left right-left"></i>
+                                            </a>
+                                        </div>
 
-                                    <div class="col-lg-3">
-                                        <a href="?category={{ request()->category }}&brand={{ request()->brand }}&price={{ request()->price }}&orderBy=created_at&orderType=DESC"
-                                            style="font-size: 16px; font-weight: 500"
-                                            class="order__by__a {!! request()->orderBy == 'created_at' && request()->orderType == 'DESC' ? 'order_by__active' : '' !!}">
-                                            Sản phẩm mới nhất
-                                            <i class="fa-solid fa-right-left right-left"></i>
-                                        </a>
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <a href="?category={{ request()->category }}&brand={{ request()->brand }}&price={{ request()->price }}&orderBy=created_at&orderType=ASC"
-                                            style="font-size: 16px; font-weight: 500"
-                                            class="order__by__a {!! request()->orderBy == 'created_at' && request()->orderType == 'ASC' ? 'order_by__active' : '' !!}">
-                                            Sản phẩm cũ nhất
-                                            <i class="fa-solid fa-right-left right-left"></i>
-                                        </a>
-                                    </div>
+                                        <div class="col-lg-3">
+                                            <a href="?category={{ request()->category }}&brand={{ request()->brand }}&price={{ request()->price }}&orderBy=created_at&orderType=DESC"
+                                                style="font-size: 16px; font-weight: 500"
+                                                class="order__by__a {!! request()->orderBy == 'created_at' && request()->orderType == 'DESC' ? 'order_by__active' : '' !!}">
+                                                Sản phẩm mới nhất
+                                                <i class="fa-solid fa-right-left right-left"></i>
+                                            </a>
+                                        </div>
+                                    @endif
                                 </div>
 
                             </div>

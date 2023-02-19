@@ -28,7 +28,9 @@
                         {{-- @dd(request()->fullUrl()) --}}
                         <li class="nav-item nav--item__shop">
                             <a class="nav-link nav-link_a nav-shop {{ request()->category === 'dien-thoai' ? 'nav-active' : '' }}"
-                                aria-current="page" href="{{ route('store.list.products') }}?category=dien-thoai">Điện thoại</a>
+                                aria-current="page"
+                                href="{{ route('store.list.products') }}?category=dien-thoai&orderBy=created_at&orderType=ASC">Điện
+                                thoại</a>
 
                             <div class="nav--dropdown__items">
                                 <div class="container-fluid">
@@ -37,45 +39,25 @@
                                             <p class="nav--dropdown__items-title">Hãng sản xuât</p>
                                             <ul class="items__brand">
                                                 <div class="row">
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=apple&category=dien-thoai"
-                                                            target="_self" title="Apple (MacBook)">
-                                                            Apple (iPhone)
-                                                        </a>
-                                                    </li>
-
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=vivo&category=dien-thoai"
-                                                            target="_self" title="Vivo">
-                                                            Vivo
-                                                        </a>
-                                                    </li>
-
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=oppo&category=dien-thoai"
-                                                            target="_self" title="Oppo">
-                                                            Oppo
-                                                        </a>
-                                                    </li>
-
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=samsung&category=dien-thoai"
-                                                            target="_self" title="Samsung">
-                                                            Samsung
-                                                        </a>
-                                                    </li>
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=realme&category=dien-thoai"
-                                                            target="_self" title="Realme">
-                                                            Realme
-                                                        </a>
-                                                    </li>
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=xiaomi&category=dien-thoai"
-                                                            target="_self" title="Xiaomi">
-                                                            Xiaomi
-                                                        </a>
-                                                    </li>
+                                                    @if (isset($brand))
+                                                        @foreach ($brands as $brand)
+                                                            @if ($brand->name == 'Apple')
+                                                                <li class="col-lg-4 items__brand--li">
+                                                                    <a href="{{ route('store.list.products') }}?brand={{ $brand->name }}&category=dien-thoai"
+                                                                        target="_self" title="Apple (iPhone)">
+                                                                        {{ $brand->name }} (iPhone)
+                                                                    </a>
+                                                                </li>
+                                                            @else
+                                                                <li class="col-lg-4 items__brand--li">
+                                                                    <a href="{{ route('store.list.products') }}?brand={{ $brand->name }}&category=dien-thoai"
+                                                                        target="_self" title="{{ $brand->name }}">
+                                                                        {{ $brand->name }}
+                                                                    </a>
+                                                                </li>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
                                                 </div>
                                             </ul>
                                         </div>
@@ -98,7 +80,10 @@
 
                         <li class="nav-item nav--item__shop">
                             <a class="nav-link nav-link_a nav-shop {{ request()->category === 'laptop' ? 'nav-active' : '' }}"
-                                aria-current="page" href="{{ route('store.list.products') }}?category=laptop">Laptop</a>
+                                aria-current="page"
+                                href="{{ route('store.list.products') }}?category=laptop&orderBy=created_at&orderType=ASC">
+                                Laptop
+                            </a>
 
                             <div class="nav--dropdown__items">
                                 <div class="container-fluid">
@@ -107,42 +92,25 @@
                                             <p class="nav--dropdown__items-title">Hãng sản xuât</p>
                                             <ul class="items__brand">
                                                 <div class="row">
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=apple&category=laptop"
-                                                            target="_self" title="Apple (MacBook)">
-                                                            Apple (MacBook)
-                                                        </a>
-                                                    </li>
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=microsoft&category=laptop"
-                                                            target="_self" title="Microsoft">
-                                                            Microsoft
-                                                        </a>
-                                                    </li>
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=dell&category=laptop"
-                                                            target="_self" title="dell">
-                                                            Dell
-                                                        </a>
-                                                    </li>
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=acer&category=laptop"
-                                                            target="_self" title="acer">
-                                                            Acer
-                                                        </a>
-                                                    </li>
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=hp&category=laptop"
-                                                            target="_self" title="HP">
-                                                            HP
-                                                        </a>
-                                                    </li>
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=MIS&category=laptop"
-                                                            target="_self" title="MIS">
-                                                            MIS
-                                                        </a>
-                                                    </li>
+                                                    @if (isset($brand))
+                                                        @foreach ($brands as $brand)
+                                                            @if ($brand->name == 'Apple')
+                                                                <li class="col-lg-4 items__brand--li">
+                                                                    <a href="{{ route('store.list.products') }}?brand={{ $brand->name }}&category=laptop"
+                                                                        target="_self" title="Apple (MacBook)">
+                                                                        {{ $brand->name }} (MacBook)
+                                                                    </a>
+                                                                </li>
+                                                            @else
+                                                                <li class="col-lg-4 items__brand--li">
+                                                                    <a href="{{ route('store.list.products') }}?brand={{ $brand->name }}&category=laptop"
+                                                                        target="_self" title="{{ $brand->name }}">
+                                                                        {{ $brand->name }}
+                                                                    </a>
+                                                                </li>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
                                                 </div>
                                             </ul>
                                         </div>
@@ -165,7 +133,8 @@
 
                         <li class="nav-item nav--item__tablet">
                             <a class="nav-link nav-link_a nav-shop {{ request()->category === 'tablet' ? 'nav-active' : '' }}"
-                                aria-current="page" href="{{ route('store.list.products') }}?category=tablet">Tablet</a>
+                                aria-current="page"
+                                href="{{ route('store.list.products') }}?category=tablet&orderBy=created_at&orderType=ASC">Tablet</a>
 
                             <div class="nav--dropdown__items">
                                 <div class="container-fluid">
@@ -174,27 +143,28 @@
                                             <p class="nav--dropdown__items-title">Hãng sản xuât</p>
                                             <ul class="items__brand">
                                                 <div class="row">
-                                                    <li class="col-lg-4 items__brand--li">
-                                                        <a href="{{ route('store.list.products') }}?brand=Apple&category=tablet"
-                                                            target="_self" title="Apple (MacBook)">
-                                                            Apple (iPad)
-                                                        </a>
-                                                    </li>
+                                                    @if (isset($brand))
+                                                        @foreach ($brands as $brand)
+                                                            @if ($brand->name == 'Apple')
+                                                                <li class="col-lg-4 items__brand--li">
+                                                                    <a href="{{ route('store.list.products') }}?brand=Apple&category=tablet"
+                                                                        target="_self" title="Apple (MacBook)">
+                                                                        {{ $brand->name }} (iPad)
+                                                                    </a>
+                                                                </li>
+                                                            @else
+                                                                <li class="col-lg-4 items__brand--li">
+                                                                    <a href="{{ route('store.list.products') }}?brand={{ $brand->name }}&category=tablet"
+                                                                        target="_self" title="{{ $brand->name }}">
+                                                                        {{ $brand->name }}
+                                                                    </a>
+                                                                </li>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
                                                 </div>
                                             </ul>
                                         </div>
-
-                                        {{-- @if (!empty($headers[2]['image_path']))
-                                            <div class="col-lg-4 nav--dropdown__items__image">
-                                                <p class="nav--dropdown__items-title">Sản phẩm bán chạy nhất</p>
-                                                <a href="{{ route('store.product', $headers[2]['code']) }}">
-                                                    <div class="" style="width: 100%">
-                                                        <img style="width: 100%;" src="{{ $headers[2]['image_path'] }}"
-                                                            alt="">
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        @endif --}}
                                     </div>
                                 </div>
                             </div>
@@ -203,9 +173,12 @@
 
                         <li class="nav-item nav--item__tablet">
                             <a class="nav-link nav-link_a nav-shop {{ request()->category === 'phu-kien' ? 'nav-active' : '' }}"
-                                aria-current="page" href="{{ route('store.list.products') }}?category=phu-kien">Phụ kiện</a>
+                                aria-current="page"
+                                href="{{ route('store.list.products') }}?category=phu-kien&productType=tat-ca&orderBy=created_at&orderType=ASC">Phụ
+                                kiện
+                            </a>
 
-                            <div class="nav--dropdown__items">
+                            {{-- <div class="nav--dropdown__items">
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-lg-8 nav--dropdown__items__brand">
@@ -223,7 +196,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                         </li>
 
@@ -231,7 +204,7 @@
                             <a class="nav-link nav-link_a {{ request()->path() === 'store/posts' ? 'nav-active' : '' }}"
                                 aria-current="page" href="{{ route('store.list.posts') }}">Blog</a>
 
-                            <div class="nav--dropdown__items">
+                            {{-- <div class="nav--dropdown__items">
                                 <div class="container-fluid">
                                     <div class="row">
                                         <div class="col-lg-8 nav--dropdown__items__brand">
@@ -250,7 +223,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </li>
                     </ul>
                 </div>
@@ -315,6 +288,14 @@
 
                         <ul class="container-login active">
                             @if (Auth::guard('customers')->check())
+                                <li class="login-item">
+                                    <a href="{{ route('store.customer.info', Auth::guard('customers')->id()) }}"
+                                        class="login-link">Tài khoản</a>
+                                </li>
+                                <li class="login-item">
+                                    <a href="{{ route('store.listOrder', Auth::guard('customers')->id()) }}"
+                                        class="login-link">Đơn hàng</a>
+                                </li>
                                 <li class="login-item">
                                     <a href="{{ route('store.logout') }}" class="login-link"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

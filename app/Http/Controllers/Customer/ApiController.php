@@ -12,7 +12,7 @@ use App\Models\Image;
 
 class ApiController extends Controller
 {
-    
+
     public function storeSearch (Request $request) {
         $products = new Product();
 
@@ -26,7 +26,7 @@ class ApiController extends Controller
 
             $products[$key]['avatar'] = $images->select('path')->where('product_id', $product['id'])->where('is_avatar', 1)->get()->toArray()[0]['path'];
         }
-
+        
         return $products;
     }
 }

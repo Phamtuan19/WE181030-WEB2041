@@ -45,7 +45,6 @@
     box-shadow: var(--box-shadow);
     margin-bottom: 12px;
     display: flex;
-    justify-content: space-between;
 }
 
 .right-left {
