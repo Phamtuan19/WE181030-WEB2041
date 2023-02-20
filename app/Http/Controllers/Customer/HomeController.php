@@ -64,7 +64,9 @@ class HomeController extends Controller
                 ->where('product_id', $product['id'])->where('is_avatar', 1)->get()->toArray();
         }
 
-        return view('customer.pages.home', compact('selling_products', 'new_products', 'other_products', 'new_posts'));
+        $brands = Brand::all();
+
+        return view('customer.pages.home', compact('selling_products', 'new_products', 'other_products', 'new_posts', 'brands'));
     }
 
     public function indexCart(Request $request)

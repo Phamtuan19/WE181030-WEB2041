@@ -39,7 +39,7 @@
                                             <p class="nav--dropdown__items-title">Hãng sản xuât</p>
                                             <ul class="items__brand">
                                                 <div class="row">
-                                                    @if (isset($brand))
+                                                    @if (isset($brands))
                                                         @foreach ($brands as $brand)
                                                             @if ($brand->name == 'Apple')
                                                                 <li class="col-lg-4 items__brand--li">
@@ -92,7 +92,7 @@
                                             <p class="nav--dropdown__items-title">Hãng sản xuât</p>
                                             <ul class="items__brand">
                                                 <div class="row">
-                                                    @if (isset($brand))
+                                                    @if (isset($brands))
                                                         @foreach ($brands as $brand)
                                                             @if ($brand->name == 'Apple')
                                                                 <li class="col-lg-4 items__brand--li">
@@ -143,7 +143,7 @@
                                             <p class="nav--dropdown__items-title">Hãng sản xuât</p>
                                             <ul class="items__brand">
                                                 <div class="row">
-                                                    @if (isset($brand))
+                                                    @if (isset($brands))
                                                         @foreach ($brands as $brand)
                                                             @if ($brand->name == 'Apple')
                                                                 <li class="col-lg-4 items__brand--li">
