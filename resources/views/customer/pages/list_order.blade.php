@@ -97,11 +97,9 @@
                                     @if ($order->order_statusID != 4 && $order->order_statusID != 5)
                                         <div class="">
                                             <div class="d-flex justify-content-around">
-                                                <form action="{{ route('store.order.cancelOrder', $order->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <input type="submit" class="btn btn-danger" value="Hủy đơn">
-                                                </form>
+                                                <button id="cancel__order" class="btn btn-danger cancel__order" data-id="{{ $order->id }}" data-bs-toggle="modal"
+                                                    data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Hủy
+                                                    Đơn</button>
                                             </div>
                                         </div>
                                     @endif
@@ -114,5 +112,41 @@
             </div>
 
         </div>
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel" style="color: #FF0000">Hủy đơn hàng</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                            style="border: none; background-color: #fff;">
+                            <i class="fa-regular"></i>
+                        </button>
+                    </div>
+                    <form class="form-cancel__order" action="" method="POST">
+                        @csrf
+
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="message-text" class="col-form-label">Notes:</label>
+                                <textarea class="form-control" id="message-text" name="notes"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Hủy</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        $(".cancel__order").click(function () {
+            $(".form-cancel__order").attr('action', 'http://127.0.0.1:8000/store/order/cancel/' + $(this).data('id'));
+        });
+    </script>
 @endsection

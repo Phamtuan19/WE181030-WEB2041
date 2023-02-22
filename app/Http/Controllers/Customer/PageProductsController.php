@@ -102,21 +102,22 @@ class PageProductsController extends Controller
 
         $comments = new Comment();
 
+        $brands = Brand::all();
+
         $query = $comments->get();
 
         $comments = $comments->whereNotNull('product_id')->whereNull('parent_id')->get();
 
-        foreach ($comments as $key => $item) {
-            $comments[$key]['parent'] = $query->where('parent_id', $item['id']);
-        }
+        // foreach ($comments as $key => $item) {
+        //     dd($item->children);
+        //     $comments[$key]['parent'] = $query->where('parent_id', $item['id']);
+        // }
 
+        // dd($comments);
         $product = $products->where('code', $code)->first();
 
-        $brands = new Brand();
-
-        $brands = $brands->get();
-
         $commentType = "product";
+
 
         return view('customer.pages.page_product', compact('product', 'brands', 'comments', 'commentType'));
     }

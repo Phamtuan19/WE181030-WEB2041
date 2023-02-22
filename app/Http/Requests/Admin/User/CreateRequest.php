@@ -31,7 +31,6 @@ class CreateRequest extends FormRequest
                 'string',
                 'min:6',
                 'max:255',
-                Rule::unique('users')->ignore($this->id, 'id'),
             ],
 
             'email' => [

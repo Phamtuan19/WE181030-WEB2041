@@ -181,7 +181,3 @@
         </div>
     </div>
 @endsection
-
-@section('js')
-    <script></script>
-@endsection

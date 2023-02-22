@@ -10,8 +10,8 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-lg-12 mt-4" style="">
-                <div class="view_post" style="background-color: #FFF; padding: 24px; border-radius: 5px; ">
+            <div class="col-lg-12" style="">
+                <div class="view_post">
 
                     <div class="heading" style="margin-bottom: 24px">
                         <div class="heading-title mb-3">
@@ -28,8 +28,7 @@
                                     <span class="post-time">{{ date_format($post->created_at, 'd-m-Y') }}</span>
                                     <a class="post-cmt" href="#root-comment">
                                         <i class="fa-regular fa-message"></i>
-                                        <span
-                                            id="totalCmt">{{ $post->comments->count() }}
+                                        <span id="totalCmt">{{ $post->comments->count() }}
                                         </span>
                                         <span> Hỏi &amp; Đáp</span>
                                     </a>
@@ -38,20 +37,24 @@
                         </div>
                     </div>
 
-                    <div class="content" >
+                    <div class="content">
                         {!! $post->content !!}
                     </div>
                     <hr>
                 </div>
-                <div class="comment" style="background-color: #FFF; padding: 24px; border-radius: 5px; ">
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="comment" style="padding-top: 1px">
                     @include('customer.layout.comment')
                 </div>
             </div>
-
-
         </div>
-    </div>
 
+    </div>
 @endsection
 
 @section('js')

@@ -30,7 +30,7 @@
     <title>Trang chủ</title>
 </head>
 
-<body>
+<body class="body-loading ">
 
     <main class="main-wrapper">
         <!-- NavBar -->
@@ -46,7 +46,41 @@
                             <div class="swiper-wrapper" style="box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;">
 
                                 <div class="swiper-slide">
-                                    <img src="https://images.fpt.shop/unsafe/fit-in/1200x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/2/1/638108673553993107_F-C1_1200x300@2x.png"
+                                    <img src="https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/2/17/638122571019476665_F-H1_800x300.png"
+                                        alt="" class="slider_image"
+                                        style="width: 100%; height: 450px; cursor: pointer; border-radius: 5px">
+                                </div>
+
+                                <div class="swiper-slide">
+                                    <img src="https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/2/15/638120822076951530_F-H1_800x300.png"
+                                        alt="" class="slider_image"
+                                        style="width: 100%; height: 450px; cursor: pointer; border-radius: 5px">
+                                </div>
+
+
+                                <div class="swiper-slide">
+                                    <img src="https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/2/10/638116385569529572_F-H1_800x300.png"
+                                        alt="" class="slider_image"
+                                        style="width: 100%; height: 450px; cursor: pointer; border-radius: 5px">
+                                </div>
+
+                                <div class="swiper-slide">
+                                    <img src="https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/2/22/638127046683440586_F-H1_800x300.png"
+                                        alt="" class="slider_image"
+                                        style="width: 100%; height: 450px; cursor: pointer; border-radius: 5px">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/2/17/638122418428942654_F-H1_800x300@2x.png"
+                                        alt="" class="slider_image"
+                                        style="width: 100%; height: 450px; cursor: pointer; border-radius: 5px">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/2/21/638125789800166645_F_H1_800x300.png"
+                                        alt="" class="slider_image"
+                                        style="width: 100%; height: 450px; cursor: pointer; border-radius: 5px">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="https://images.fpt.shop/unsafe/fit-in/800x300/filters:quality(90):fill(white)/fptshop.com.vn/Uploads/Originals/2023/2/18/638123240854446893_F_M1_640x250.png"
                                         alt="" class="slider_image"
                                         style="width: 100%; height: 450px; cursor: pointer; border-radius: 5px">
                                 </div>
@@ -67,11 +101,19 @@
             @yield('content-product')
         </main>
 
-        @include('customer.layout.footer')
 
-        <section id="loading" style="display: none;"></section>
+
+
+
+        @if (request()->path() != 'store/listOrder')
+            @include('customer.layout.footer')
+        @endif
 
     </main>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
 
     <!-- CDN Fontawesome -->
     <script src="https://kit.fontawesome.com/03e43a0756.js" crossorigin="anonymous"></script>
@@ -102,6 +144,7 @@
 
         let url = window.location.origin
         console.log(url);
+
         function renderSearch(data, url) {
             let value = data.map(function(e) {
                 return `
@@ -135,17 +178,18 @@
 
             $(".search-box__input").keyup(function() {
 
-                $(".fs-suggest-product").css("display","block");
+                $(".fs-suggest-product").css("display", "block");
 
                 $.ajax({
                     url: window.location.origin + "/api/store/search?storeSearch=" + $(this).val(),
                     type: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        if(data.length > 0) {
+                        if (data.length > 0) {
                             renderSearch(data)
-                        }else {
-                            $(".search-box__ul").html('<h5 style="text-align:center">Sản phẩm không tồn tại</h5>');
+                        } else {
+                            $(".search-box__ul").html(
+                                '<h5 style="text-align:center">Sản phẩm không tồn tại</h5>');
                         }
                     },
                 });

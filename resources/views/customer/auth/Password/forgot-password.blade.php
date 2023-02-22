@@ -76,10 +76,10 @@
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="">Tạo một tài khoản!</a>
+                                        <a class="small" href="{{ route('store.register') }}">Tạo một tài khoản!</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="">Đẵ có tài khoản? Đăng nhập</a>
+                                        <a class="small" href="{{ route('store.login') }}">Đẵ có tài khoản? Đăng nhập</a>
                                     </div>
                                 </div>
                             </div>

@@ -22,16 +22,19 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MailNotify;
 
 use App\Http\Requests\Customer\PaymentRequest;
+use App\Models\Brand;
 
 class PaymentController extends Controller
 {
     public function payment(Request $request)
     {
+        $brands = Brand::all();
+
         $users = new User();
 
         $users = $users->find(Auth::guard('customers')->id());
 
-        return view('customer.pages.pay', compact('users'));
+        return view('customer.pages.pay', compact('users', 'brands'));
     }
 
     // Tạo đơn hàng mới

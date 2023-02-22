@@ -42,7 +42,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">PH 29384</div>
             </a>
 
             <!-- Divider -->
@@ -156,10 +156,9 @@
                         data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             @can('users.add')
-                                <a class="collapse-item" href="{{ route('admin.users.create') }}">Thêm người quản trị
-                                    viên</a>
+                                <a class="collapse-item" href="{{ route('admin.users.create') }}">Thêm tài khoản</a>
                             @endcan
-                            <a class="collapse-item" href="{{ route('admin.users.index') }}">Danh sách quản trị viên</a>
+                            <a class="collapse-item" href="{{ route('admin.users.index') }}">Danh sách người dùng</a>
                         </div>
                     </div>
                 </li>

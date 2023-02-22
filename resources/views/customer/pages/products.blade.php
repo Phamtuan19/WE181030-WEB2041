@@ -82,8 +82,10 @@
                                         <div class="product-img">
                                             @foreach ($product->image as $image)
                                                 @if ($image->is_avatar != null)
-                                                    <img src="{{ $image->path }}" alt="" class="product-image"
-                                                        style="width: 100%;">
+                                                    <a href="{{ route('store.product', $product['code']) }}">
+                                                        <img src="{{ $image->path }}" alt="" class="product-image"
+                                                            style="width: 100%;">
+                                                    </a>
                                                 @endif
                                             @endforeach
                                         </div>

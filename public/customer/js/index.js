@@ -1,22 +1,26 @@
 
+
 // =======================================
 var swiper = new Swiper(".mySwiper-slider", {
-    pagination: {
-        el: ".swiper-pagination",
-    },
+    spaceBetween: 30,
+    centeredSlides: true,
     autoplay: {
         delay: 2500,
         disableOnInteraction: false,
     },
+    pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+    },
 });
 
 // =======================================
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
     var scrollpos = localStorage.getItem('scrollpos');
     if (scrollpos) window.scrollTo(0, scrollpos);
 });
 
-window.onbeforeunload = function(e) {
+window.onbeforeunload = function (e) {
     localStorage.setItem('scrollpos', window.scrollY);
 };
 
@@ -138,3 +142,6 @@ function api() {
 
     });
 }
+
+
+// ===================================

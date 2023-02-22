@@ -3,6 +3,7 @@
 @section('css')
     <link rel="stylesheet" href="{{ asset('customer/css/product.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+
 @endsection
 
 @section('title', 'Home Page')
@@ -68,12 +69,7 @@
                     </div>
                 @endforeach
 
-                <div class="show-all">
-                    <a href="{{ route('store.list.products') }}?orderType=quantity_sold&orderBy=DESC">
-                        Xem tất cả
-                        <i class="fa-solid fa-right-long"></i>
-                    </a>
-                </div>
+
             </div>
 
             <div class="row mt-4">
@@ -136,12 +132,7 @@
                     </div>
                 @endforeach
 
-                <div class="show-all">
-                    <a href="{{ route('store.list.products') }}?orderType=created_at&orderBy=DESC">
-                        Xem tất cả
-                        <i class="fa-solid fa-right-long"></i>
-                    </a>
-                </div>
+
             </div>
 
             <div class="row mt-4">
@@ -198,12 +189,7 @@
                     </div>
                 @endforeach
 
-                <div class="show-all">
-                    <a href="{{ route('store.list.products') }}">
-                        Xem tất cả
-                        <i class="fa-solid fa-right-long"></i>
-                    </a>
-                </div>
+
             </div>
 
             <div class="row mt-4">
@@ -220,35 +206,36 @@
                 </div>
 
                 @foreach ($new_posts as $post)
-                <div class="col-lg-4 col-md-6">
-                    <div class="single-blog">
-                        <div class="thumb">
-                            <img class="img-fluid" src="{{ $post->avatar_path }}"
-                                alt="{{ $post->slug }}">
-                        </div>
-                        <div class="short_details">
-                            <div class="meta-top d-flex">
-                                <a href="{{ route('store.show.posts', $post->slug) }}">{{ $post->user->username }}</a>
-                                <a href="#"><i class="ti-comments-smiley"></i>{{ $post->comments->count() }} Comments</a>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="single-blog">
+                            <div class="thumb">
+                                <img class="img-fluid" src="{{ $post->avatar_path }}" alt="{{ $post->slug }}">
                             </div>
-                            <a class="d-block" href="{{ route('store.show.posts', $post->id) }}">
-                                <h4>{{ $post->title }}</h4>
-                            </a>
-                            <div class="text-wrap">
-                                <p>
-                                    {{ $post->introduction }}
-                                </p>
+                            <div class="short_details">
+                                <div class="meta-top d-flex">
+                                    <a href="{{ route('store.show.posts', $post->slug) }}">{{ $post->user->username }}</a>
+                                    <a href="#"><i class="ti-comments-smiley"></i>{{ $post->comments->count() }}
+                                        Comments</a>
+                                </div>
+                                <a class="d-block" href="{{ route('store.show.posts', $post->id) }}">
+                                    <h4>{{ $post->title }}</h4>
+                                </a>
+                                <div class="text-wrap">
+                                    <p>
+                                        {{ $post->introduction }}
+                                    </p>
+                                </div>
+                                <a href="{{ route('store.show.posts', $post->id) }}" class="blog_btn">Learn More <span
+                                        class="ml-2 ti-arrow-right"></span></a>
                             </div>
-                            <a href="{{ route('store.show.posts', $post->id) }}" class="blog_btn">Learn More <span class="ml-2 ti-arrow-right"></span></a>
                         </div>
                     </div>
-                </div>
-
                 @endforeach
             </div>
             {{-- </div> --}}
         </div>
     </div>
+
 
 @endsection
 
@@ -256,38 +243,6 @@
 @section('js')
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
-        // var swiper = new Swiper(".mySwiper-product", {
-        //     slidesPerView: 4,
-        //     spaceBetween: 20,
-        //     loop: true,
-        //     pagination: {
-        //         el: ".swiper-pagination",
-        //         clickable: true,
-        //     },
-        //     autoplay: {
-        //         delay: 2500,
-        //         disableOnInteraction: false,
-        //     },
-        //     breakpoints: {
-        //         0: {
-        //             slidesPerView: 1,
-        //             spaceBetween: 20,
-        //         },
-        //         768: {
-        //             slidesPerView: 2,
-        //             spaceBetween: 40,
-        //         },
-        //         992: {
-        //             slidesPerView: 3,
-        //             spaceBetween: 40,
-        //         },
-        //         1024: {
-        //             slidesPerView: 4,
-        //             spaceBetween: 20,
-        //         },
-        //     }
-        // });
-
         const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
         const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
     </script>

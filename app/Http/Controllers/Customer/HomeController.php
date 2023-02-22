@@ -41,7 +41,7 @@ class HomeController extends Controller
 
         $images = new Image();
 
-        $new_posts = Post::orderBy('created_at', 'DESC')->take(3)->get();
+        $new_posts = Post::orderBy('created_at', 'ASC')->take(3)->get();
 
         $selling_products = $products->select('id', 'code', 'name', 'price', 'promotion_price')->orderBy('quantity_sold', 'DESC')->take(8)->get()->toArray();
 
@@ -71,17 +71,20 @@ class HomeController extends Controller
 
     public function indexCart(Request $request)
     {
-        return view('customer.pages.cart');
+        $brands = Brand::all();
+
+        return view('customer.pages.cart', compact('brands'));
     }
 
     public function orderSuccess()
     {
+        $brands = Brand::all();
 
         $orders = new Order();
 
         $orders = $orders->get();
 
-        return view('customer.pages.orderSuccess', compact('orders'));
+        return view('customer.pages.orderSuccess', compact('orders', 'brands'));
     }
 
     public function indexPosts()
@@ -95,6 +98,8 @@ class HomeController extends Controller
 
     public function showPosts(Post $post)
     {
+        $brands = Brand::all();
+
         $comments = new Comment();
 
         $connect = $comments->get();
@@ -107,12 +112,13 @@ class HomeController extends Controller
             $comments[$key]['parent'] = $connect->where('parent_id', $item['id']);
         }
 
-        $commentType = "post";
+        $commentType = "posts";
 
-        return view('customer.pages.show_post', compact('post', 'comments', 'commentType'));
+        return view('customer.pages.show_post', compact('post', 'comments', 'commentType', 'brands'));
     }
 
-    public function listOrder (Request $request, User $user) {
+    public function listOrder(Request $request, User $user)
+    {
 
         $orders = Order::query();
 
@@ -122,7 +128,7 @@ class HomeController extends Controller
 
         $status = $request->status;
 
-        if(!empty($status)) {
+        if (!empty($status)) {
             $statusRequest = OrderStatus::select('id')->where('slug', $status)->get();
             $orders->where('order_statusID', $statusRequest[0]->id);
         }
@@ -131,14 +137,20 @@ class HomeController extends Controller
 
         $orderStatus = $orderStatus->get();
 
-        return view("customer.pages.list_order", compact('user','orders', 'orderStatus'));
+        return view("customer.pages.list_order", compact('user', 'orders', 'orderStatus'));
     }
 
-    public function cancelOrder (Order $order) {
+    public function cancelOrder(Request $request, Order $order)
+    {
+
+        // dd($request->method());
+
         $order->order_statusID = 5;
 
-        $order->update();
+        $order->user_notes = !empty($request->notes) ? $request->notes : null;
 
-        return back()->with('msg', 'Hủy đơn hàng thành công');
+        if ($order->update()) {
+            return back()->with('msg', 'Hủy đơn hàng thành công');
+        }
     }
 }

@@ -62,7 +62,7 @@ class CommentController extends Controller
             ];
 
             if ($comments->create($data)) {
-                return back()->with('msg', 'đăng bài viết thành công');
+                return back()->with('msg', 'Bình luận bài viết thành công');
             }
 
             return back();
@@ -79,7 +79,9 @@ class CommentController extends Controller
                 'timestamps' => date('Y-m-d H:i:s'),
             ];
 
-            $comments->create($data);
+            if ($comments->create($data)) {
+                return back()->with('msg', 'Bình luận sản phẩm thành công');
+            }
             return back();
         }
     }

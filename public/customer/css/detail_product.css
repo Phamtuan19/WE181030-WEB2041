@@ -68,6 +68,7 @@
 
 .option-list {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .attribute-memory_label {

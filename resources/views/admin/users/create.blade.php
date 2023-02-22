@@ -21,9 +21,9 @@
         @csrf
 
         <div class="form-group">
-            <label for="username">Tài khoản đăng nhập</label>
+            <label for="username">Tên tài khoản</label>
             <input type="text" class="form-control" id="username" name="username"
-                placeholder="Nhập tài khoản đăng nhập">
+                placeholder="Tên tài khoản ...">
             @error('username')
                 <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
             @enderror

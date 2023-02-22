@@ -26,18 +26,14 @@ class Comment extends Model
         'deleted_at',
     ];
 
-    public function comment ()
+    public function children ()
     {
-        return $this->belongsTo(self::class, 'parent_id', 'id');
+        return $this->hasMany(self::class, 'parent_id', 'id');
     }
 
-    public function usercomment () {
+    public function users () {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
-
-    // public function user () {
-    //     return $this->belongsTo(Customers::class, 'customer_id', 'id');
-    // }
 
     public function post () {
         return $this->belongsToMany(Post::class);

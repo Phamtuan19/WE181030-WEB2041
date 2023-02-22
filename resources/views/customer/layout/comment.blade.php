@@ -1,56 +1,68 @@
 
+
 <div class="container mt-4">
 
-
-    <h1 style="text-align: center; margin-bottom:  1.5rem">Comments</h1>
 
     <div class="row">
 
         @if (Auth::guard('customers')->check())
-            @if ($commentType == 'post')
-                <div class="col-lg-8 offset-md-2 mb-4">
-                    <form action="{{ route('store.comments.store') }}" method="POST">
-                        @csrf
+            @if ($commentType == 'posts')
+                <div class="card-title">
+                    <h3 class="h5 heading">Hỏi &amp; Đáp</h3>
+                </div>
+                <div class="card-body">
+                    <div class="user-form">
+                        <form action="{{ route('store.comments.store') }}" method="POST">
+                            @csrf
 
-                        <input type="hidden" name="commentType" value="{{ $commentType }}">
-                        <div class="form-group">
-                            <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Viết bình luận của bạn ... ">nội dung comment</textarea>
-                            @error('comment')
-                                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                            @enderror
-                            <input type="hidden" name="post" value="{{ $post->id }}">
-                        </div>
+                            <input type="hidden" name="commentType" value="{{ $commentType }}">
+                            <div class="form-group">
+                                <textarea id="comment" name="comment" class="form-control" rows="3"
+                                    placeholder="Nhập nội dung bình luận (tiếng Việt có dấu)..." style="padding-right: 200px;"></textarea>
 
-                        <div class="mt-4" style="text-align: center">
-                            <input type="submit" class="btn btn-primary " value="Đăng bình luận">
-                        </div>
-                    </form>
+                                @error('comment')
+                                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                                @enderror
+
+                                <input type="hidden" name="post" value="{{ $post->id }}">
+
+                                <button type="submit" class="btn btn-primary btn-lg btn-bl">GỬI BÌNH LUẬN</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             @elseif ($commentType == 'product')
-                <div class="col-lg-8 offset-md-2 mb-4">
-                    <form action="{{ route('store.comments.store') }}" method="POST">
-                        @csrf
+                <div class="card-title">
+                    <h3 class="h5 heading">Hỏi &amp; Đáp</h3>
+                </div>
+                <div class="card-body">
+                    <div class="user-form">
+                        <form action="{{ route('store.comments.store') }}" method="POST">
+                            @csrf
 
-                        <input type="hidden" name="commentType" value="{{ $commentType }}">
-                        <div class="form-group">
-                            <textarea class="form-control" id="comment" name="comment" rows="3" placeholder="Viết bình luận của bạn ... ">nội dung comment</textarea>
-                            @error('comment')
-                                <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
-                            @enderror
-                            <input type="hidden" name="product" value="{{ $product->id }}">
-                        </div>
+                            <input type="hidden" name="commentType" value="{{ $commentType }}">
 
-                        <div class="mt-4" style="text-align: center">
-                            <input type="submit" class="btn btn-primary " value="Đăng bình luận">
-                        </div>
-                    </form>
+                            <div class="form-group">
+                                <textarea id="comment" name="comment" class="form-control" rows="3"
+                                    placeholder="Nhập nội dung bình luận (tiếng Việt có dấu)..." style="padding-right: 200px;"></textarea>
+
+                                @error('comment')
+                                    <span class="text-danger" style="font-size: 16px">{{ $message }}</span>
+                                @enderror
+
+                                <input type="hidden" name="product" value="{{ $product->id }}">
+
+                                <button type="submit" class="btn btn-primary btn-lg btn-bl">GỬI BÌNH LUẬN</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             @endif
         @endif
 
 
-
-            <div class="col-lg-8 offset-md-2 mb-4 p-3">
+        @if ($comments->count() > 0)
+            <div class="col-lg-12 mb-4 p-3">
 
                 @foreach ($comments as $comment)
                     <div class="comment mb-4">
@@ -61,7 +73,7 @@
                         </div>
                         <div class="comment-meta">
                             <div class="comment-user_name">
-                                {{ $comment->userComment->username }}
+                                {{ $comment->users->username }}
                             </div>
                             <div class="content">
                                 {{ $comment->content }}
@@ -76,8 +88,9 @@
                         </div>
                     </div>
 
-                    @if (!empty($comment->parent))
-                        @foreach ($comment->parent as $parent)
+                    @if (!empty($comment->children))
+                        @foreach ($comment->children as $children)
+
                             <div class="comment comment-parent mb-4">
                                 <div class="comment-image_user">
                                     <img class="image_user"
@@ -86,14 +99,14 @@
                                 </div>
                                 <div class="comment-meta">
                                     <div class="comment-user_name">
-                                        {{ $parent->userComment->username }}
+                                        {{ $children->users->username }}
                                     </div>
                                     <div class="content">
-                                        {{ $parent->content }}
+                                        {{ $children->content }}
                                     </div>
                                     <div class="comment-time_reply">
                                         <span class="comment-time">
-                                            {{ $parent->created_at }}
+                                            {{ $children->created_at }}
                                         </span>
                                         <a class="comment-reply" href="javascript::void(0)" onclick="reply(this)"
                                             data-commentID="{{ $comment->id }}">Trả
@@ -113,7 +126,7 @@
                         <input type="hidden" name="commentId" id="commentId">
                         <input type="hidden" name="commentType" value="{{ $commentType }}">
                         <textarea name="comment" id="" placeholder="Nhập vào bình luận của bạn"
-                            style="width: 500px; height: 100px; border-radius: 10px"></textarea>
+                            style="width: 500px; height: 100px; border-radius: 10px; padding: 12px"></textarea>
                         <br>
 
                         <button type="submit" class="btn btn-primary">Đăng</button>
@@ -122,9 +135,9 @@
                 </div>
 
             </div>
-        {{-- @else
-            <p style="text-align: center">Không có bình luận nào về sản phẩm</p>
-        @endif --}}
+        @else
+            <p class="no-comments">Không có bình luận nào về sản phẩm</p>
+        @endif
 
     </div>
 

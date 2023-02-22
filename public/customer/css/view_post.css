@@ -41,10 +41,11 @@ td, th {
 
 
 .view_post {
-    /* padding: 24px;
+    padding: 24px;
     background: var(--color-white);
     border-radius: 5px;
-    box-shadow: var(--box-shadow); */
+    box-shadow: var(--box-shadow);
+    margin: 12px 0;
 }
 
 .view_post table {
